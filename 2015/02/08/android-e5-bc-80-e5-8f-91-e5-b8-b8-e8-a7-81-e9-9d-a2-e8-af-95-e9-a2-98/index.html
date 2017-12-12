@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Android开发常见面试题 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="方法重载与覆盖的区别方法的重载属于编译时多态,方法名相同参数列表不同,返回值必须相同或都没有返回值类型。方法的覆盖属于运行时多态，子类覆盖父类的方法,子类指向父类引用,在调用方法的时候用父类的引用调用。 String 和StringBuffer的区别String的长度是不可变的，StringBuffer的长度是可变的。如果你对字符串中的内容经常进行操作，特别是内容要修改时，那么使用StringBu">
+<meta name="keywords" content="安卓,面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android开发常见面试题">
+<meta property="og:url" content="http://yoursite.com/2015/02/08/android-e5-bc-80-e5-8f-91-e5-b8-b8-e8-a7-81-e9-9d-a2-e8-af-95-e9-a2-98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="方法重载与覆盖的区别方法的重载属于编译时多态,方法名相同参数列表不同,返回值必须相同或都没有返回值类型。方法的覆盖属于运行时多态，子类覆盖父类的方法,子类指向父类引用,在调用方法的时候用父类的引用调用。 String 和StringBuffer的区别String的长度是不可变的，StringBuffer的长度是可变的。如果你对字符串中的内容经常进行操作，特别是内容要修改时，那么使用StringBu">
+<meta property="og:updated_time" content="2017-12-12T12:38:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android开发常见面试题">
+<meta name="twitter:description" content="方法重载与覆盖的区别方法的重载属于编译时多态,方法名相同参数列表不同,返回值必须相同或都没有返回值类型。方法的覆盖属于运行时多态，子类覆盖父类的方法,子类指向父类引用,在调用方法的时候用父类的引用调用。 String 和StringBuffer的区别String的长度是不可变的，StringBuffer的长度是可变的。如果你对字符串中的内容经常进行操作，特别是内容要修改时，那么使用StringBu">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-android-e5-bc-80-e5-8f-91-e5-b8-b8-e8-a7-81-e9-9d-a2-e8-af-95-e9-a2-98" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/02/08/android-e5-bc-80-e5-8f-91-e5-b8-b8-e8-a7-81-e9-9d-a2-e8-af-95-e9-a2-98/" class="article-date">
+  <time datetime="2015-02-08T04:36:00.000Z" itemprop="datePublished">2015-02-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android开发常见面试题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="方法重载与覆盖的区别"><a href="#方法重载与覆盖的区别" class="headerlink" title="方法重载与覆盖的区别"></a>方法重载与覆盖的区别</h3><p>方法的重载属于编译时多态,方法名相同参数列表不同,返回值必须相同或都没有返回值类型。方法的覆盖属于运行时多态，子类覆盖父类的方法,子类指向父类引用,在调用方法的时候用父类的引用调用。</p>
+<h3 id="String-和StringBuffer的区别"><a href="#String-和StringBuffer的区别" class="headerlink" title="String 和StringBuffer的区别"></a>String 和StringBuffer的区别</h3><p>String的长度是不可变的，StringBuffer的长度是可变的。如果你对字符串中的内容经常进行操作，特别是内容要修改时，那么使用StringBuffer，如果最后需要String，那么使用StringBuffer的toString()方法。<br>字符串“abcde”通过写一个函数不让调用第三方的字符串，实现一个字符串倒序，比如字符串“abcde” 变成“edcba”<br>String src = “ABCDEF “;<br>String dst  =  new  StringBuffer(src).reverse().toString();</p>
+<h3 id="抽象类与接口的区别"><a href="#抽象类与接口的区别" class="headerlink" title="抽象类与接口的区别"></a>抽象类与接口的区别</h3><p>abstract可以修饰抽象方法，而一个类只要有一个抽象方法，就必须用abstract定义该类，即抽象类。<br>用interface修饰的类，里面的方法都是抽象方法，因此在定义接口的时候，可以直接不加那些修饰，系统会默认的添上去。接口里面的字段都是公有常量，即public static final修饰的字段。</p>
+<h3 id="线程有几种状态-分别是哪些"><a href="#线程有几种状态-分别是哪些" class="headerlink" title="线程有几种状态,分别是哪些"></a>线程有几种状态,分别是哪些</h3><p>1)、新建状态(New)：新创建了一个线程对象。<br>2)、就绪状态(Runnable)：线程对象创建后，其他线程调用了该对象的start()方法。该状态的线程位于可运行线程池中，变得可运行，等待获取CPU的使用权。<br>3)、运行状态(Running)：就绪状态的线程获取了CPU，执行run()方法。<br>4)、阻塞状态(Blocked)：阻塞状态是线程因为某种原因放弃CPU使用权，暂时停止运行。直到线程进入就绪状态，才有机会转到运行状态。阻塞的情况分三种：<br>　　(一)、等待阻塞：运行的线程执行wait()方法，JVM会把该线程放入等待池中。<br>　　(二)、同步阻塞：运行的线程在获取对象的同步锁时，若该同步锁被别的线程占用，则JVM会把该线程放入锁池中。<br>　　(三)、其他阻塞：运行的线程执行sleep()或join()方法，或者发出了I/O请求时，JVM会把该线程置为阻塞状态。当sleep()状态超时、join()等待线程终止或者超时、或者I/O处理完毕时，线程重新转入就绪状态。<br>5)、死亡状态(Dead)：线程执行完了或者因异常退出了run()方法，该线程结束生命周期。<br>当调用start方法的时候，该线程就进入就绪状态。等待CPU进行调度执行，此时还没有真正执行线程。<br>当调用run方法的时候，是已经被CPU进行调度，执行线程的主要任务。</p>
+<h3 id="线程的实现方式"><a href="#线程的实现方式" class="headerlink" title="线程的实现方式"></a>线程的实现方式</h3><p>线程的实现有两种方式，一是继承Thread类，二是实现Runnable接口</p>
+<h3 id="final、finally、finanlize-的区别"><a href="#final、finally、finanlize-的区别" class="headerlink" title="final、finally、finanlize()的区别"></a>final、finally、finanlize()的区别</h3><p>final用于声明属性，方法和类，分别表示属性不可变，方法不可覆盖，类不可继承。<br>finally是异常处理语句结构的一部分，表示总是执行。<br>finalize是Object类的一个方法，在垃圾收集器执行的时候会调用被回收对象的此方法，可以覆盖此方法提供垃圾收集时的其他资源回收，例如关闭文件等。</p>
+<h3 id="常用设计模式及应用场景"><a href="#常用设计模式及应用场景" class="headerlink" title="常用设计模式及应用场景"></a>常用设计模式及应用场景</h3><p>单例模式: Calendar实例的获取<br>适配器模式: Adapter为ListView GridView等添加数据<br>工厂模式: Spring IOC 反转控制<br>代理模式: Spring AOP 面向切面编程<br>观察者模式: ContentObserver监听内容改变</p>
+<h3 id="用两种方式实现单例模式，要求线程安全"><a href="#用两种方式实现单例模式，要求线程安全" class="headerlink" title="用两种方式实现单例模式，要求线程安全"></a>用两种方式实现单例模式，要求线程安全</h3><p>（懒汉式）程序执行过程中需要这个类的对象时再实例化该类的对象<br>步骤1.定义静态私有对象<br>2. 构造方法私有化保证在类的外部无法实例化该类的对象<br>3. 定义对外开放的静态方法在调用方法是判断对象是否为空，为空再创建对象返回<br>public class Singleton {<br>private static Singleton singleton;<br>// 构造方法私有化，保证在类的外部无法实例化该类的对象<br>private Singleton() {<br>}<br>public static synchronized Singleton getSingletonInstance() {<br>  if (singleton == null) {<br>   singleton = new Singleton();<br>  }<br>  return singleton;<br>}<br>}<br>（饿汉式）类加载的时候就实例化该类的对象<br>public class Singleton {<br>private static Singleton  singleton = new Singleton();<br>// 构造方法私有化，保证在类的外部无法实例化该类的对象<br>private Singleton() {<br>}<br>public static Singleton getSingletonInstance() {<br>  return singleton;<br>}<br>}</p>
+<h3 id="Android系统架构"><a href="#Android系统架构" class="headerlink" title="Android系统架构"></a>Android系统架构</h3><p>1）应用程序层      java语言    应用程序开发<br>2）应用程序框架层  java语言    OS定制  framework层开发<br>3）系统运行库层    C C++ 实现   so库<br>4）Linux内核层</p>
+<h3 id="Activity生命周期"><a href="#Activity生命周期" class="headerlink" title="Activity生命周期"></a>Activity生命周期</h3><p>void onCreate(Bundle savedInstanceState) 第一次创建时调用<br>void onStart()   被用户可见时调用<br>void onRestart()  当Activity处于stop状态又被重新启动时调用<br>void onResume() 当获得焦点即可与用户交互时调用<br>void onPause()  当失去焦点时调用<br>void onStop()   当不可见时调用<br>void onDestroy()  当销毁时调用</p>
+<h3 id="Activity的-onSaveInstanceState-和-onRestoreInstanceState"><a href="#Activity的-onSaveInstanceState-和-onRestoreInstanceState" class="headerlink" title="Activity的 onSaveInstanceState() 和 onRestoreInstanceState()"></a>Activity的 onSaveInstanceState() 和 onRestoreInstanceState()</h3><p>Activity的 onSaveInstanceState() 和 onRestoreInstanceState()并不是生命周期方法，它们不同于 onCreate()、onPause()等生命周期方法，它们并不一定会被触发。当应用遇到意外情况（如：内存不足、用户直接按Home键）由系统销毁一个Activity时，onSaveInstanceState() 会被调用。但是当用户主动去销毁一个Activity时，例如在应用中按返回键，onSaveInstanceState()就不会被调用。因为在这种情况下，用户的行为决定了不需要保存Activity的状态。通常onSaveInstanceState()只适合用于保存一些临时性的状态，而onPause()适合用于数据的持久化保存。<br>另外，当屏幕的方向发生了改变， Activity会被摧毁并且被重新创建，如果你想在Activity被摧毁前缓存一些数据，并且在Activity被重新创建后恢复缓存的数据。可以重写Activity的 onSaveInstanceState() 和 onRestoreInstanceState()方法。</p>
+<h3 id="Android四大组件"><a href="#Android四大组件" class="headerlink" title="Android四大组件"></a>Android四大组件</h3><p>Activity :应用程序中，一个Activity通常就是一个单独的屏幕，它上面可以显示一些控件也可以监听并处理用户的事件做出响应。Activity之间通过Intent进行通信。<br>Service 服务:一个Service 是一段长生命周期的，没有用户界面的程序，可以用来开发如监控类程序。<br>BroadcastReceive广播接收器:你的应用可以使用它对外部事件进行过滤只对感兴趣的外部事件(如当电话呼入时，或者数据网络可用时)进行接收并做出响应。广播接收器没有用户界面。然而，它们可以启动一个activity或serice 来响应它们收到的信息。<br>Content Provider内容提供者 :主要用于多个应用间数据共享。这些数据可以存储在文件系统中或SQLite数据库。</p>
+<h3 id="广播如何调用，有什么方式，各自的区别"><a href="#广播如何调用，有什么方式，各自的区别" class="headerlink" title="广播如何调用，有什么方式，各自的区别"></a>广播如何调用，有什么方式，各自的区别</h3><p>程序中发送广播通过sendBroadcastReceiver（）实现<br>接收广播通过定义一个类继承BroadcastReceiver并重写onReceive（）方法实现<br>注册广播有两种方式：<br>第一种静态方式:在清单文件中通过<receive>标签声明<br>第二种代码动态方式:<br>IntentFilter filter =  new IntentFilter(“android.provider.Telephony.SMS_RECEIVED”);<br>IncomingSMSReceiver receiver = new IncomgSMSReceiver();<br>registerReceiver(receiver.filter);<br>1)第一种不是常驻型广播，也就是说广播跟随activity的生命周期。注意: 在activity结束前，移除广播接收器。<br>2)第二种是常驻型，也就是说当应用程序关闭后，如果有信息广播来，程序也会被系统调用自动运行。</receive></p>
+<h3 id="Android中asset文件夹和raw文件夹区别"><a href="#Android中asset文件夹和raw文件夹区别" class="headerlink" title="Android中asset文件夹和raw文件夹区别"></a>Android中asset文件夹和raw文件夹区别</h3><p>res/raw和assets的相同点：<br>两者目录下的文件在打包后会原封不动的保存在apk包中，不会被编译成二进制。<br>res/raw和assets的不同点：<br>1）res/raw中的文件会被映射到R.java文件中，访问的时候直接使用资源ID即   R.raw.filename；assets文件夹下的文件不会被映射到R.java中，访问的时候需要AssetManager类。<br>2）res/raw不可以有目录结构，而assets则可以有目录结构，也就是assets目录下可以再建立文件夹<br>3）读取文件资源举例：<br>读取res/raw下的文件资源，通过以下方式获取输入流来进行写操作<br>InputStream is = getResources().openRawResource(R.raw.filename);<br>读取assets下的文件资源，通过以下方式获取输入流来进行写操作<br>AssetManager am = null;<br>am = getAssets();<br>InputStream is = am.open(“filename”); </p>
+<h3 id="Android中的五种存储方式及其应用场景"><a href="#Android中的五种存储方式及其应用场景" class="headerlink" title="Android中的五种存储方式及其应用场景"></a>Android中的五种存储方式及其应用场景</h3><p>1)SharedPreferences<br>存储路径:(data/data/packagename/shares_prefs), 轻量级存储,以键值对的形式存储在xml中,一般用来保存应用中的设置属性<br>2)文件存储;opSD卡存储多媒体文件, 文件缓存<br>3) Sqlite数据库        存储路径:(data/data/packagename/databases), 一种嵌入式数据库,支持sql语言,存储大量结构性数据<br>4)ContentProvider  进程(应用程序)间数据共享,数据源可以是sqlite,也可以是xml,相关类: ContentResolver(内容解析器), ContentObserver(数据                        观察者)<br>5) 网络存储    天气数据的xml,json格式等等,通过HttpUrlConnection,HttpClient,或者SOAP协议获取数据</p>
+<h3 id="什么是ANR-如何避免它"><a href="#什么是ANR-如何避免它" class="headerlink" title="什么是ANR 如何避免它"></a>什么是ANR 如何避免它</h3><p>ANR：Application Not Responding(应用程序无响应).当出现下列情况时，Android就会显示ANR对话框了：   对输入事件（如按键、触摸屏事件）的响应超过5秒 意向接受器（intentReceiver）超过10秒钟仍未执行完毕Android应用程序完全运行在一个独立的线程中（例如main）。这就意味着，任何在主线程中运行的，需要消耗大量时间的操作都会引发ANR。<br>解决方案有两种:<br>1. AsyncTask异步任务中，doInBackground()和onPostExecute(Result)两个方法非常重要<br>doInBackground() 这个方法运行在后台线程中，主要负责执行那些很耗时的操作，如移动护理系统中的网络连接、解析XML等操作。该方法必须重载。<br>onPostExecute(Result) 这个方法也运行于UI线程，在doInBackground(Params…)方法执行后调用，该方法用于处理后台任务执行后返回的结果。<br>2.  子thread + handler</p>
+<h3 id="Handler的运行机制"><a href="#Handler的运行机制" class="headerlink" title="Handler的运行机制"></a>Handler的运行机制</h3><p>一个Handler允许你发送和处理Message和Runable对象，每个线程都有自己的Looper，每个Looper中封装着MessageQueue。Looper负责不断的从自己的消息队列里取出队头的任务或消息执行。每个handler也和线程关联，Handler负责把Message和Runable对象传递给MessageQueue（用到post ，sendMessage等方法），而且在这些对象离开MessageQueue时，Handler负责执行他们（用到handleMessage方法）。<br>其中Message类就是定义了一个信息，这个信息中包含一个描述符和任意的数据对象，这个信息被用来传递给Handler.Message对象提供额外的两个int域和一个Object域。</p>
+<h3 id="Listview优化策略"><a href="#Listview优化策略" class="headerlink" title="Listview优化策略"></a>Listview优化策略</h3><p>1)对convetView进行判空，是当convertView不为空的时候直接重新使用convertView从而减少了很多不必要的View的创建<br>2)定义一个ViewHolder，将convetView的tag设置为ViewHolder,不为空时重新使用即可<br>3)当ListView加载数据量较大时可以采用分页加载和图片异步加载</p>
+<h3 id="ListView分页加载实现思路"><a href="#ListView分页加载实现思路" class="headerlink" title="ListView分页加载实现思路"></a>ListView分页加载实现思路</h3><p>实现OnScrollListener 接口重写onScrollStateChanged 和onScroll方法，使用onscroll方法实现”滑动“后处理检查是否还有新的记录，如果有，调用 addFooterView，添加记录到adapter, adapter调用 notifyDataSetChanged 更新数据;如果没有记录了，把自定义的mFooterView去掉。使用onScrollStateChanged可以检测是否滚到最后一行且停止滚动然后执行加载   </p>
+<h3 id="ListView图片异步加载实现思路"><a href="#ListView图片异步加载实现思路" class="headerlink" title="ListView图片异步加载实现思路"></a>ListView图片异步加载实现思路</h3><p>1.先从内存缓存中获取图片显示（内存缓冲）<br>2.获取不到的话从SD卡里获取（SD卡缓冲，，从SD卡获取图片是放在子线程里执行的，否则快速滑屏的话会不够流畅）<br>3.都获取不到的话从网络下载图片并保存到SD卡同时加入内存并显示（视情况看是否要显示）</p>
+<h3 id="Intent的原理，作用，可以传递哪些类型的参数"><a href="#Intent的原理，作用，可以传递哪些类型的参数" class="headerlink" title="Intent的原理，作用，可以传递哪些类型的参数"></a>Intent的原理，作用，可以传递哪些类型的参数</h3><p>Intent是连接Activity, Service, BroadcastReceiver, ContentProvider四大组件的信使,，可以传递八种基本数据类型以及string, Bundle类型，以及实现了Serializable或者Parcelable的类型。<br>Intent可以划分成显式意图和隐式意图。<br>显式意图：调用Intent.setComponent()或Intent.setClass()方法明确指定了组件名的Intent为显式意图，显式意图明确指定了Intent应该传递给哪个组件。<br>隐式意图：没有明确指定组件名的Intent为隐式意图。 Android系统会根据隐式意图中设置的动作(action)、类别(category)、数据（URI和数据类型）找到最合适的组件来处理这个意图。</p>
+<h3 id="如何实现屏幕分辨率的自适应"><a href="#如何实现屏幕分辨率的自适应" class="headerlink" title="如何实现屏幕分辨率的自适应"></a>如何实现屏幕分辨率的自适应</h3><p>最好可以通过权重(layout_weight)的方式来分配每个组件的大小，也可以通过具体的像素(dip)来确定大小。<br>尽量使用Relativelayout  。<br>已知应用支持平台设备的分辨率,可以提供多个layout_320<em>480  …<br>drawable-hdpi,drawable-mdpi,drawable-ldpi分别代表分辨率为480</em>800,360<em>480,240</em>360, 放置图片大小相差1.5倍<br>最后还需要在AndroidManifest.xml里添加下面一段，没有这一段自适应就不能实现：</p>
+<p><supports-screens android:largescreens="true" android:normalscreens="true" android:anydensity="true"><br>在标签和 标签之间添加上面那段代码。即可。<br>备注：三者的解析度不一样，就像你把电脑的分辨率调低，图片会变大一样，反之分辨率高，图片缩小<br>还可以通过.9.png实现图片的自适应</supports-screens></p>
+<h3 id="Android程序入口如何判断"><a href="#Android程序入口如何判断" class="headerlink" title="Android程序入口如何判断"></a>Android程序入口如何判断</h3><p>action节点中的android.intent.action.MAIN表明它所在的Activity是整个应用程序的入口点</p>
+<h3 id="Android哪几种方式访问网络"><a href="#Android哪几种方式访问网络" class="headerlink" title="Android哪几种方式访问网络"></a>Android哪几种方式访问网络</h3><p>HttpURLConnection<br>HttpClient方式（HttpGet和HttpPost类）<br>Volley</p>
+<h3 id="移动互联数据交互格式有哪些及其区别"><a href="#移动互联数据交互格式有哪些及其区别" class="headerlink" title="移动互联数据交互格式有哪些及其区别"></a>移动互联数据交互格式有哪些及其区别</h3><p>移动互联数据交互格式有XML和JSON<br>1.JSON和XML的数据可读性基本相同<br>2.JSON和XML同样拥有丰富的解析手段<br>3.JSON相对于XML来讲，数据的体积小<br>4.JSON与JavaScript的交互更加方便<br>5.JSON对数据的描述性比XML较差<br>6.JSON的速度要远远快于XML</p>
+<h3 id="XML解析有哪几种"><a href="#XML解析有哪几种" class="headerlink" title="XML解析有哪几种"></a>XML解析有哪几种</h3><p>基本的解析方式有三种: DOM,SAX,Pull<br>1.dom解析解析器读入整个文档，然后构建一个驻留内存的树结构，然后代码就可以使用 DOM 接口来操作这个树结构的优点是对文档增删改查比较方便，缺点占用内存比较大。<br>2.sax解析基于事件驱动型,优点占用内存少，解析速度快，缺点是只适合做文档的读取，不适合做文档的增删改查。<br>3.pull解析同样基于事件驱动型,android 官方API提供,可随时终止</p>
+<h3 id="GC内存泄露在什么情况下回出现？怎么解决？"><a href="#GC内存泄露在什么情况下回出现？怎么解决？" class="headerlink" title="GC内存泄露在什么情况下回出现？怎么解决？"></a>GC内存泄露在什么情况下回出现？怎么解决？</h3><p>(一) 查询数据库没有关闭游标<br>(二) 构造Adapter时，没有使用缓存的 convertView<br>(三) Bitmap对象不在使用时调用recycle()释放内存<br>(四) 不用的对象没有及时释放对象的引用</p>
+<h3 id="Android内存的优化"><a href="#Android内存的优化" class="headerlink" title="Android内存的优化"></a>Android内存的优化</h3><p>Android内存泄露容易导致内存溢出，又称为OOM。<br>Android内存优化策略：<br>1）在循环内尽量不要使用局部变量<br>2）不用的对象即时释放，即指向NULL<br>3）数据库的cursor即时关闭。<br>4）构造adapter时使用缓存contentview<br>5）调用registerReceiver()后在对应的生命周期方法中调用unregisterReceiver()<br>6）即时关闭InputStream/OutputStream。<br>7）android系统给图片分配的内存只有8M, 图片尽量使用软引用, 较大图片可通过BitmapFactory缩放后再使用,并及时recycle<br>8）尽量避免static成员变量引用资源耗费过多的实例。</p>
+<h3 id="加载大图片的时候如何防止内存溢出"><a href="#加载大图片的时候如何防止内存溢出" class="headerlink" title="加载大图片的时候如何防止内存溢出"></a>加载大图片的时候如何防止内存溢出</h3><p>Android系统给图片分配的内存只有8M,当加载大量图片时往往会出现OOM。<br>Android加载大量图片内存溢出解决方案：<br>1）尽量不要使用setImageBitmap或setImageResource或BitmapFactory.decodeResource来设置一张大图，因为这些函数在完成decode后，最终都是通过java层的createBitmap来完成的，需要消耗更多内存，可以通过BitmapFactory.decodeStream方法，创建出一个bitmap，再将其设为ImageView的 source<br>2）使用BitmapFactory.Options对图片进行压缩<br>InputStream is = this.getResources().openRawResource(R.drawable.pic1);<br>BitmapFactory.Options options=new BitmapFactory.Options();<br>options.inJustDecodeBounds = false;<br>options.inSampleSize = 10;   //width，hight设为原来的十分一<br>Bitmap btp =BitmapFactory.decodeStream(is,null,options);<br>3）运用Java软引用，进行图片缓存，将需要经常加载的图片放进缓存里，避免反复加载<br>及时销毁不再使用的Bitmap对象<br>   if(!bmp.isRecycle() ){<br>         bmp.recycle()   //回收图片所占的内存<br>         system.gc()  //提醒系统及时回收<br>   } </p>
+<h3 id="Android缓存机制"><a href="#Android缓存机制" class="headerlink" title="Android缓存机制"></a>Android缓存机制</h3><p>客户端缓存机制是android应用开发中非常重要的一项工作,使用缓存机制不仅仅可以为用户节省3G流量,同时在用户体验方面也是非常好的选择，比如有些新闻客户端支持离线模式，也是通过缓存机制实现的.缓存机制分为两部分,一部分是文字缓存,另一部分是多媒体文件缓存.<br>文字缓存有两种实现：<br>1）可以将与服务器交互得到的json数据或者xml数据存入sd卡中，并在数据库添加该数据的记录.添加数据库记录时,提供两个关键字段,一个是请求的URL,另一个则是本地保存后的文件地址，每次加载数据之前都会根据URL在数据库中检索<br>2）将JSON数据解析后装入List<map>对象中,然后遍历List,将数据统统写入相应的数据库表结构中,以后每次向服务器发起请求之前可以先在数据库中检索,如果有直接返回.<br>多媒体文件缓存：主要指图片缓存<br>图片的缓存可以根据当前日期,时间为名字缓存到SD卡中的指定图片缓存目录,同时数据库中做相应记录,记录办法可以采用两个关键字段控制,一个字段是该图片的URL地址,另一个字段是该图片的本机地址.取图片时根据URL在数据中检索,如果没有则连接服务器下载,下载之后再服务器中作出相应记录<br>缓存文件删除策略:<br>1. 每一个模块在每次客户端自动或者用户手动更新的时候删除相应模块的缓存文件,并重新下载新的缓存文件.<br>2. 在设置界面中提供删除缓存的功能,点击后删除本机所有缓存.</map></p>
+<h3 id="如何实现消息推送，有哪些方式，各自优缺点，最常使用哪种？"><a href="#如何实现消息推送，有哪些方式，各自优缺点，最常使用哪种？" class="headerlink" title="如何实现消息推送，有哪些方式，各自优缺点，最常使用哪种？"></a>如何实现消息推送，有哪些方式，各自优缺点，最常使用哪种？</h3><p>实现消息推送的方式有五种，分别是轮询，SMS,C2DM,MQTT,XMPP最常使用的是XMPP, 我们做项目时采用的是XMPP协议<br>1.XMPP协议，它是一种基于XML的传递协议，具有很强的灵活性和可扩展性。它的特点是将复杂性从客户端转移到了服务器端。GTalk、QQ、IM等都用这个协议。<br>2.轮询:客户端定时去服务端取或者保持一个长Socket，从本质讲这个不叫推送，    而是去服务端拽数据。但是实现简单，主要缺点：耗电,浪费用户流量等<br>3.Google的C2DM，具体不细说，缺点，服务器在国外，不是很稳定。<br>4.通过短信方式, 但是很难找到免费短信平台<br>5. MQTT协议, IBM提供的一种推送服务,不太灵活</p>
+<h3 id="MVC在Android中的应用"><a href="#MVC在Android中的应用" class="headerlink" title="MVC在Android中的应用"></a>MVC在Android中的应用</h3><p>Android中界面部分也采用了当前比较流行的MVC框架，在Android中：<br>1) 视图层（View）：一般采用XML文件进行界面的描述，使用的时候可以非常方便的引入。也可以使用JavaScript+HTML等的方式作为View层，通过WebView组件加载,同时可以实现Java和JavaScript之间的通信。<br>2) 控制层（Controller）：这句话也就暗含了不要在Acitivity中写代码，要通过Activity交割Model业务逻辑层处理，这样做的另外一个原因是Android中的Acitivity的响应时间是5s，如果耗时的操作放在这里，Android的控制层的重任通常落在了众多的Acitvity的肩上，程序就很容易被回收掉。<br>3) 模型层（Model）：对数据库的操作、对网络等的操作都应该在Model里面处理，当然对业务计算等操作也是必须放在的该层的。<br>在Android SDK中的数据绑定，也都是采用了与MVC框架类似的方法来显示数据。在控制层上将数据按照视图模型的要求（也就是Android SDK中的Adapter）封装就可以直接在视图模型上显示了，从而实现了数据绑定。比如显示Cursor中所有数据的ListActivity，其视图层就是一个ListView，将数据封装为ListAdapter，并传递给ListView，数据就在ListView中显示。</p>
+<h3 id="Android自定义组件实现思路"><a href="#Android自定义组件实现思路" class="headerlink" title="Android自定义组件实现思路"></a>Android自定义组件实现思路</h3><p>Android自定义组件有三种实现思路:<br>1) 继承某个现有组件，在其基础上添加额外功能,如继承Gallery实现CoverFlow效果<br>2) 继承某个Layout，实现复合组件自定义，如TextView和EditText组合实现登录注册组件<br>3) 继承View，实现onDraw()方法，实现自己绘制组件，如翻页效果组件</p>
+<h3 id="版本更新的实现思路"><a href="#版本更新的实现思路" class="headerlink" title="版本更新的实现思路"></a>版本更新的实现思路</h3><p>在服务器相应URL上有版本文件, 客户端同时存储该应用当前版本号  (SharedPreferences/Sqlite), 每次打开应用,去检测服务器版本号与本地版本号是否一致,如果不一 致,则自定义对话框提示是否下载更新</p>
+<h3 id="播放视频有哪些实现方式"><a href="#播放视频有哪些实现方式" class="headerlink" title="播放视频有哪些实现方式"></a>播放视频有哪些实现方式</h3><p>1.使用系统自带的播放器来播放，指定Action为ACTION_VIEW,Data为Uri，Type为其MIME类型。<br>          Intent intent = new Intent(Intent.ACTION_VIEW);<br>          intent.setDataAndType(uri, “video/mp4”);<br>          startActivity(intent);<br>2. 使用VideoView组件来播放, 可以结合MediaController来实现播控, 只是不能随意更改视频的大小及位置。<br>3. 使用MediaPlayer和SurfaceView来实现，这种方式很灵活,可以自定义视频播放的大小和位置。</p>
+<h3 id="NDK开发流程"><a href="#NDK开发流程" class="headerlink" title="NDK开发流程"></a>NDK开发流程</h3><p>NDK应用的开发流程(在应用中定义本地接口(native), 编译成.h头文件,交由C程序员实现,将.c实现通过NDK编译成.so动态链接库,导入项目中libs/armeabi,代码中调用该本地接口)<br>应用场景: 音频,视频解码,拍摄车牌号,识别车牌号</p>
+<h3 id="如何实现一键退出"><a href="#如何实现一键退出" class="headerlink" title="如何实现一键退出"></a>如何实现一键退出</h3><p>定义一个类继承Application，定义一个集合存放所有的activity，<br>定义一个添加的方法，再写一个退出的方法，使用for循环全部调用finish方法，然<br>后在每个Activity的onCreate方法中调用自定义类里的添加方法，然后在需要使用一键退出的地方调用类中的退出方法即可。</p>
+<h3 id="Android客户端如何实现自动登录"><a href="#Android客户端如何实现自动登录" class="headerlink" title="Android客户端如何实现自动登录"></a>Android客户端如何实现自动登录</h3><p>通过SharedPreferences存储用户名,密码,当存储不为空时实现自动登录功能</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/02/08/android-e5-bc-80-e5-8f-91-e5-b8-b8-e8-a7-81-e9-9d-a2-e8-af-95-e9-a2-98/" data-id="cjb3m5km00026rq14jt8ws58x" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/面试/">面试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/05/05/e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-e5-a5-bd-e7-9a-84android-e5-bc-80-e5-8f-91-e4-b9-a0-e6-83-af/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          分享一些好的Android开发习惯
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/02/04/android-e5-ba-94-e7-94-a8-e5-bc-80-e5-8f-91-ef-bc-8c-e4-bd-a0-e6-89-80-e5-bf-85-e9-a1-bb-e7-9f-a5-e9-81-93-e7-9a-84-e6-9c-8d-e5-8a-a1-e5-b9-b3-e5-8f-b0/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Android应用开发，你所必须知道的服务平台</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/10天学安卓/">10天学安卓</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/">产品 • 设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/">收藏 • 分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/职场-•-技能/">职场 • 技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/运营-•-数据/">运营 • 数据</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/">原创 • 文章</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/开源系列/">开源系列</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/开源系列/我的应用/">我的应用</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/我的应用/">我的应用</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/生活-•-随笔/">生活 • 随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/我的应用/">我的应用</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/">收藏 • 分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/职场-•-技能/">职场 • 技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/营销-•-媒体/">营销 • 媒体</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/营销-•-媒体/运营-•-数据/">运营 • 数据</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/运营-•-数据/">运营 • 数据</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活-•-随笔/">生活 • 随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/90后/">90后</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APP/">APP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Admob/">Admob</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Andengine/">Andengine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blur/">Blur</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DateTime/">DateTime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FTP/">FTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QQ/">QQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sliding-Menu/">Sliding Menu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Widget/">Widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/afinal/">afinal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/db/">db</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iphone/">iphone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iwatch/">iwatch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgame/">lgame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/o2o/">o2o</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shimmer/">shimmer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xutils/">xutils</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理/">产品经理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/仙剑/">仙剑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/侧滑/">侧滑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创业/">创业</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创新/">创新</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双十一/">双十一</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双十二/">双十二</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团购/">团购</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图片/">图片</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/在线音乐/">在线音乐</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/天气预报/">天气预报</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓/">安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓教程/">安卓教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小米/">小米</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幸福/">幸福</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幼教/">幼教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开源/">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/录音/">录音</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微信/">微信</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微商/">微商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快速开发/">快速开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/扁平化/">扁平化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/手游/">手游</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/播放器/">播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/效果/">效果</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/日期/">日期</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/时间/">时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务/">服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/海淘/">海淘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/淘宝/">淘宝</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物联网/">物联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/特效/">特效</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/电商/">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动互联网/">移动互联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/第三方/">第三方</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/罗永浩/">罗永浩</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/美空/">美空</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/职业生涯/">职业生涯</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/职场/">职场</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/菜单/">菜单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/萌萌颜文字/">萌萌颜文字</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计/">设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/锤子手机/">锤子手机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/闪烁/">闪烁</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阿里巴巴/">阿里巴巴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/高仿/">高仿</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/10天学安卓/" style="font-size: 17.5px;">10天学安卓</a> <a href="/tags/90后/" style="font-size: 10px;">90后</a> <a href="/tags/APP/" style="font-size: 10px;">APP</a> <a href="/tags/Admob/" style="font-size: 10px;">Admob</a> <a href="/tags/Andengine/" style="font-size: 10.83px;">Andengine</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Blur/" style="font-size: 10px;">Blur</a> <a href="/tags/DateTime/" style="font-size: 10px;">DateTime</a> <a href="/tags/FTP/" style="font-size: 10px;">FTP</a> <a href="/tags/QQ/" style="font-size: 10px;">QQ</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Sliding-Menu/" style="font-size: 12.5px;">Sliding Menu</a> <a href="/tags/Widget/" style="font-size: 10px;">Widget</a> <a href="/tags/afinal/" style="font-size: 10px;">afinal</a> <a href="/tags/apple/" style="font-size: 10px;">apple</a> <a href="/tags/db/" style="font-size: 10.83px;">db</a> <a href="/tags/http/" style="font-size: 10.83px;">http</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iphone/" style="font-size: 10.83px;">iphone</a> <a href="/tags/iwatch/" style="font-size: 10px;">iwatch</a> <a href="/tags/lgame/" style="font-size: 10px;">lgame</a> <a href="/tags/o2o/" style="font-size: 17.5px;">o2o</a> <a href="/tags/shimmer/" style="font-size: 10px;">shimmer</a> <a href="/tags/xutils/" style="font-size: 10px;">xutils</a> <a href="/tags/产品经理/" style="font-size: 10px;">产品经理</a> <a href="/tags/仙剑/" style="font-size: 10px;">仙剑</a> <a href="/tags/侧滑/" style="font-size: 12.5px;">侧滑</a> <a href="/tags/创业/" style="font-size: 12.5px;">创业</a> <a href="/tags/创新/" style="font-size: 10px;">创新</a> <a href="/tags/双十一/" style="font-size: 15px;">双十一</a> <a href="/tags/双十二/" style="font-size: 10px;">双十二</a> <a href="/tags/团购/" style="font-size: 10px;">团购</a> <a href="/tags/图片/" style="font-size: 10.83px;">图片</a> <a href="/tags/在线音乐/" style="font-size: 10px;">在线音乐</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/天气预报/" style="font-size: 10px;">天气预报</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/安卓/" style="font-size: 18.33px;">安卓</a> <a href="/tags/安卓入门/" style="font-size: 17.5px;">安卓入门</a> <a href="/tags/安卓开发/" style="font-size: 19.17px;">安卓开发</a> <a href="/tags/安卓教程/" style="font-size: 17.5px;">安卓教程</a> <a href="/tags/小米/" style="font-size: 10px;">小米</a> <a href="/tags/幸福/" style="font-size: 10px;">幸福</a> <a href="/tags/幼教/" style="font-size: 10px;">幼教</a> <a href="/tags/开源/" style="font-size: 15.83px;">开源</a> <a href="/tags/录音/" style="font-size: 10px;">录音</a> <a href="/tags/微信/" style="font-size: 10.83px;">微信</a> <a href="/tags/微商/" style="font-size: 10px;">微商</a> <a href="/tags/快速开发/" style="font-size: 10.83px;">快速开发</a> <a href="/tags/扁平化/" style="font-size: 11.67px;">扁平化</a> <a href="/tags/手游/" style="font-size: 10px;">手游</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a> <a href="/tags/播放器/" style="font-size: 10.83px;">播放器</a> <a href="/tags/效果/" style="font-size: 10px;">效果</a> <a href="/tags/数据库/" style="font-size: 10.83px;">数据库</a> <a href="/tags/日期/" style="font-size: 10px;">日期</a> <a href="/tags/时间/" style="font-size: 10px;">时间</a> <a href="/tags/服务/" style="font-size: 10px;">服务</a> <a href="/tags/框架/" style="font-size: 10px;">框架</a> <a href="/tags/海淘/" style="font-size: 10px;">海淘</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/游戏/" style="font-size: 12.5px;">游戏</a> <a href="/tags/物联网/" style="font-size: 10px;">物联网</a> <a href="/tags/特效/" style="font-size: 13.33px;">特效</a> <a href="/tags/电商/" style="font-size: 16.67px;">电商</a> <a href="/tags/移动互联网/" style="font-size: 11.67px;">移动互联网</a> <a href="/tags/第三方/" style="font-size: 10px;">第三方</a> <a href="/tags/罗永浩/" style="font-size: 10px;">罗永浩</a> <a href="/tags/美空/" style="font-size: 10px;">美空</a> <a href="/tags/职业生涯/" style="font-size: 10px;">职业生涯</a> <a href="/tags/职场/" style="font-size: 10px;">职场</a> <a href="/tags/菜单/" style="font-size: 10.83px;">菜单</a> <a href="/tags/萌萌颜文字/" style="font-size: 10px;">萌萌颜文字</a> <a href="/tags/设计/" style="font-size: 10.83px;">设计</a> <a href="/tags/锤子手机/" style="font-size: 10px;">锤子手机</a> <a href="/tags/闪烁/" style="font-size: 10px;">闪烁</a> <a href="/tags/阿里巴巴/" style="font-size: 10px;">阿里巴巴</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a> <a href="/tags/高仿/" style="font-size: 14.17px;">高仿</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/12/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/03/e5-a3-b0-e6-98-8e-ef-bc-9a-e8-af-b7-e7-ab-8b-e5-8d-b3-e5-81-9c-e6-ad-a2-e4-bd-bf-e7-94-a8-e6-9c-ac-e4-ba-ba-e7-9a-84-e7-99-be-e5-ba-a6-e5-9c-b0-e5-9b-beapi-e7-9b-b8-e5-85-b3ak/">声明：请立即停止使用本人的百度地图API相关AK</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/28/e5-bf-83-e6-83-85-e8-ae-b0-e4-ba-8b-e6-9c-ac-ef-bc-8c-e7-8e-b0-e5-b7-b2-e5-bc-80-e6-ba-90/">心情记事本，现已开源</a>
+          </li>
+        
+          <li>
+            <a href="/2015/06/19/e6-88-91-e7-9a-84-e5-8a-9b-e4-bd-9c-e8-90-8c-e8-90-8c-e9-a2-9c-e6-96-87-e5-ad-97-ef-bc-8c-e5-a4-a7-e5-ae-b6-e5-a4-9a-e5-a4-9a-e6-94-af-e6-8c-81/">我的力作-萌萌颜文字，大家多多支持</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/05/e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-e5-a5-bd-e7-9a-84android-e5-bc-80-e5-8f-91-e4-b9-a0-e6-83-af/">分享一些好的Android开发习惯</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

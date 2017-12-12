@@ -1,0 +1,2891 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b9-9d-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/27/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b9-9d-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-27T00:49:26.000Z" itemprop="datePublished">2015-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/27/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b9-9d-e5-a4-a9/">10天学安卓-第九天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>接着昨天的任务，我们今天实现左右滑动可以切换城市的功能。</p>
+<p>这里就需要引入新的控件了，Android给我们提供了ViewPager，我们就使用这个，同时，显示天气的界面我们也不再使用Activity，而改为Fragment。</p>
+<h2 id="Fragment"><a href="#Fragment" class="headerlink" title="Fragment"></a>Fragment</h2><p>Fragment可以认为是可复用的UI组件，有自己的布局和完整的生命周期，可以处理本身的事件，但是必须依存于Activity，不能脱离Activity而存在。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/10/08162501-0d1530c0e072468b8b0a68c1c8913bce1.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/10/08162501-0d1530c0e072468b8b0a68c1c8913bce1.png" alt="08162501-0d1530c0e072468b8b0a68c1c8913bce"></a></p>
+<p>&nbsp;</p>
+<p>可以看出来，Fragment的生命周期跟Activity非常相似，并且会随着Activity的销毁而销毁。</p>
+<p>&nbsp;</p>
+<p>下面，我们来战。</p>
+<p>首先，新建一个Fragment的子类，取名为WeatherFragment。</p>
+<p><pre>public class WeatherFragment extends Fragment<br>{<br>    @Override<br>    public void onCreate( Bundle savedInstanceState )<br>    {<br>        super.onCreate( savedInstanceState );<br>    }</pre></p>
+<pre><code>@Override
+public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
+{
+    return super.onCreateView( inflater, container, savedInstanceState );
+}
+</code></pre><p>}<br>这是用来显示天气的界面，而我们之前是直接在Activity中显示的，需要把这部分代码给移植到Fragment中。</p>
+<p>这是个麻烦的过程，不过不要紧，慢慢来。</p>
+<p>新建一个Layout，取名为frag_weather.xml，然后把activity_main.xml中的代码给复制过来，</p>
+<p><pre>&lt;RelativeLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    xmlns:tools=”<a href="http://schemas.android.com/tools" target="_blank" rel="noopener">http://schemas.android.com/tools</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”match_parent”<br>    android:paddingBottom=”@dimen/activity_vertical_margin”<br>    android:paddingLeft=”@dimen/activity_horizontal_margin”<br>    android:paddingRight=”@dimen/activity_horizontal_margin”<br>    android:paddingTop=”@dimen/activity_vertical_margin”  &gt;</pre></p>
+<pre><code>&amp;lt;ListView
+    android:id=&quot;@+id/weather_list&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_centerHorizontal=&quot;true&quot;
+    android:layout_centerVertical=&quot;true&quot; &amp;gt;
+&amp;lt;/ListView&amp;gt;
+</code></pre><p>&lt;/RelativeLayout&gt;<br>&nbsp;</p>
+<p>我们让WeatherFragment使用新的Layout，再把MainActivity中关于天气的代码移植到WeatherFragment中，</p>
+<p><pre>public class WeatherFragment extends Fragment<br>{<br>    @ViewInject( R.id.weather_list )<br>    private ListView lstWeather;</pre></p>
+<pre><code>private WeatherAdapter adapter;
+private BaiduData data;
+
+private List&amp;lt;WeatherDataBean&amp;gt; datas;
+private String city;
+
+public void setCity( String city )
+{
+    this.city = city;
+}
+
+@Override
+public void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getActivity(), datas );
+}
+
+@Override
+public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
+{
+    View view = inflater.inflate( R.layout.frag_weather, null );
+    ViewUtils.inject( this, view );
+
+    lstWeather.setAdapter( adapter );
+
+    getWeather();
+
+    return view;
+}
+
+private void getWeather()
+{
+    HttpUtils http = new HttpUtils();
+
+    RequestParams params = new RequestParams();
+    params.addQueryStringParameter( &quot;location&quot;, city );
+    params.addQueryStringParameter( &quot;output&quot;, &quot;json&quot; );
+    params.addQueryStringParameter( &quot;ak&quot;, &quot;YknGmxIoPugT7YrNrG955YLS&quot; );
+
+    http.send( HttpMethod.GET, &quot;http://api.map.baidu.com/telematics/v3/weather&quot;, params, new RequestCallBack&amp;lt;String&amp;gt;()
+    {
+        @Override
+        public void onSuccess( ResponseInfo&amp;lt;String&amp;gt; responseInfo )
+        {
+            String weather = responseInfo.result;
+
+            Gson gson = new Gson();
+            data = gson.fromJson( weather, BaiduData.class );
+
+            datas.clear();
+            datas.addAll( data.getResults().get( 0 ).getWeather_data() );
+            adapter.notifyDataSetChanged();
+
+            Log.v( &quot;onSuccess&quot;, data.toString() );
+        }
+
+        @Override
+        public void onFailure( HttpException arg0, String arg1 )
+        {
+            Log.v( &quot;onFailure&quot;, arg1 );
+        }
+    } );
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>然后，修改主页面activity_main.xml为：</p>
+<p><pre>&lt;?xml version=”1.0”?&gt;<br>&lt;RelativeLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    android:layout_width=”fill_parent”<br>    android:layout_height=”fill_parent”<br>    android:orientation=”vertical” &gt;</pre></p>
+<pre><code>&amp;lt;android.support.v4.view.ViewPager
+    android:id=&quot;@+id/viewPager&quot;
+    android:layout_width=&quot;fill_parent&quot;
+    android:layout_height=&quot;wrap_content&quot; /&amp;gt;
+
+&amp;lt;LinearLayout
+    android:id=&quot;@+id/viewGroup&quot;
+    android:layout_width=&quot;fill_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_alignParentBottom=&quot;true&quot;
+    android:layout_marginBottom=&quot;30dp&quot;
+    android:gravity=&quot;center_horizontal&quot;
+    android:orientation=&quot;horizontal&quot; &amp;gt;
+&amp;lt;/LinearLayout&amp;gt;
+</code></pre><p>&lt;/RelativeLayout&gt;<br>这里我们引入了ViewPager，并且还有一个LinearLayout，其中ViewPager我们用来显示天气，Linearlayout用来作为指示器，表示我们当前所选城市的次序。</p>
+<p>&nbsp;</p>
+<p>之后，修改我们主页面的代码，主界面现在的作用主要是两个：</p>
+<p>1. 初次启动的时候，获取所在地城市</p>
+<ol>
+<li>处理切换Fragment的逻辑</li>
+</ol>
+<p>3. 处理页面跳转/返回的逻辑</p>
+<p><pre>public class MainActivity extends FragmentActivity<br>{<br>    @ViewInject( R.id.viewPager )<br>    private ViewPager pager;</pre></p>
+<pre><code>@ViewInject( R.id.viewGroup )
+private LinearLayout layout;
+
+private MyAdapter mAdapter;
+private List&amp;lt;SelectCityBean&amp;gt; citys;
+
+private LocationClient mLocationClient;
+private BDLocationListener myListener;
+
+private List&amp;lt;ImageView&amp;gt; imageViews;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_main );
+
+    Log.v( &quot;WeatherAPP&quot;, &quot;onCreate&quot; );
+
+    ViewUtils.inject( this );
+
+    imageViews = new ArrayList&amp;lt;ImageView&amp;gt;();
+
+    citys = readCity();
+    mAdapter = new MyAdapter( getSupportFragmentManager() );
+    pager.setAdapter( mAdapter );
+    pager.setOnPageChangeListener( new OnPageChangeListener()
+    {
+        @Override
+        public void onPageSelected( int arg0 )
+        {
+            setTitle( citys.get( arg0 ).getCityName() + &quot;天气&quot; );
+            setImageBackground( arg0 );
+        }
+
+        @Override
+        public void onPageScrolled( int arg0, float arg1, int arg2 )
+        {
+        }
+
+        @Override
+        public void onPageScrollStateChanged( int arg0 )
+        {
+        }
+    } );
+
+    if( citys == null || citys.size() == 0 )
+    {
+        citys = new ArrayList&amp;lt;SelectCityBean&amp;gt;();
+        initLocationClient();
+        mLocationClient.start();
+    }
+
+    showIndicator( 0 );
+}
+
+private void showIndicator( int position )
+{
+    layout.removeAllViews();
+    imageViews = new ArrayList&amp;lt;ImageView&amp;gt;();
+
+    pager.setCurrentItem( position );
+
+    for( int i = 0; i &amp;lt; citys.size(); i++ )
+    {
+        ImageView imageView = new ImageView( this );
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams( 20, 20 );
+        lp.leftMargin = 5;
+        imageView.setLayoutParams( lp );
+        imageViews.add( imageView );
+        if( i == position )
+        {
+            setTitle( citys.get( position ).getCityName() + &quot;天气&quot; );
+            imageView.setBackgroundResource( R.drawable.page_indicator_focused );
+        }
+        else
+        {
+            imageView.setBackgroundResource( R.drawable.page_indicator_unfocused );
+        }
+
+        layout.addView( imageView );
+    }
+}
+
+private void setImageBackground( int selectItems )
+{
+    for( int i = 0; i &amp;lt; imageViews.size(); i++ )
+    {
+        if( i == selectItems )
+        {
+            imageViews.get( i ).setBackgroundResource( R.drawable.page_indicator_focused );
+        }
+        else
+        {
+            imageViews.get( i ).setBackgroundResource( R.drawable.page_indicator_unfocused );
+        }
+    }
+}
+
+@Override
+public boolean onCreateOptionsMenu( Menu menu )
+{
+    super.onCreateOptionsMenu( menu );
+    menu.add( Menu.NONE, Menu.FIRST + 1, 0, &quot;添加城市&quot; ).setShowAsAction( MenuItem.SHOW_AS_ACTION_ALWAYS );
+    return true;
+}
+
+@Override
+public boolean onOptionsItemSelected( MenuItem item )
+{
+    if( item.getItemId() == Menu.FIRST + 1 )
+    {
+        Intent intent = new Intent( getApplicationContext(), ChooseCityActivity.class );
+        intent.putExtra( &quot;key&quot;, &quot;value&quot; );
+        startActivityForResult( intent, 99 );
+    }
+
+    return super.onOptionsItemSelected( item );
+}
+
+@Override
+protected void onActivityResult( int requestCode, int resultCode, Intent data )
+{
+    super.onActivityResult( requestCode, resultCode, data );
+
+    if( resultCode == RESULT_OK )
+    {
+        String city = data.getStringExtra( &quot;selectedCity&quot; );
+        addCity( city );
+    }
+}
+
+private void initLocationClient()
+{
+    mLocationClient = new LocationClient( getApplicationContext() ); // 声明LocationClient类
+    myListener = new MyLocationListener();
+    LocationClientOption option = new LocationClientOption();
+    option.setLocationMode( LocationMode.Hight_Accuracy );
+    option.setIsNeedAddress( true );
+    mLocationClient.setLocOption( option );
+    mLocationClient.registerLocationListener( myListener );
+}
+
+@Override
+protected void onStop()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onStop&quot; );
+    super.onStop();
+    if( mLocationClient != null ) mLocationClient.stop();
+}
+
+@Override
+protected void onPause()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onPause&quot; );
+    super.onPause();
+}
+
+@Override
+protected void onRestart()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onRestart&quot; );
+    super.onRestart();
+}
+
+@Override
+protected void onResume()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onResume&quot; );
+    super.onResume();
+}
+
+@Override
+protected void onStart()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onStart&quot; );
+    super.onStart();
+}
+
+@Override
+protected void onDestroy()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onDestroy&quot; );
+    super.onDestroy();
+}
+
+public class MyLocationListener implements BDLocationListener
+{
+    @Override
+    public void onReceiveLocation( BDLocation location )
+    {
+        String city = location.getCity();
+        addCity( city );
+    }
+}
+
+private void addCity( String city )
+{
+    SelectCityBean cityBean = new SelectCityBean();
+    cityBean.setCityName( city );
+    saveCity( cityBean );
+
+    if( citys == null ) citys = new ArrayList&amp;lt;SelectCityBean&amp;gt;();
+    citys.add( cityBean );
+    mAdapter.notifyDataSetChanged();
+    showIndicator( citys.size() - 1 );
+}
+
+private void saveCity( SelectCityBean city )
+{
+    DbUtils dbUtils = WeatherApplication.getInstance().getDbUtil();
+    try
+    {
+        dbUtils.save( city );
+    }
+    catch( DbException e )
+    {
+    }
+}
+
+private List&amp;lt;SelectCityBean&amp;gt; readCity()
+{
+    DbUtils dbUtils = WeatherApplication.getInstance().getDbUtil();
+    try
+    {
+        return dbUtils.findAll( SelectCityBean.class );
+    }
+    catch( DbException e )
+    {
+        return null;
+    }
+}
+
+public class MyAdapter extends FragmentStatePagerAdapter
+{
+    public MyAdapter( FragmentManager fm )
+    {
+        super( fm );
+    }
+
+    @Override
+    public Fragment getItem( int arg0 )
+    {
+        WeatherFragment fragment = new WeatherFragment();
+        fragment.setCity( citys.get( arg0 ).getCityName() );
+        return fragment;
+    }
+
+    @Override
+    public int getItemPosition( Object object )
+    {
+        return POSITION_NONE;
+    }
+
+    @Override
+    public int getCount()
+    {
+        if( citys == null ) return 0;
+        return citys.size();
+    }
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>基本上面目全非了，跟之前的代码完全不一样了，这里面的主要变动为：</p>
+<ol>
+<li>saveCity、readCity不再从Preference中获取数据了，而改为从数据库获取</li>
+</ol>
+<p>2. 增加了MyAdapter以及相关的ViewPager的逻辑</p>
+<p>&nbsp;</p>
+<p>这里还用到了一个新的SelectCityBean以及两个图片资源，</p>
+<p><pre>public class SelectCityBean<br>{<br>    private int id;<br>    private String cityName;</pre></p>
+<pre><code>public int getId()
+{
+    return id;
+}
+
+public void setId( int id )
+{
+    this.id = id;
+}
+
+public String getCityName()
+{
+    return cityName;
+}
+
+public void setCityName( String cityName )
+{
+    this.cityName = cityName;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>两个图片资源分别代表了当前城市以及其他城市，</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_focused1.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_focused1.png" alt="page_indicator_focused"></a><a href="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_unfocused1.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_unfocused1.png" alt="page_indicator_unfocused"></a></p>
+<p>&nbsp;</p>
+<p>完成之后，运行来看看，我这边的效果是这样的：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-27-0842391.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-27-0842391-576x1024.png" alt="device-2015-01-27-084239"></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>你可以试着添加城市看看，是不是这样的效果。</p>
+<p>&nbsp;</p>
+<p>今天的内容比较少，代码比较多，大家多多练习一下。</p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1sj2V5fB" target="_blank" rel="noopener">点击下载</a> <a href="http://pan.baidu.com/s/1sj2V5fB" target="_blank" rel="noopener">http://pan.baidu.com/s/1sj2V5fB</a> 。</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/27/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b9-9d-e5-a4-a9/" data-id="cjb3m5kk6000grq14o17j8ivi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ab-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/25/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ab-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-25T07:05:36.000Z" itemprop="datePublished">2015-01-25</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/25/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ab-e5-a4-a9/">10天学安卓-第八天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天郑州雨夹雪，还有冰雹，结果小区就断电了，真是悲剧。第八天的学习就挪到今天了。</p>
+<p>经过前几天的学习，我们了解了一些Android的基础知识，并且做出了一个也算实用的天气预报APP，对Android也算得上是入门了，那么今天我们继续改进我们的APP。</p>
+<p>这个APP现在只能查看所在城市的天气，那么万一妹子不跟我们一个城市，我们就不能关注到妹子所在城市的天气了，那还怎么嘘寒问暖呢，这个问题是一定要解决的。</p>
+<p>&nbsp;</p>
+<p>如何解决？</p>
+<p>那就是需要在一个界面上可以选择城市了，这就用到了数据库了。</p>
+<p>我整理了一份所有城市的名单：</p>
+<p>北京市,天津市,上海市,重庆市,邯郸市,石家庄市,保定市,张家口市,承德市,唐山市,廊坊市,沧州市,衡水市,邢台市,秦皇岛市,朔州市,忻州市,太原市,大同市,阳泉市,晋中市,长治市,晋城市,临汾市,吕梁市,运城市,沈阳市,铁岭市,大连市,鞍山市,抚顺市,本溪市,丹东市,锦州市,营口市,阜新市,辽阳市,朝阳市,盘锦市,葫芦岛市,长春市,吉林市,延边朝鲜族自治州,四平市,通化市,白城市,辽源市,松原市,白山市,哈尔滨市,齐齐哈尔市,鸡西市,牡丹江市,七台河市,佳木斯市,鹤岗市,双鸭山市,绥化市,黑河市,大兴安岭地区,伊春市,大庆市,南京市,无锡市,镇江市,苏州市,南通市,扬州市,盐城市,徐州市,淮安市,连云港市,常州市,泰州市,宿迁市,舟山市,衢州市,杭州市,湖州市,嘉兴市,宁波市,绍兴市,温州市,丽水市,金华市,台州市,合肥市,芜湖市,蚌埠市,淮南市,马鞍山市,淮北市,铜陵市,安庆市,黄山市,滁州市,阜阳市,宿州市,巢湖市,六安市,亳州市,池州市,宣城市,福州市,厦门市,宁德市,莆田市,泉州市,漳州市,龙岩市,三明市,南平市,鹰潭市,新余市,南昌市,九江市,上饶市,抚州市,宜春市,吉安市,赣州市,景德镇市,萍乡市,菏泽市,济南市,青岛市,淄博市,德州市,烟台市,潍坊市,济宁市,泰安市,临沂市,滨州市,东营市,威海市,枣庄市,日照市,莱芜市,聊城市,商丘市,郑州市,安阳市,新乡市,许昌市,平顶山市,信阳市,南阳市,开封市,洛阳市,济源市,焦作市,鹤壁市,濮阳市,周口市,漯河市,驻马店市,三门峡市,武汉市,襄樊市,鄂州市,孝感市,黄冈市,黄石市,咸宁市,荆州市,宜昌市,恩施土家族苗族自治州,神农架林区,十堰市,随州市,荆门市,仙桃市,天门市,潜江市,岳阳市,长沙市,湘潭市,株洲市,衡阳市,郴州市,常德市,益阳市,娄底市,邵阳市,湘西土家族苗族自治州,张家界市,怀化市,永州市,广州市,汕尾市,阳江市,揭阳市,茂名市,惠州市,江门市,韶关市,梅州市,汕头市,深圳市,珠海市,佛山市,肇庆市,湛江市,中山市,河源市,清远市,云浮市,潮州市,东莞市,兰州市,金昌市,白银市,天水市,嘉峪关市,武威市,张掖市,平凉市,酒泉市,庆阳市,定西市,陇南市,临夏回族自治州,甘南藏族自治州,成都市,攀枝花市,自贡市,绵阳市,南充市,达州市,遂宁市,广安市,巴中市,泸州市,宜宾市,资阳市,内江市,乐山市,眉山市,凉山彝族自治州,雅安市,甘孜藏族自治州,阿坝藏族羌族自治州,德阳市,广元市,贵阳市,遵义市,安顺市,黔南布依族苗族自治州,黔东南苗族侗族自治州,铜仁地区,毕节地区,六盘水市,黔西南布依族苗族自治州,海口市,三亚市,五指山市,琼海市,儋州市,文昌市,万宁市,东方市,澄迈县,定安县,屯昌县,临高县,白沙黎族自治县,昌江黎族自治县,乐东黎族自治县,陵水黎族自治县,保亭黎族苗族自治县,琼中黎族苗族自治县,西双版纳傣族自治州,德宏傣族景颇族自治州,昭通市,昆明市,大理白族自治州,红河哈尼族彝族自治州,曲靖市,保山市,文山壮族苗族自治州,玉溪市,楚雄彝族自治州,普洱市,临沧市,怒江傈傈族自治州,迪庆藏族自治州,丽江市,海北藏族自治州,西宁市,海东地区,黄南藏族自治州,海南藏族自治州,果洛藏族自治州,玉树藏族自治州,海西蒙古族藏族自治州,西安市,咸阳市,延安市,榆林市,渭南市,商洛市,安康市,汉中市,宝鸡市,铜川市,防城港市,南宁市,崇左市,来宾市,柳州市,桂林市,梧州市,贺州市,贵港市,玉林市,百色市,钦州市,河池市,北海市,拉萨市,日喀则地区,山南地区,林芝地区,昌都地区,那曲地区,阿里地区,银川市,石嘴山市,吴忠市,固原市,中卫市,塔城地区,哈密地区,和田地区,阿勒泰地区,克孜勒苏柯尔克孜自治州,博尔塔拉蒙古自治州,克拉玛依市,乌鲁木齐市,石河子市,昌吉回族自治州,五家渠市,吐鲁番地区,巴音郭楞蒙古自治州,阿克苏地区,阿拉尔市,喀什地区,图木舒克市,伊犁哈萨克自治州,呼伦贝尔市,呼和浩特市,包头市,乌海市,乌兰察布市,通辽市,赤峰市,鄂尔多斯市,巴彦淖尔市,锡林郭勒盟,兴安盟,阿拉善盟,台北市,高雄市,基隆市,台中市,台南市,新竹市,嘉义市,澳门特别行政区,香港特别行政区</p>
+<p>&nbsp;</p>
+<p>这里基本囊括了国内大部分城市，我们做一个界面从这里选择就好了。</p>
+<p>开工。</p>
+<p>&nbsp;</p>
+<p>新建一个Activity，取名为ChooseCityActivity，并且修改AndroidManifest.xml，在application节点添加一个activity，如下：</p>
+<p><pre>&lt;activity android:name=”com.demo.weather.ChooseCityActivity”&gt;&lt;/activity&gt;</pre><br>&nbsp;</p>
+<p>这样就添加了一个新的Activity到APP中，不过现在还是空的，没有内容，不着急，我们过会儿会添加进去。</p>
+<p>&nbsp;</p>
+<p>然后修改MainActivity，添加两个方法：</p>
+<p><pre>    @Override<br>    public boolean onCreateOptionsMenu( Menu menu )<br>    {<br>        super.onCreateOptionsMenu( menu );<br>        menu.add( Menu.NONE, Menu.FIRST + 1, 0, “添加城市” ).setShowAsAction( MenuItem.SHOW_AS_ACTION_ALWAYS );<br>        return true;<br>    }</pre></p>
+<pre><code>@Override
+public boolean onOptionsItemSelected( MenuItem item )
+{
+    if( item.getItemId() == Menu.FIRST + 1 )
+    {
+        startActivityForResult( new Intent( getApplicationContext(), ChooseCityActivity.class ), 99 );
+    }
+
+    return super.onOptionsItemSelected( item );
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>第一个方法的作用是在右上角添加了一个名为“添加城市”的按钮，第二个方法的作用就是点击了“添加城市”的按钮后，会跳转到我们新建的那个Activity。</p>
+<p>&nbsp;</p>
+<h2 id="ActionBar"><a href="#ActionBar" class="headerlink" title="ActionBar"></a>ActionBar</h2><p>我们这里用到了ActionBar，一个完整的ActionBar是这样子的：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/10/22242152660677399401.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/10/22242152660677399401.png" alt="2224215266067739940"></a></p>
+<p>一共分为四部分，</p>
+<p>1. App Icon，也可替换为任意的图标</p>
+<p>2. View Controller，这部分为下拉菜单或者Tab选项卡，或者是App Title</p>
+<p>3. Action Item，这部分就是我们上面那两个方法进行设置的，每一个Action Item都会包含文字、图标</p>
+<p>4. Action Overflow，如果第三部分的Action Item比较多显示不全的时候，就会在这里以列表的形式展示</p>
+<p>每一个Action Item都可以通过调用setShowAsAction来设置它的展示方式，在前面我们添加了一个Action Item，并且设置为SHOW_AS_ACTION_ALWAYS，这就要求这个Item是必须显示在第三部分的。</p>
+<p>&nbsp;</p>
+<p>了解了一些ActionBar的基础知识后，我们继续之前的学习。</p>
+<p>现在的界面应该是这个样子的：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1433301.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1433301-576x1024.png" alt="device-2015-01-25-143330"></a></p>
+<p>&nbsp;</p>
+<p>点击“添加城市”后，就跳转到了一个空白页面。</p>
+<p>&nbsp;</p>
+<h2 id="跳转-传值"><a href="#跳转-传值" class="headerlink" title="跳转+传值"></a>跳转+传值</h2><p>Android中页面跳转提供了两种方法，startActivityForResult和startActivity，这两个方法区别在于能否将结果回传。</p>
+<p>&nbsp;</p>
+<h3 id="传值"><a href="#传值" class="headerlink" title="传值"></a>传值</h3><p>假如MainActivity需要向ChooseCityActivity传值，可以这么做：</p>
+<p><pre>            Intent intent = new Intent( getApplicationContext(), ChooseCityActivity.class );<br>            intent.putExtra( “key”, “value” );<br>            startActivityForResult( intent, 99 );</pre><br>并且在ChooseCityActivity的onCreate方法中进行接收：</p>
+<p><pre>    protected void onCreate( Bundle savedInstanceState )<br>    {<br>        super.onCreate( savedInstanceState );</pre></p>
+<pre><code>    String value = getIntent().getStringExtra( &quot;key&quot; );
+    Log.v( &quot;ChooseCityActivity&quot;, value );
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<h3 id="回传"><a href="#回传" class="headerlink" title="回传"></a>回传</h3><p>假如这个时候ChooseCityActivity需要把一些数据回传，可以这么做：</p>
+<p><pre>        Intent intent = new Intent();<br>        intent.putExtra( “key2”, “value2” );<br>        setResult( RESULT_OK, intent );<br>        super.finish();</pre><br>并且在MainActivity添加onActivityResult方法：</p>
+<p><pre>    protected void onActivityResult( int requestCode, int resultCode, Intent data )<br>    {<br>        super.onActivityResult( requestCode, resultCode, data );</pre></p>
+<pre><code>    Log.v( &quot;onActivityResult&quot;, data.getStringExtra( &quot;key2&quot; ) );
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>了解了这些内容，Activity间的传值就没有问题了，可以传很多类型的数据，包括基本类型以及实现了Serializable或者Parcelable接口的类型，Serializable是Java标准的序列化接口，Parcelable是Google定义的效率更高的序列化接口，如果是复杂类型，推荐大家使用Parcelable接口。</p>
+<p>&nbsp;</p>
+<p>希望大家掌握这些知识点，这些内容会在实际的应用中频繁使用。</p>
+<p>我们继续之前的学习，这次的目标是在新的界面实现选择城市并且传回MainActivity，为了做到这一点，这个界面需要有一个可以输入关键字的文本框已经一个城市列表，知道要做什么了，就动起手来吧。</p>
+<p>还记得怎么新建一个Layout吗？如果忘记了，请看这里：<a href="http://liuzhibang.cn/?p=380" target="_blank" rel="noopener">http://liuzhibang.cn/?p=380</a></p>
+<p>这次我们新建的Layout可以起名为：activity_choose_city，并且我们这次尝试使用LinearLayout，</p>
+<p><pre>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<br>&lt;LinearLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”match_parent”<br>    android:orientation=”vertical” &gt;</pre></p>
+<pre><code>&amp;lt;EditText
+    android:id=&quot;@+id/choose_key&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:ems=&quot;10&quot; &amp;gt;
+&amp;lt;/EditText&amp;gt;
+
+&amp;lt;ListView
+    android:id=&quot;@+id/choose_list&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot; &amp;gt;
+&amp;lt;/ListView&amp;gt;
+</code></pre><p>&lt;/LinearLayout&gt;<br>&nbsp;</p>
+<p>这个界面有一个文本框和一个列表，并且是垂直排列，占满了整个屏幕。</p>
+<p>界面已经好了，接下来我们需要把数据以某种方式存储起来，并且在文本框输入了关键字后进行筛选，把筛选的城市显示到列表中。</p>
+<p>&nbsp;</p>
+<p>怎样把那么些个城市数据存储起来？什么时候进行这个操作呢？</p>
+<p>&nbsp;</p>
+<p>Application</p>
+<p>为什么我们的手机应用都叫APP呢？</p>
+<p>那是因为我们所做出来的每一个应用都是一个Android Application，而APP就是Application的缩写，可见Application的重要性了。</p>
+<p>实际上，Application是Android框架的系统组件，当应用启动的时候就会创建一个且只有一个Application对象，用来存储APP的一些信息，所有说Application是一个单例模式。既然是单例对象，那么我们就可以在这里保存一些全局的数据，例如我们的城市数据；或者进行一些必要的初始化操作，比如把我们的城市数据存储起来。</p>
+<p>要做到这些，只需要继承Application这个类，实现我们自己的Application就可以了。</p>
+<p>新建一个类WeatherApplication，让它继承Application，并且实现它的onCreate方法：</p>
+<p><pre>public class WeatherApplication extends Application<br>{<br>    @Override<br>    public void onCreate()<br>    {<br>        super.onCreate();<br>    }<br>}</pre><br>这个onCreate就是实际意义的整个APP的入口，每次启动都会执行这个方法，我们在这里把城市数据存储到数据库中。</p>
+<p>&nbsp;</p>
+<p>然后修改AndroidManifest.xml，在application节点添加：</p>
+<p><pre>android:name=”com.demo.weather.WeatherApplication”</pre><br>这就指定了这个应用的Application就是WeatherApplication，然后修改WeatherApplication，进行我们的初始化数据的操作。</p>
+<p><pre>public class WeatherApplication extends Application<br>{<br>    private String citys = “北京市,天津市,上海市,重庆市,邯郸市,石家庄市,保定市,张家口市,承德市,唐山市,廊坊市,沧州市,衡水市,邢台市,秦皇岛市,朔州市,忻州市,太原市,大同市,阳泉市,晋中市,长治市,晋城市,临汾市,吕梁市,运城市,沈阳市,铁岭市,大连市,鞍山市,抚顺市,本溪市,丹东市,锦州市,营口市,阜新市,辽阳市,朝阳市,盘锦市,葫芦岛市,长春市,吉林市,延边朝鲜族自治州,四平市,通化市,白城市,辽源市,松原市,白山市,哈尔滨市,齐齐哈尔市,鸡西市,牡丹江市,七台河市,佳木斯市,鹤岗市,双鸭山市,绥化市,黑河市,大兴安岭地区,伊春市,大庆市,南京市,无锡市,镇江市,苏州市,南通市,扬州市,盐城市,徐州市,淮安市,连云港市,常州市,泰州市,宿迁市,舟山市,衢州市,杭州市,湖州市,嘉兴市,宁波市,绍兴市,温州市,丽水市,金华市,台州市,合肥市,芜湖市,蚌埠市,淮南市,马鞍山市,淮北市,铜陵市,安庆市,黄山市,滁州市,阜阳市,宿州市,巢湖市,六安市,亳州市,池州市,宣城市,福州市,厦门市,宁德市,莆田市,泉州市,漳州市,龙岩市,三明市,南平市,鹰潭市,新余市,南昌市,九江市,上饶市,抚州市,宜春市,吉安市,赣州市,景德镇市,萍乡市,菏泽市,济南市,青岛市,淄博市,德州市,烟台市,潍坊市,济宁市,泰安市,临沂市,滨州市,东营市,威海市,枣庄市,日照市,莱芜市,聊城市,商丘市,郑州市,安阳市,新乡市,许昌市,平顶山市,信阳市,南阳市,开封市,洛阳市,济源市,焦作市,鹤壁市,濮阳市,周口市,漯河市,驻马店市,三门峡市,武汉市,襄樊市,鄂州市,孝感市,黄冈市,黄石市,咸宁市,荆州市,宜昌市,恩施土家族苗族自治州,神农架林区,十堰市,随州市,荆门市,仙桃市,天门市,潜江市,岳阳市,长沙市,湘潭市,株洲市,衡阳市,郴州市,常德市,益阳市,娄底市,邵阳市,湘西土家族苗族自治州,张家界市,怀化市,永州市,广州市,汕尾市,阳江市,揭阳市,茂名市,惠州市,江门市,韶关市,梅州市,汕头市,深圳市,珠海市,佛山市,肇庆市,湛江市,中山市,河源市,清远市,云浮市,潮州市,东莞市,兰州市,金昌市,白银市,天水市,嘉峪关市,武威市,张掖市,平凉市,酒泉市,庆阳市,定西市,陇南市,临夏回族自治州,甘南藏族自治州,成都市,攀枝花市,自贡市,绵阳市,南充市,达州市,遂宁市,广安市,巴中市,泸州市,宜宾市,资阳市,内江市,乐山市,眉山市,凉山彝族自治州,雅安市,甘孜藏族自治州,阿坝藏族羌族自治州,德阳市,广元市,贵阳市,遵义市,安顺市,黔南布依族苗族自治州,黔东南苗族侗族自治州,铜仁地区,毕节地区,六盘水市,黔西南布依族苗族自治州,海口市,三亚市,五指山市,琼海市,儋州市,文昌市,万宁市,东方市,澄迈县,定安县,屯昌县,临高县,白沙黎族自治县,昌江黎族自治县,乐东黎族自治县,陵水黎族自治县,保亭黎族苗族自治县,琼中黎族苗族自治县,西双版纳傣族自治州,德宏傣族景颇族自治州,昭通市,昆明市,大理白族自治州,红河哈尼族彝族自治州,曲靖市,保山市,文山壮族苗族自治州,玉溪市,楚雄彝族自治州,普洱市,临沧市,怒江傈傈族自治州,迪庆藏族自治州,丽江市,海北藏族自治州,西宁市,海东地区,黄南藏族自治州,海南藏族自治州,果洛藏族自治州,玉树藏族自治州,海西蒙古族藏族自治州,西安市,咸阳市,延安市,榆林市,渭南市,商洛市,安康市,汉中市,宝鸡市,铜川市,防城港市,南宁市,崇左市,来宾市,柳州市,桂林市,梧州市,贺州市,贵港市,玉林市,百色市,钦州市,河池市,北海市,拉萨市,日喀则地区,山南地区,林芝地区,昌都地区,那曲地区,阿里地区,银川市,石嘴山市,吴忠市,固原市,中卫市,塔城地区,哈密地区,和田地区,阿勒泰地区,克孜勒苏柯尔克孜自治州,博尔塔拉蒙古自治州,克拉玛依市,乌鲁木齐市,石河子市,昌吉回族自治州,五家渠市,吐鲁番地区,巴音郭楞蒙古自治州,阿克苏地区,阿拉尔市,喀什地区,图木舒克市,伊犁哈萨克自治州,呼伦贝尔市,呼和浩特市,包头市,乌海市,乌兰察布市,通辽市,赤峰市,鄂尔多斯市,巴彦淖尔市,锡林郭勒盟,兴安盟,阿拉善盟,台北市,高雄市,基隆市,台中市,台南市,新竹市,嘉义市,澳门特别行政区,香港特别行政区”;<br>    private DbUtils dbUtils;</pre></p>
+<pre><code>private static WeatherApplication instance;
+
+public static WeatherApplication getInstance()
+{
+    return instance;
+}
+
+@Override
+public void onCreate()
+{
+    super.onCreate();
+    instance = this;
+    dbUtils = DbUtils.create( this );
+
+    if( !readInit() )
+    {
+        initCity();
+    }
+}
+
+private void initCity()
+{
+    boolean isSuccess = true;
+    String[] cityArray = citys.split( &quot;,&quot; );
+    for( String city : cityArray )
+    {
+        CityBean cityBean = new CityBean();
+        cityBean.setCityName( city );
+        try
+        {
+            dbUtils.save( cityBean );
+        }
+        catch( DbException e )
+        {
+            isSuccess = false;
+        }
+    }
+
+    saveInit( isSuccess );
+}
+
+private void saveInit( boolean isInited )
+{
+    SharedPreferences sharedPreferences = getSharedPreferences( &quot;weather&quot;, Context.MODE_PRIVATE );
+    Editor editor = sharedPreferences.edit();
+    editor.putBoolean( &quot;isInited&quot;, isInited );
+    editor.commit();
+}
+
+private boolean readInit()
+{
+    SharedPreferences sharedPreferences = getSharedPreferences( &quot;weather&quot;, Context.MODE_PRIVATE );
+    return sharedPreferences.getBoolean( &quot;isInited&quot;, false );
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>这里用到了CityBean这个类，</p>
+<p><pre>public class CityBean<br>{<br>    private int id;<br>    private String cityName;</pre></p>
+<pre><code>public int getId()
+{
+    return id;
+}
+
+public void setId( int id )
+{
+    this.id = id;
+}
+
+public String getCityName()
+{
+    return cityName;
+}
+
+public void setCityName( String cityName )
+{
+    this.cityName = cityName;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>这个类是进行数据库操作的类，而我们的数据库操作使用了第三方类库，根据类库的要求，我们这里有一个名为id的字段。</p>
+<p>&nbsp;</p>
+<p>做好了这些后，运行程序。</p>
+<p>有没有发现特别慢？那是因为我们在启动的时候进行了数据库操作，并且插入了300多条城市数据，这个过程是比较耗时的。</p>
+<p>等一切现实正常后，我们退出程序，再重新启动，有没有发现变快了？那是因为我们只在第一次启动的时候进行了数据存储。</p>
+<p>这里面用到了一个小技巧：</p>
+<p>在数据存储操作后，我们另外在Preference中写入了一个名为isInited的Boolean类型的数据，如果成功，我们就不再进行这个操作了。</p>
+<p>&nbsp;</p>
+<h3 id="查看数据库文件"><a href="#查看数据库文件" class="headerlink" title="查看数据库文件"></a>查看数据库文件</h3><p>如果你的手机是Root过的，那么你还可以把数据库导出，放到电脑上用工具查看数据是否正确。另外，有一些手机APP，例如Root Explorer也提供了在手机上直接查看数据库的功能，但是毕竟不如在电脑上清晰直观。</p>
+<p>每一个APP的数据库、缓存文件都存在/data/data/[package]下面，比如我们的APP，就存在/data/data/com.demo.weather这个目录下面。</p>
+<p>需要注意，这个目录在APP被卸载之后会被清空。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1439341.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1439341-576x1024.png" alt="device-2015-01-25-143934"></a></p>
+<p>&nbsp;</p>
+<p>稍微说明一下这几个目录，</p>
+<p>cache：在这里可以存放临时缓存，</p>
+<p>databases：就是数据库，我们的数据库文件就在这个目录</p>
+<p>files：一般存放一些长时间保存的数据</p>
+<p>lib：APP用到库文件</p>
+<p>shared_prefs：这个就是SharedPreferences这个类保存的数据</p>
+<p>&nbsp;</p>
+<p>跟我们这个APP相关的就只要两个目录：databases和shared_prefs，打开它们：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1456191.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1456191-576x1024.png" alt="device-2015-01-25-145619"></a> <a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1456331.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1456331-576x1024.png" alt="device-2015-01-25-145633"></a></p>
+<p>很清楚，一个数据库文件，另外一个是xml文件。大家可以通过各种办法把这两个文件导出到电脑来查看。</p>
+<p>&nbsp;</p>
+<p>接下来的工作就是在ChooseCityActivity中选择城市了。</p>
+<p>首先把这个Activity和我们之前新建的Layout联系起来，</p>
+<p><pre>public class ChooseCityActivity extends Activity<br>{<br>    @ViewInject( R.id.choose_key )<br>    private EditText edtKey;</pre></p>
+<pre><code>@ViewInject( R.id.choose_list )
+private ListView lstCity;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_choose_city );
+
+    ViewUtils.inject( this );
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>&nbsp;</p>
+<p>再回想一下我们的需求：输入关键字后，在列表中显示相应的城市</p>
+<p>这需要我们监听文本框的输入事件，可以这么做：</p>
+<p><pre>public class ChooseCityActivity extends Activity<br>{<br>    @ViewInject( R.id.choose_key )<br>    private EditText edtKey;</pre></p>
+<pre><code>@ViewInject( R.id.choose_list )
+private ListView lstCity;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_choose_city );
+
+    ViewUtils.inject( this );
+
+    edtKey.addTextChangedListener( new TextFilter() );
+}
+
+private void search( String key )
+{
+}
+
+class TextFilter implements TextWatcher
+{
+    @Override
+    public void beforeTextChanged( CharSequence s, int start, int count, int after )
+    {
+    }
+
+    @Override
+    public void onTextChanged( CharSequence s, int start, int before, int count )
+    {
+        String key = edtKey.getText().toString();
+        search( key );
+    }
+
+    @Override
+    public void afterTextChanged( Editable s )
+    {
+    }
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>给EditText添加一个TextWatcher事件，就可以监听它的文本变化，当文本变化后，会调用search方法，这个方法将会查询数据库，并且把查询结果显示到ListView中。</p>
+<p>&nbsp;</p>
+<p>将会用到数据库查询操作，联想到之前我们已经进行过存储操作了，我们可以把在Application里用到的DbUtils公开出来，在WeatherApplication添加方法：</p>
+<p><pre>    public DbUtils getDbUtil()<br>    {<br>        if( dbUtils == null )<br>        {<br>            dbUtils = DbUtils.create( this );<br>        }</pre></p>
+<pre><code>    return dbUtils;
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>关于如何把数据显示到ListView中，相信大家还记得之前如何把天气显示出来的吧。</p>
+<p>新建一个Layout，名为item_city：</p>
+<p><pre>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<br>&lt;RelativeLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”match_parent” &gt;</pre></p>
+<pre><code>&amp;lt;TextView
+    android:id=&quot;@+id/item_city&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_centerInParent=&quot;true&quot;
+    android:layout_margin=&quot;15dp&quot;
+    android:textColor=&quot;#000000&quot;
+    android:textSize=&quot;16sp&quot; /&amp;gt;
+</code></pre><p>&lt;/RelativeLayout&gt;<br>&nbsp;</p>
+<p>&nbsp;</p>
+<p>然后新建一个Adapter，名为CityAdapter：</p>
+<p><pre>public class CityAdapter extends BaseAdapter<br>{<br>    private List&lt;CityBean&gt; citys;<br>    private LayoutInflater inflater;</pre></p>
+<pre><code>public CityAdapter( Context context, List&amp;lt;CityBean&amp;gt; citys )
+{
+    this.citys = citys;
+    inflater = LayoutInflater.from( context );
+}
+
+@Override
+public int getCount()
+{
+    return citys.size();
+}
+
+@Override
+public Object getItem( int position )
+{
+    return citys.get( position );
+}
+
+@Override
+public long getItemId( int position )
+{
+    return position;
+}
+
+@Override
+public View getView( int position, View convertView, ViewGroup parent )
+{
+    convertView = inflater.inflate( R.layout.item_city, null );
+
+    CityBean bean = (CityBean)getItem( position );
+
+    TextView txtCity = (TextView)convertView.findViewById( R.id.item_city );
+    txtCity.setText( bean.getCityName() );
+
+    return convertView;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>&nbsp;</p>
+<p>最后修改ChooseCityActivity的search方法：</p>
+<p><pre>    private void search( String key )<br>    {<br>        DbUtils dbUtils = WeatherApplication.getInstance().getDbUtil();<br>        try<br>        {<br>            List&lt;CityBean&gt; citys = dbUtils.findAll( Selector.from( CityBean.class ).where( “cityName”, “like”, “%” + key + “%” ) );<br>            CityAdapter adapter = new CityAdapter( getApplicationContext(), citys );<br>            lstCity.setAdapter( adapter );<br>        }<br>        catch( DbException e )<br>        {<br>            e.printStackTrace();<br>        }<br>    }</pre><br>&nbsp;</p>
+<p>这个时候的ChooseCityActivity是这样的：</p>
+<p><pre>public class ChooseCityActivity extends Activity<br>{<br>    @ViewInject( R.id.choose_key )<br>    private EditText edtKey;</pre></p>
+<pre><code>@ViewInject( R.id.choose_list )
+private ListView lstCity;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_choose_city );
+
+    ViewUtils.inject( this );
+
+    edtKey.addTextChangedListener( new TextFilter() );
+}
+
+private void search( String key )
+{
+    DbUtils dbUtils = WeatherApplication.getInstance().getDbUtil();
+    try
+    {
+        List&amp;lt;CityBean&amp;gt; citys = dbUtils.findAll( Selector.from( CityBean.class ).where( &quot;cityName&quot;, &quot;like&quot;, &quot;%&quot; + key + &quot;%&quot; ) );
+        CityAdapter adapter = new CityAdapter( getApplicationContext(), citys );
+        lstCity.setAdapter( adapter );
+    }
+    catch( DbException e )
+    {
+        e.printStackTrace();
+    }
+}
+
+class TextFilter implements TextWatcher
+{
+    @Override
+    public void beforeTextChanged( CharSequence s, int start, int count, int after )
+    {
+    }
+
+    @Override
+    public void onTextChanged( CharSequence s, int start, int before, int count )
+    {
+        String key = edtKey.getText().toString();
+        search( key );
+    }
+
+    @Override
+    public void afterTextChanged( Editable s )
+    {
+    }
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>来运行一下吧，点击“添加城市”，在输入框中输入文字后，列表是不是有了内容了？</p>
+<p>我的是这样的：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1458161.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-25-1458161-576x1024.png" alt="device-2015-01-25-145816"></a></p>
+<p>&nbsp;</p>
+<p>到这里，我们的工作就完成了一多半了，剩下的就是把选择的城市回传给MainActivity，并且更新天气数据。</p>
+<p>&nbsp;</p>
+<p>再接再厉，我们把最后这部分完成再休息。</p>
+<p>&nbsp;</p>
+<p>关于如何把选择的城市回传，之前已经了解了，这次实践一下：</p>
+<p><pre>    @OnItemClick( R.id.choose_list )<br>    public void onItemClick( AdapterView&lt;?&gt; parent, View view, int position, long id )<br>    {<br>        CityBean cityBean = (CityBean)parent.getAdapter().getItem( position );</pre></p>
+<pre><code>    Intent intent = new Intent();
+    intent.putExtra( &quot;selectedCity&quot;, cityBean.getCityName() );
+    setResult( RESULT_OK, intent );
+    super.finish();
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>这个方法是ListView中的Item点击后触发，作用就是把选中的城市从Adapter中取出来，并且回传。</p>
+<p>&nbsp;</p>
+<p>然后在MainActivity中修改onActivityResult方法：</p>
+<p><pre>    protected void onActivityResult( int requestCode, int resultCode, Intent data )<br>    {<br>        super.onActivityResult( requestCode, resultCode, data );</pre></p>
+<pre><code>    if( resultCode == RESULT_OK )
+    {
+        String selectedCity = data.getStringExtra( &quot;selectedCity&quot; );
+        getWeather( selectedCity );
+    }
+}&lt;/pre&gt;
+</code></pre><p>在这里先判断了一下resultCode时候是正确返回，然后取出来城市并且调用了getWeather方法获取天气。</p>
+<p>&nbsp;</p>
+<p>打完收工，运行一下吧。</p>
+<p>&nbsp;</p>
+<p>有没有发现这个情况：</p>
+<p>选择了别的城市后，再返回回来，天气好像是发生了变化，但是标题上还是所在地的名字，为什么会有这个情况呢？我们明明在getWeather方法中设置了标题啊。</p>
+<p>&nbsp;</p>
+<p>别急，让我们回想一下Activity的生命周期中的第3条：</p>
+<p>&gt;&gt; 3. Activity重新获得焦点的时候，会依次执行onRestart、onStart和onResume</p>
+<p>当返回到MainActivity的时候，这个顺序有发生了一点变化，它会这样执行：</p>
+<p>onActivityResult -&gt; onRestart -&gt; onStart -&gt; onResume</p>
+<p>看到了吧，onActivityResult是最先执行，这个时候我们调用getWeather会被onStart调用的getWeather给覆盖掉，怎么解决呢？</p>
+<p>我这里有两种办法：</p>
+<p>1. 我们不在onStart中获取天气，而在onCreate中获取</p>
+<p>2. 修改一下getWeather，把城市作为类的成员变量，而不是方法参数，这样保证城市的一致</p>
+<p>我们先采用第二种办法吧。</p>
+<p><pre>public class MainActivity extends Activity<br>{<br>    @ViewInject( R.id.weather_list )<br>    private ListView lstWeather;</pre></p>
+<pre><code>private WeatherAdapter adapter;
+private BaiduData data;
+
+private List&amp;lt;WeatherDataBean&amp;gt; datas;
+
+private LocationClient mLocationClient;
+private BDLocationListener myListener;
+
+private String city;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_main );
+
+    Log.v( &quot;WeatherAPP&quot;, &quot;onCreate&quot; );
+
+    ViewUtils.inject( this );
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getApplicationContext(), datas );
+    lstWeather.setAdapter( adapter );
+
+    initLocationClient();
+    mLocationClient.start();
+}
+
+@Override
+public boolean onCreateOptionsMenu( Menu menu )
+{
+    super.onCreateOptionsMenu( menu );
+    menu.add( Menu.NONE, Menu.FIRST + 1, 0, &quot;添加城市&quot; ).setShowAsAction( MenuItem.SHOW_AS_ACTION_ALWAYS );
+    return true;
+}
+
+@Override
+public boolean onOptionsItemSelected( MenuItem item )
+{
+    if( item.getItemId() == Menu.FIRST + 1 )
+    {
+        Intent intent = new Intent( getApplicationContext(), ChooseCityActivity.class );
+        intent.putExtra( &quot;key&quot;, &quot;value&quot; );
+        startActivityForResult( intent, 99 );
+    }
+
+    return super.onOptionsItemSelected( item );
+}
+
+@Override
+protected void onActivityResult( int requestCode, int resultCode, Intent data )
+{
+    super.onActivityResult( requestCode, resultCode, data );
+
+    if( resultCode == RESULT_OK )
+    {
+        city = data.getStringExtra( &quot;selectedCity&quot; );
+    }
+}
+
+private void getWeather()
+{
+    setTitle( city + &quot;天气&quot; );
+
+    HttpUtils http = new HttpUtils();
+
+    RequestParams params = new RequestParams();
+    params.addQueryStringParameter( &quot;location&quot;, city );
+    params.addQueryStringParameter( &quot;output&quot;, &quot;json&quot; );
+    params.addQueryStringParameter( &quot;ak&quot;, &quot;YknGmxIoPugT7YrNrG955YLS&quot; );
+
+    http.send( HttpMethod.GET, &quot;http://api.map.baidu.com/telematics/v3/weather&quot;, params, new RequestCallBack&amp;lt;String&amp;gt;()
+    {
+        @Override
+        public void onSuccess( ResponseInfo&amp;lt;String&amp;gt; responseInfo )
+        {
+            String weather = responseInfo.result;
+
+            Gson gson = new Gson();
+            data = gson.fromJson( weather, BaiduData.class );
+
+            datas.clear();
+            datas.addAll( data.getResults().get( 0 ).getWeather_data() );
+            adapter.notifyDataSetChanged();
+
+            Log.v( &quot;onSuccess&quot;, data.toString() );
+        }
+
+        @Override
+        public void onFailure( HttpException arg0, String arg1 )
+        {
+            Log.v( &quot;onFailure&quot;, arg1 );
+        }
+    } );
+}
+
+private void initLocationClient()
+{
+    mLocationClient = new LocationClient( getApplicationContext() ); // 声明LocationClient类
+    myListener = new MyLocationListener();
+    LocationClientOption option = new LocationClientOption();
+    option.setLocationMode( LocationMode.Hight_Accuracy );
+    option.setIsNeedAddress( true );
+    mLocationClient.setLocOption( option );
+    mLocationClient.registerLocationListener( myListener );
+}
+
+@Override
+protected void onStop()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onStop&quot; );
+    super.onStop();
+    mLocationClient.stop();
+}
+
+@Override
+protected void onPause()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onPause&quot; );
+    super.onPause();
+}
+
+@Override
+protected void onRestart()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onRestart&quot; );
+    super.onRestart();
+}
+
+@Override
+protected void onResume()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onResume&quot; );
+    super.onResume();
+}
+
+@Override
+protected void onStart()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onStart&quot; );
+    super.onStart();
+
+    if( city == null || city.length() == 0 )
+    {
+        city = readCity();
+    }
+
+    if( city != null &amp;amp;&amp;amp; city.length() &amp;gt; 0 )
+    {
+        getWeather();
+    }
+}
+
+@Override
+protected void onDestroy()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onDestroy&quot; );
+    super.onDestroy();
+}
+
+public class MyLocationListener implements BDLocationListener
+{
+    @Override
+    public void onReceiveLocation( BDLocation location )
+    {
+        city = location.getCity();
+
+        String localCity = readCity();
+        if( !localCity.equals( city ) )
+        {
+            saveCity( city );
+            getWeather();
+        }
+    }
+}
+
+private void saveCity( String city )
+{
+    SharedPreferences sharedPreferences = getSharedPreferences( &quot;weather&quot;, Context.MODE_PRIVATE );
+    Editor editor = sharedPreferences.edit();
+    editor.putString( &quot;city&quot;, city );
+    editor.commit();
+}
+
+private String readCity()
+{
+    SharedPreferences sharedPreferences = getSharedPreferences( &quot;weather&quot;, Context.MODE_PRIVATE );
+    return sharedPreferences.getString( &quot;city&quot;, &quot;&quot; );
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>这里修改了onStart方法：</p>
+<p><pre>    protected void onStart()<br>    {<br>        Log.v( “WeatherAPP”, “onStart” );<br>        super.onStart();</pre></p>
+<pre><code>    if( city == null || city.length() == 0 )
+    {
+        city = readCity();
+    }
+
+    if( city != null &amp;amp;&amp;amp; city.length() &amp;gt; 0 )
+    {
+        getWeather();
+    }
+}&lt;/pre&gt;
+</code></pre><p>如果城市为空，才获取我们在Preference中保存的城市，这是因为onActivityResult执行在前，已经把city变量赋值了，然后在 执行onStart的时候确保这个值不被覆盖。</p>
+<p>&nbsp;</p>
+<p>大功告成了。お疲れ様です。（辛苦了）</p>
+<p>&nbsp;</p>
+<p>就这样，天气就变成了我们选择的城市的了。</p>
+<p>&nbsp;</p>
+<p>等等，说好的“添加城市”呢？</p>
+<p>我想同事查看两个城市，而不是一个一个看。</p>
+<p>别慌，怎么同时查看两个城市，我们明天继续。</p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1bntoAGR" target="_blank" rel="noopener">点击下载</a> <a href="http://pan.baidu.com/s/1bntoAGR" target="_blank" rel="noopener">http://pan.baidu.com/s/1bntoAGR</a> 。</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/25/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ab-e5-a4-a9/" data-id="cjb3m5kkd000krq14x44va6n4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-83-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/23/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-83-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-23T07:53:08.000Z" itemprop="datePublished">2015-01-23</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/23/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-83-e5-a4-a9/">10天学安卓-第七天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们上次学习了百度定位以及SharedPreferences的使用，不知道大家有没有注意到我们新加了一个方法：</p>
+<p><pre>    protected void onStop()<br>    {<br>        super.onStop();<br>        mLocationClient.stop();<br>    }</pre><br>&nbsp;</p>
+<p>这个方法的作用是在界面停止的时候，同时停止百度定位功能。</p>
+<p>&nbsp;</p>
+<p>联想到我们还有onCreate，那么这两个方法是做什么用的？是什么原理呢？</p>
+<p>这就需要我们来了解一下Activity的生命周期。</p>
+<h2 id="Activity生命周期"><a href="#Activity生命周期" class="headerlink" title="Activity生命周期"></a>Activity生命周期</h2><p><a href="http://lzbwp.b0.upaiyun.com/2014/09/20121201224507871.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/20121201224507871.png" alt="2012120122450787"></a></p>
+<p>Activity的整个生命周期有七个重要方法，分别是onCreate、onStart、onResume、onPause、onStop、onRestart、onDestroy，而且这七个方法在不同的状态下会有不同的触发时机，</p>
+<p>1. Activity启动的时候，会依次执行onCreate、onStart和onResume</p>
+<p>2. Activity失去焦点的时候，会依次执行onPause和onStop</p>
+<p>3. Activity重新获得焦点的时候，会依次执行onRestart、onStart和onResume</p>
+<p>4. Activity关闭的时候，会依次执行onPause、onStop和onDestroy</p>
+<p>举个例子：</p>
+<p>在APP已经启动的时候，如果按下Back键，那么就是第4种-关闭的情况，会依次执行onPause、onStop和onDestroy，</p>
+<p>按下Home键，那么就是第2种-失去焦点的情况，会依次执行onPause和onStop，这个时候如果再次启动APP，就会是按照第3种-重新获得焦点的情况，会依次执行onRestart、onStart和onResume。</p>
+<p>为了验证这一点，我们修改一下MainActivity.java，添加以下方法：</p>
+<p><pre>    @Override<br>    protected void onPause()<br>    {<br>        Log.v( “WeatherAPP”, “onPause” );<br>        super.onPause();<br>    }</pre></p>
+<pre><code>@Override
+protected void onRestart()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onRestart&quot; );
+    super.onRestart();
+}
+
+@Override
+protected void onResume()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onResume&quot; );
+    super.onResume();
+}
+
+@Override
+protected void onStart()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onStart&quot; );
+    super.onStart();
+}
+
+@Override
+protected void onDestroy()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onDestroy&quot; );
+    super.onDestroy();
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>并且在onCreate和onStop方法内加入分别加入：</p>
+<p><pre>        Log.v( “WeatherAPP”, “onCreate” );<br>    Log.v( “WeatherAPP”, “onStop” );</pre><br>&nbsp;</p>
+<p>&nbsp;</p>
+<p>然后运行程序，试着重复以上操作，并且在Logcat View中查看相应的Log。</p>
+<p>这里说一点小技巧，点击Logcat View左上角的绿色加号，可以添加自定义的日志过滤器，我这里就是用了这样的功能。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409271946501.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409271946501.png" alt="QQ截图20140927194650"></a></p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409271945501.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409271945501.png" alt="QQ截图20140927194550"></a></p>
+<p>&nbsp;</p>
+<p>在明白了Activity的生命周期后，它们在实际的APP中具体怎么应用？</p>
+<p>那么，举一些例子。</p>
+<p>1. 如果我们的预报天气APP需要在用户每次<strong>重新可见</strong>的时候都获取最新天气，那么调用获取天气相关的代码就需要放置到onResume方法中</p>
+<p>2. 另外一种情况，我们的APP已经在前台可见了，这时候来了电话，就变得不可见了，之后挂了电话，又重新可见了，这个时候通常是不需要重新获取数据的，那么调用获取天气相关的代码就需要放置到onStart方法中</p>
+<p>3. 最简单的情况，我们只需要在启动的时候获取天气，那么就只需要在onCreate方法中执行</p>
+<p>所以呢，技术不是问题，一切都需要根据实际的需要来决定我们的程序应该如何实现。</p>
+<p>&nbsp;</p>
+<p>以上是简单介绍了一下Activity的生命周期，大家可以在实践中慢慢摸索，并且以上介绍的都只是基础内容，高阶一点的内容我们将在之后的学习中慢慢接触。</p>
+<p>&nbsp;</p>
+<p>在了解了生命周期后，是不是要对我们的APP做些修改呢，嗯，就按照第2种情况修改吧。</p>
+<p>所要做的只是把下面这段代码从onCreate方法移到onStart中。</p>
+<p><pre>        String city = readCity();<br>        if( city != null &amp;&amp; city.length() &gt; 0 )<br>        {<br>            getWeather( city );<br>        }</pre><br>&nbsp;</p>
+<p>看看结果是不是想要的呢。</p>
+<p>&nbsp;</p>
+<p>想必练习到这里，大家也都累了，理论知识真是恼人，不过确实是我们所必须的，只有经过理论武装的知识才能发挥出最大作用。</p>
+<p>今天就到这里吧，各位辛苦了。</p>
+<p>明天是周末，会有很多的内容，请大家期待！</p>
+<p>&nbsp;</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/23/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-83-e5-a4-a9/" data-id="cjb3m5kjx000arq14prcbebpo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ad-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/22/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ad-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-22T08:20:00.000Z" itemprop="datePublished">2015-01-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/22/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ad-e5-a4-a9/">10天学安卓-第六天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>经过前几天的学习，我们的天气预报程序已经可以把天气正常的呈现出来了，正如之前说的，现在的APP只能显示固定地区的天气，那么我们要怎样才能显示我们本身所在地的天气呢？</p>
+<h2 id="Android定位"><a href="#Android定位" class="headerlink" title="Android定位"></a>Android定位</h2><p>Android系统本身提供了三种定位方式，分别是网络、基站和GPS，主要利用的是LocationManager、TelephonyManager相关的类库，但是因为一些原因，Google的API在国内访问经常出现问题，所以在这里我就不对这些API做介绍了，有想了解的可以自行查询相关资料。</p>
+<h2 id="百度地图定位"><a href="#百度地图定位" class="headerlink" title="百度地图定位"></a>百度地图定位</h2><p>除了Android本身提供的定位功能外，在国内也有很多供我们使用的定位系统，比如百度地图、高德地图都提供了相应的功能，我这里主要介绍一下百度地图的使用方式。</p>
+<p>需要到 <a href="http://lbsyun.baidu.com/sdk/download?selected=location" target="_blank" rel="noopener">http://lbsyun.baidu.com/sdk/download?selected=location</a> 下载定位功能的开发包，然后把开发包的内容放到libs文件夹，这样我们就引入了百度地图定位功能的API。</p>
+<p>然后，开工吧。</p>
+<p>&nbsp;</p>
+<p>配置Manifest</p>
+<p>首先添加定位功能所需要的权限，还记得添加到哪吧。</p>
+<p><pre>    &lt;!– 这个权限用于进行网络定位 –&gt;<br>    &lt;uses-permission android:name=”android.permission.ACCESS_COARSE_LOCATION” /&gt;<br>    &lt;!– 这个权限用于访问GPS定位 –&gt;<br>    &lt;uses-permission android:name=”android.permission.ACCESS_FINE_LOCATION” /&gt;<br>    &lt;!– 用于访问wifi网络信息，wifi信息会用于进行网络定位 –&gt;<br>    &lt;uses-permission android:name=”android.permission.ACCESS_WIFI_STATE” /&gt;<br>    &lt;!– 获取运营商信息，用于支持提供运营商信息相关的接口 –&gt;<br>    &lt;uses-permission android:name=”android.permission.ACCESS_NETWORK_STATE” /&gt;<br>    &lt;!– 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 –&gt;<br>    &lt;uses-permission android:name=”android.permission.CHANGE_WIFI_STATE” /&gt;<br>    &lt;!– 用于读取手机当前的状态 –&gt;<br>    &lt;uses-permission android:name=”android.permission.READ_PHONE_STATE” /&gt;<br>    &lt;!– 写入扩展存储，向扩展卡写入数据，用于写入离线定位数据 –&gt;<br>    &lt;uses-permission android:name=”android.permission.WRITE_EXTERNAL_STORAGE” /&gt;<br>    &lt;!– SD卡读取权限，用户写入离线定位数据 –&gt;<br>    &lt;uses-permission android:name=”android.permission.MOUNT_UNMOUNT_FILESYSTEMS” /&gt;<br>    &lt;!– 允许应用读取低级别的系统日志文件 –&gt;<br>    &lt;uses-permission android:name=”android.permission.READ_LOGS” /&gt;</pre><br>&nbsp;</p>
+<p>然后在application节点内，添加一个service，这个service是运行于后台的获取定位的服务，</p>
+<p><pre>        &lt;service<br>            android:name=”com.baidu.location.f”<br>            android:enabled=”true”<br>            android:process=”:remote” &gt;<br>            &lt;intent-filter&gt;<br>                &lt;action android:name=”com.baidu.location.service_v2.2” &gt;<br>                &lt;/action&gt;<br>            &lt;/intent-filter&gt;<br>        &lt;/service&gt;</pre><br>&nbsp;</p>
+<p>最后，在application节点内，添加我们申请的百度地图API的Accesskey。</p>
+<p><pre>        &lt;meta-data<br>            android:name=”com.baidu.lbsapi.API_KEY”<br>            android:value=”YknGmxIoPugT7YrNrG955YLS” /&gt;</pre><br>&nbsp;</p>
+<p>就这样，百度地图的引入就算是完成了。那么如何在代码中使用？</p>
+<p>&nbsp;</p>
+<p>打开MainActivity.java，我们需要简单重构一下代码。</p>
+<p>你可以使用Eclipse的重构工具，也可以手动修改代码，修改为如下：</p>
+<p><pre>    @Override<br>    protected void onCreate( Bundle savedInstanceState )<br>    {<br>        super.onCreate( savedInstanceState );<br>        setContentView( R.layout.activity_main );</pre></p>
+<pre><code>    ViewUtils.inject( this );
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getApplicationContext(), datas );
+    lstWeather.setAdapter( adapter );
+
+    getWeather( &quot;北京&quot; );
+}
+
+private void getWeather( String city )
+{
+    HttpUtils http = new HttpUtils();
+
+    RequestParams params = new RequestParams();
+    params.addQueryStringParameter( &quot;location&quot;, city );
+    params.addQueryStringParameter( &quot;output&quot;, &quot;json&quot; );
+    params.addQueryStringParameter( &quot;ak&quot;, &quot;YknGmxIoPugT7YrNrG955YLS&quot; );
+
+    http.send( HttpMethod.GET, &quot;http://api.map.baidu.com/telematics/v3/weather&quot;, params, new RequestCallBack&amp;lt;String&amp;gt;()
+    {
+        @Override
+        public void onSuccess( ResponseInfo&amp;lt;String&amp;gt; responseInfo )
+        {
+            String weather = responseInfo.result;
+
+            Gson gson = new Gson();
+            data = gson.fromJson( weather, BaiduData.class );
+
+            datas.clear();
+            datas.addAll( data.getResults().get( 0 ).getWeather_data() );
+            adapter.notifyDataSetChanged();
+
+            Log.v( &quot;onSuccess&quot;, data.toString() );
+        }
+
+        @Override
+        public void onFailure( HttpException arg0, String arg1 )
+        {
+            Log.v( &quot;onFailure&quot;, arg1 );
+        }
+    } );
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>这里新增加了一个以城市为参数方法getWeather，做好了重构之后，我们加入百度的定位功能。</p>
+<p>&nbsp;</p>
+<p>声明两个变量：</p>
+<p><pre>    private LocationClient mLocationClient;<br>    private BDLocationListener myListener;</pre><br>&nbsp;</p>
+<p>添加初始化这两个变量的方法，</p>
+<p><pre>    private void initLocationClient()<br>    {<br>        mLocationClient = new LocationClient( getApplicationContext() );<br>        myListener = new MyLocationListener();<br>        LocationClientOption option = new LocationClientOption();<br>        option.setLocationMode( LocationMode.Hight_Accuracy );<br>        option.setIsNeedAddress( true );<br>        mLocationClient.setLocOption( option );<br>        mLocationClient.registerLocationListener( myListener );<br>    }</pre><br>&nbsp;</p>
+<p>我们是用到了MyLocationListener，这个类需要自定义，作为MainActivity的内部类存在，</p>
+<p><pre>    public class MyLocationListener implements BDLocationListener<br>    {<br>        @Override<br>        public void onReceiveLocation( BDLocation location )<br>        {<br>            String city = location.getCity();<br>            getWeather( city );<br>            setTitle( city + “天气” );<br>        }<br>    }</pre><br>&nbsp;</p>
+<p>然后，修改onCreate方法，</p>
+<p><pre>    protected void onCreate( Bundle savedInstanceState )<br>    {<br>        super.onCreate( savedInstanceState );<br>        setContentView( R.layout.activity_main );</pre></p>
+<pre><code>    ViewUtils.inject( this );
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getApplicationContext(), datas );
+    lstWeather.setAdapter( adapter );
+
+    initLocationClient();
+    mLocationClient.start();
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>最后，添加onStop方法，</p>
+<p><pre>    @Override<br>    protected void onStop()<br>    {<br>        super.onStop();<br>        mLocationClient.stop();<br>    }</pre><br>&nbsp;</p>
+<p>打完收工。</p>
+<p>&nbsp;</p>
+<p>运行吧，看看是怎样的效果，反正我的是这样：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-22-1614101.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-22-1614101-576x1024.png" alt="device-2015-01-22-161410"></a></p>
+<p>&nbsp;</p>
+<p>是不是你所在的城市呢？</p>
+<p>&nbsp;</p>
+<p>既然看到效果了，那么稍微解释一下上面那些代码。</p>
+<p>首先在界面加载的时候，会调用initLocationClient方法，这个方法初始化了LocationClient和BDLocationListener，LocationClient的作用是异步获取定位，MyLocationListener则是在LocationClient获取定位后的回调方法，我们在这个回调方法中调用了获取天气的方法getWeather，并且调用setTitle方法修改了APP页面的标题为“城市名+天气”。</p>
+<p>整个流程堪称完美，只差一点点。</p>
+<p>&nbsp;</p>
+<p>这一点点是什么地方呢？</p>
+<p>&nbsp;</p>
+<p>就在于我们每一次获取天气之前都需要定位，而你是不会每天都换一个城市的，为此我们的程序需要优化一下。优化后的流程为：</p>
+<p>1. 从本地读取城市，并且同时调用百度定位</p>
+<p>2. 如果1中的本地城市不为空，则获取天气</p>
+<p>3. 如果1中百度定位的城市跟本地城市一致，就不再次获取天气；若不一致，则覆盖本地城市，并且重新获取天气</p>
+<p>这样做的好处有两个：</p>
+<p>1. 只有第一次启动APP的时候，本地城市为空，那么就是获取天气会比较快</p>
+<p>2. 即使更换了城市，也能准确应对</p>
+<p>&nbsp;</p>
+<p>既然整理好思路了，那么就开工吧。</p>
+<p>&nbsp;</p>
+<p>Android本地存储数据有多种方式，主要有Preference、Sqlite、File这三种，我们今天使用的是Preference这种方式。</p>
+<h2 id="Preference"><a href="#Preference" class="headerlink" title="Preference"></a>Preference</h2><p>Preference适合存储轻量数据，如String、Int、Boolean等类型的数据，我们所需要保存的城市数据就是一个简单的字符串，非常适合这种方式。</p>
+<p>在MainActivity.java 内添加两个方法，分别为存储、读取数据的方法。</p>
+<p><pre>    private void saveCity( String city )<br>    {<br>        SharedPreferences sharedPreferences = getSharedPreferences( “weather”, Context.MODE_PRIVATE );<br>        Editor editor = sharedPreferences.edit();<br>        editor.putString( “city”, city );<br>        editor.commit();<br>    }</pre></p>
+<pre><code>private String readCity()
+{
+    SharedPreferences sharedPreferences = getSharedPreferences( &quot;weather&quot;, Context.MODE_PRIVATE );
+    return sharedPreferences.getString( &quot;city&quot;, &quot;&quot; );
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>有些经验的程序员一眼就能看明白，Preference中是以Key/Value的形式存储数据的。</p>
+<p>&nbsp;</p>
+<p>然后修改onCreate方法，</p>
+<p><pre>    protected void onCreate( Bundle savedInstanceState )<br>    {<br>        super.onCreate( savedInstanceState );<br>        setContentView( R.layout.activity_main );</pre></p>
+<pre><code>    ViewUtils.inject( this );
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getApplicationContext(), datas );
+    lstWeather.setAdapter( adapter );
+
+    initLocationClient();
+    mLocationClient.start();
+
+    String city = readCity();
+    if( city != null &amp;amp;&amp;amp; city.length() &amp;gt; 0 )
+    {
+        getWeather( city );
+    }
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>这里加入了读取本地城市，并且获取天气的逻辑。</p>
+<p>&nbsp;</p>
+<p>接下来修改MyLocationListener，</p>
+<p><pre>    public class MyLocationListener implements BDLocationListener<br>    {<br>        @Override<br>        public void onReceiveLocation( BDLocation location )<br>        {<br>            String city = location.getCity();</pre></p>
+<pre><code>        String localCity = readCity();
+        if( !localCity.equals( city ) )
+        {
+            saveCity( city );
+            getWeather( city );
+        }
+    }
+}&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>这里加入了定位的城市和本地城市判断的逻辑，并且删掉了对setTitle 方法的调用.</p>
+<p>&nbsp;</p>
+<p>最后，修改getWeather方法，在方法第一行加入对setTitle的调用。</p>
+<p><pre>setTitle( city + “天气” );</pre><br>&nbsp;</p>
+<p>打完收工，最后MainActivity.java是这个样子的：</p>
+<p><pre>public class MainActivity extends Activity<br>{<br>    @ViewInject( R.id.weather_list )<br>    private ListView lstWeather;</pre></p>
+<pre><code>private WeatherAdapter adapter;
+private BaiduData data;
+
+private List&amp;lt;WeatherDataBean&amp;gt; datas;
+
+private LocationClient mLocationClient;
+private BDLocationListener myListener;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_main );
+
+    ViewUtils.inject( this );
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getApplicationContext(), datas );
+    lstWeather.setAdapter( adapter );
+
+    initLocationClient();
+    mLocationClient.start();
+
+    String city = readCity();
+    if( city != null &amp;amp;&amp;amp; city.length() &amp;gt; 0 )
+    {
+        getWeather( city );
+    }
+}
+
+private void getWeather( String city )
+{
+    setTitle( city + &quot;天气&quot; );
+
+    HttpUtils http = new HttpUtils();
+
+    RequestParams params = new RequestParams();
+    params.addQueryStringParameter( &quot;location&quot;, city );
+    params.addQueryStringParameter( &quot;output&quot;, &quot;json&quot; );
+    params.addQueryStringParameter( &quot;ak&quot;, &quot;YknGmxIoPugT7YrNrG955YLS&quot; );
+
+    http.send( HttpMethod.GET, &quot;http://api.map.baidu.com/telematics/v3/weather&quot;, params, new RequestCallBack&amp;lt;String&amp;gt;()
+    {
+        @Override
+        public void onSuccess( ResponseInfo&amp;lt;String&amp;gt; responseInfo )
+        {
+            String weather = responseInfo.result;
+
+            Gson gson = new Gson();
+            data = gson.fromJson( weather, BaiduData.class );
+
+            datas.clear();
+            datas.addAll( data.getResults().get( 0 ).getWeather_data() );
+            adapter.notifyDataSetChanged();
+
+            Log.v( &quot;onSuccess&quot;, data.toString() );
+        }
+
+        @Override
+        public void onFailure( HttpException arg0, String arg1 )
+        {
+            Log.v( &quot;onFailure&quot;, arg1 );
+        }
+    } );
+}
+
+private void initLocationClient()
+{
+    mLocationClient = new LocationClient( getApplicationContext() ); // 声明LocationClient类
+    myListener = new MyLocationListener();
+    LocationClientOption option = new LocationClientOption();
+    option.setLocationMode( LocationMode.Hight_Accuracy );
+    option.setIsNeedAddress( true );
+    mLocationClient.setLocOption( option );
+    mLocationClient.registerLocationListener( myListener );
+}
+
+@Override
+protected void onStop()
+{
+    super.onStop();
+    mLocationClient.stop();
+}
+
+public class MyLocationListener implements BDLocationListener
+{
+    @Override
+    public void onReceiveLocation( BDLocation location )
+    {
+        String city = location.getCity();
+
+        String localCity = readCity();
+        if( !localCity.equals( city ) )
+        {
+            saveCity( city );
+            getWeather( city );
+        }
+    }
+}
+
+private void saveCity( String city )
+{
+    SharedPreferences sharedPreferences = getSharedPreferences( &quot;weather&quot;, Context.MODE_PRIVATE );
+    Editor editor = sharedPreferences.edit();
+    editor.putString( &quot;city&quot;, city );
+    editor.commit();
+}
+
+private String readCity()
+{
+    SharedPreferences sharedPreferences = getSharedPreferences( &quot;weather&quot;, Context.MODE_PRIVATE );
+    return sharedPreferences.getString( &quot;city&quot;, &quot;&quot; );
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>今天的主要任务就是嵌入了百度地图，重构了代码，优化了流程，最最重要的是我们学习了SharedPreferences的使用，这种保存数据方式在做APP的时候是经常会用到的，希望大家能熟练掌握。</p>
+<p>&nbsp;</p>
+<p><strong>请注意，本文用到的key是我个人使用的，请勿将其用于任何商业用途。如果有商业需要，请联系我或者自行在百度官网申请Accesskey。</strong></p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1jG9puYU" target="_blank" rel="noopener">点击下载</a> <a href="http://pan.baidu.com/s/1jG9puYU" target="_blank" rel="noopener">http://pan.baidu.com/s/1jG9puYU</a> 。</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/22/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ad-e5-a4-a9/" data-id="cjb3m5kkm000orq14enppwnot" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-94-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/21/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-94-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-21T08:58:29.000Z" itemprop="datePublished">2015-01-21</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/21/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-94-e5-a4-a9/">10天学安卓-第五天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>经过前几天的练习，相信大家已经对如何做出一个简单的界面有了初步的了解，并且已经做出来一个还不错的天气列表了。</p>
+<p>今天大家稍事休息，要练习的内容比较少，着重学习一些理论知识，先理清几个概念。</p>
+<h2 id="Android系统架构"><a href="#Android系统架构" class="headerlink" title="Android系统架构"></a>Android系统架构</h2><p>Android系统本质上是Linux系统，但相对于Linux系统，主要在驱动、性能、内存管理、设备管理等一些部分做了比较多的改动，以更适用于移动设备。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/wp-file/2014/09/Android系统架构图.jpg" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/wp-file/2014/09/Android系统架构图.jpg" alt="Android系统架构图"></a></p>
+<p>从上图可以看到，Android系统架构为四层，分别是Linux内核、系统运行库、应用程序框架以及应用层，每一层的作用分别为：</p>
+<h3 id="Linux内核"><a href="#Linux内核" class="headerlink" title="Linux内核"></a>Linux内核</h3><p>提供了作为一个操作系统所应有的基础功能，包括各种硬件驱动、内存管理、电源管理等，该层作为硬件和软件之间的抽象层而存在。</p>
+<h3 id="系统运行库"><a href="#系统运行库" class="headerlink" title="系统运行库"></a>系统运行库</h3><p>系统运行库分为两部分，系统库和Android运行时，系统库提供了底层的Sqlite、SSL、OpenGL、Surface Manager等类库，从数据库到网络再到界面绘制，都在这一层进行。</p>
+<p>Android运行时，这一部分在Android4.4以前是Dalvik，也就是Google实现的Java虚拟机，所有的Android APP都运行在虚拟机里面，每个Dalvik虚拟机都是一个独立进程。简单的说就是每个Android APP编译之后会打包为APK文件，APK文件内部包含资源文件、代码文件（Dex）、AndroidManifest.xml以及别的配置文件，而Dalvik虚拟机则执行的是Dex文件。</p>
+<p>Android4.4以后，启用了Dalvik虚拟机，而改用Android Runtime，根据Google的说明，新的Android Runtime会有更好的效率，执行速度更快、耗电更少、占用内存更低。</p>
+<h3 id="应用程序框架"><a href="#应用程序框架" class="headerlink" title="应用程序框架"></a>应用程序框架</h3><p>这一层就是我们代码可以直接调用的了，通常所说的Android API都会在这一层提供，主要包括Activity Manager、Window Manager、Content Provider等，等我们对系统有了更多的学习之后，会慢慢用到其中的一部分内容。</p>
+<h3 id="应用层"><a href="#应用层" class="headerlink" title="应用层"></a>应用层</h3><p>这一层就是我们平时可以操作的APP了。Android本身既是个操作系统，又提供了基础的APP，如SMS、Phone、Browser等，当然了，更多的APP是需要我们程序员来实现的。</p>
+<p>&nbsp;</p>
+<p>了解了Android系统的基础架构后，再结合我们正在开发的天气预报APP来具体的学习一下Android APP项目的一个核心的文件——AndroidManifest.xml。</p>
+<h2 id="AndroidManifest"><a href="#AndroidManifest" class="headerlink" title="AndroidManifest"></a>AndroidManifest</h2><p>每一个Android项目都包含一个清单(Manifest)文件–AndroidManifest.xml，它存储在项目层次中的最底层，它是Android程序的全局配置文件，可以定义应用程序及其组件的结构和元数据。它包含了组成应用程序的每一个组件(活动、服务、内容提供器和广播接收器)的节点，并使用Intent过滤器和权限来确定这些组件之间以及这些组件和其他应用程序是如何交互的。它还提供了各种属性来详细地说明应用程序的元数据(如它的图标或者主题)的以及额外的可用来进行安全设置和单元测试顶级节点，我们先来看一下天气预报APP的这个文件：</p>
+<p><pre>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<br>&lt;manifest xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    package=”com.demo.weather”<br>    android:versionCode=”1”<br>    android:versionName=”1.0” &gt;</pre></p>
+<pre><code>&amp;lt;uses-sdk
+    android:minSdkVersion=&quot;14&quot;
+    android:targetSdkVersion=&quot;19&quot; /&amp;gt;
+
+&amp;lt;uses-permission android:name=&quot;android.permission.INTERNET&quot; /&amp;gt;
+
+&amp;lt;application
+    android:allowBackup=&quot;true&quot;
+    android:icon=&quot;@drawable/ic_launcher&quot;
+    android:label=&quot;@string/app_name&quot;
+    android:theme=&quot;@style/AppTheme&quot; &amp;gt;
+    &amp;lt;activity
+        android:name=&quot;com.demo.weather.MainActivity&quot;
+        android:label=&quot;@string/app_name&quot; &amp;gt;
+        &amp;lt;intent-filter&amp;gt;
+            &amp;lt;action android:name=&quot;android.intent.action.MAIN&quot; /&amp;gt;
+
+            &amp;lt;category android:name=&quot;android.intent.category.LAUNCHER&quot; /&amp;gt;
+        &amp;lt;/intent-filter&amp;gt;
+    &amp;lt;/activity&amp;gt;
+&amp;lt;/application&amp;gt;
+</code></pre><p>&lt;/manifest&gt;<br>我们逐次说明一下，</p>
+<h3 id="根节点"><a href="#根节点" class="headerlink" title="根节点"></a>根节点</h3><p>根节点定义了包名、版本号，其中package一定是唯一的，android:versionCode是供程序内部使用的版本号，android:versionName则会显示给用户。</p>
+<h3 id="uses-sdk"><a href="#uses-sdk" class="headerlink" title="uses-sdk"></a>uses-sdk</h3><p>这个节点指定Android应用中所需要使用的SDK的版本，android:minSdkVersion指定可运行的最低版本，android:maxSdkVersion指定可运行的最高版本，android:targetSdkVersion这个指定了目标版本。</p>
+<p>指定的版本均为数字，大家可以对照下表参考：</p>
+<p><table style="height: 556px;" width="1129"></table></p>
+<p><tbody></tbody></p>
+<p><tr></tr></p>
+<p><td> Android版本</td></p>
+<p><td> API Level</td><br></p>
+<p><tr></tr></p>
+<p><td> 5.0</td></p>
+<p><td> 21</td><br></p>
+<p><tr></tr></p>
+<p><td> 4.4w</td></p>
+<p><td> 20</td><br></p>
+<p><tr></tr></p>
+<p><td> 4.4</td></p>
+<p><td> 19</td><br></p>
+<p><tr></tr></p>
+<p><td> 4.3</td></p>
+<p><td> 18</td><br></p>
+<p><tr></tr></p>
+<p><td> 4.2.2</td></p>
+<p><td> 17</td><br></p>
+<p><tr></tr></p>
+<p><td> 4.1.2</td></p>
+<p><td> 16</td><br></p>
+<p><tr></tr></p>
+<p><td> 4.0.3</td></p>
+<p><td> 15</td><br></p>
+<p><tr></tr></p>
+<p><td> 4.0</td></p>
+<p><td> 14</td><br></p>
+<p><tr></tr></p>
+<p><td> 3.2</td></p>
+<p><td> 13</td><br></p>
+<p><tr></tr></p>
+<p><td> 3.1</td></p>
+<p><td> 12</td><br></p>
+<p><tr></tr></p>
+<p><td> 3.0</td></p>
+<p><td> 11</td><br></p>
+<p><tr></tr></p>
+<p><td> 2.3.3</td></p>
+<p><td> 10</td><br></p>
+<p><tr></tr></p>
+<p><td> 2.2</td></p>
+<p><td> 8</td><br></p>
+<p><tr></tr></p>
+<p><td> 2.1</td></p>
+<p><td> 7</td><br></p>
+<p><tr></tr></p>
+<p><td> 1.6</td></p>
+<p><td> 4</td><br></p>
+<p><tr></tr></p>
+<p><td> 1.5</td></p>
+<p><td> 3</td><br><br><br><br>&nbsp;</p>
+<p>关于android:targetSdkVersion这个目标版本很多初学者会疑惑，不明白到底有什么用。我个人的理解是比如你的APP指定了最低版本为8，目标版本为19，你开发过程中做出来的程序在Android4.4的设备上是没有任何问题的，其他的版本Android系统就会进行相应的兼容适配。比如有些API在低版本是不提供的，就需要我们在程序中进行版本判断，进行不同的代码处理。注意，这个时候你指定了最低版本是8，你最低可以使用8的API，在程序编译的时候，你用到了19的API是不会出现编译错误的。</p>
+<p>android:maxSdkVersion这个配置一般是不需要设置的，因为系统本身是向下兼容的。</p>
+<h3 id="uses-permission"><a href="#uses-permission" class="headerlink" title="uses-permission"></a>uses-permission</h3><p>这个节点指定了APP拥有的权限。Android系统对于权限管理是比较严格的，一个APP必须先声明权限才能使用相应的功能。例如需要访问网络，则需要在这里声明一个android.permission.INTERNET权限，相应的如GPS、Camera、VIBRATE等都需要先声明权限才可以使用。</p>
+<h3 id="application"><a href="#application" class="headerlink" title="application"></a>application</h3><p>这个节点指定了APP的组件、属性，如icon、label、name、theme等。</p>
+<h3 id="activity"><a href="#activity" class="headerlink" title="activity"></a>activity</h3><p>这个节点是application的子节点，定义了整个APP的所有页面。</p>
+<h3 id="其它"><a href="#其它" class="headerlink" title="其它"></a>其它</h3><p>除了以上我们用到的几个外，还有receiver、provider、service等，这些我们在以后慢慢熟悉。</p>
+<p>&nbsp;</p>
+<h2 id="一点点实践"><a href="#一点点实践" class="headerlink" title="一点点实践"></a>一点点实践</h2><p>了解了Android本身的架构后，我们稍微修改一下manifest文件。</p>
+<h3 id="应用图标"><a href="#应用图标" class="headerlink" title="应用图标"></a>应用图标</h3><p><a href="http://lzbwp.b0.upaiyun.com/2014/09/icon1.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/icon1.png" alt="icon"></a></p>
+<p>把上面的图标放到resdrawable-hdpi文件夹下，然后修改application节点下的android:icon=”@drawable/ic_launcher” 为  android:icon=”@drawable/icon”</p>
+<h3 id="应用名称"><a href="#应用名称" class="headerlink" title="应用名称"></a>应用名称</h3><p>打开resvaluesstrings.xml文件，修改&lt;string name=”app_name”&gt;Weather&lt;/string&gt;为&lt;string name=”app_name”&gt;天气预报&lt;/string&gt;</p>
+<p>&nbsp;</p>
+<p>打完收工，运行程序。</p>
+<p>可以发现应用左上角的图标和名称都变成了我们想要的。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-21-1654331.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-21-1654331-576x1024.png" alt="device-2015-01-21-165433"></a></p>
+<p>&nbsp;</p>
+<p>今天的内容比较少，主要是一些基础理论知识，也希望大家多多查阅资料，对Android本身的结构有更多更深入的了解。</p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1db8vk" target="_blank" rel="noopener">点击下载</a>。</p>
+<p>&nbsp;</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/21/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-94-e5-a4-a9/" data-id="cjb3m5kk9000jrq149rkq51r3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-9b-9b-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/20/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-9b-9b-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-20T09:13:48.000Z" itemprop="datePublished">2015-01-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/20/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-9b-9b-e5-a4-a9/">10天学安卓-第四天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>继续昨天的学习。</p>
+<p>昨天我们根据取得的天气数据新建了一个视图用来显示各项内容，那么今天我们就把数据显示出来吧！！！</p>
+<p>这里我们要把数据和视图联系起来，那么就用到了适配器-Adapter，Android给我们提供了很多Adapter，这里我们用到了BaseAdapter。</p>
+<p>&nbsp;</p>
+<h2 id="BaseAdapter（1）"><a href="#BaseAdapter（1）" class="headerlink" title="BaseAdapter（1）"></a>BaseAdapter（1）</h2><p>右键点击src/com.demo.weather，选择 New &gt; Class，按照下图填写：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212125401.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212125401.png" alt="QQ截图20140921212540"></a></p>
+<p>选择[Finish]后，我们就新建了一个BaseAdapter的子类，打开 WeatherAdapter.java这个文件，来解释一下这些代码，</p>
+<p><pre>public class WeatherAdapter extends BaseAdapter<br>{</pre></p>
+<pre><code>@Override
+public int getCount()
+{
+    // TODO Auto-generated method stub
+    return 0;
+}
+
+@Override
+public Object getItem( int arg0 )
+{
+    // TODO Auto-generated method stub
+    return null;
+}
+
+@Override
+public long getItemId( int arg0 )
+{
+    // TODO Auto-generated method stub
+    return 0;
+}
+
+@Override
+public View getView( int arg0, View arg1, ViewGroup arg2 )
+{
+    // TODO Auto-generated method stub
+    return null;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p><pre>public int getCount()</pre><br>这个方法返回ListView有几条数据，</p>
+<p>&nbsp;</p>
+<p><pre>public Object getItem( int arg0 )</pre><br>这个方法返回当前行的数据，</p>
+<p>&nbsp;</p>
+<p><pre>public long getItemId( int arg0 )</pre><br>这个方法返回当前行的id，</p>
+<p>&nbsp;</p>
+<p><pre>public View getView( int arg0, View arg1, ViewGroup arg2 )</pre><br>这个方法返回当前行的视图，</p>
+<p>那么究竟怎样把数据和视图关联起来了。</p>
+<p>&nbsp;</p>
+<p>首先，我们需要把取得的数据转换为代码可以方便操作的形式。把json数据转换为JavaBean，我们需要用到一个gson库，可以在这里下载。 <a href="http://code.google.com/p/google-gson/" target="_blank" rel="noopener">http://code.google.com/p/google-gson/</a></p>
+<p>把下载回来的gson-v2.jar放到libs文件夹，然后开始我们辛苦的工作吧，将是一大段代码。</p>
+<p>&nbsp;</p>
+<h2 id="Gson"><a href="#Gson" class="headerlink" title="Gson"></a>Gson</h2><p>新建一个package包，命名为com.demo.weather.bean，在这个包下面添加4个类，BaiduData、ResultsBean、IndexBean、WeatherDataBean，内容分别是：</p>
+<p><pre>public class BaiduData<br>{<br>    private int error;<br>    private String status;<br>    private String date;<br>    private List&lt;ResultsBean&gt; results;</pre></p>
+<pre><code>public int getError()
+{
+    return error;
+}
+public void setError( int error )
+{
+    this.error = error;
+}
+public String getStatus()
+{
+    return status;
+}
+public void setStatus( String status )
+{
+    this.status = status;
+}
+public String getDate()
+{
+    return date;
+}
+public void setDate( String date )
+{
+    this.date = date;
+}
+public List&amp;lt;ResultsBean&amp;gt; getResults()
+{
+    return results;
+}
+public void setResults( List&amp;lt;ResultsBean&amp;gt; results )
+{
+    this.results = results;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p><pre>public class ResultsBean<br>{<br>    private String currentCity;<br>    private String pm25;<br>    private List&lt;IndexBean&gt; index;<br>    private List&lt;WeatherDataBean&gt; weather_data;</pre></p>
+<pre><code>public String getCurrentCity()
+{
+    return currentCity;
+}
+public void setCurrentCity( String currentCity )
+{
+    this.currentCity = currentCity;
+}
+public String getPm25()
+{
+    return pm25;
+}
+public void setPm25( String pm25 )
+{
+    this.pm25 = pm25;
+}
+public List&amp;lt;IndexBean&amp;gt; getIndex()
+{
+    return index;
+}
+public void setIndex( List&amp;lt;IndexBean&amp;gt; index )
+{
+    this.index = index;
+}
+public List&amp;lt;WeatherDataBean&amp;gt; getWeather_data()
+{
+    return weather_data;
+}
+public void setWeather_data( List&amp;lt;WeatherDataBean&amp;gt; weather_data )
+{
+    this.weather_data = weather_data;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p><pre>public class IndexBean<br>{<br>    private String title;<br>    private String zs;<br>    private String tipt;<br>    private String des;</pre></p>
+<pre><code>public String getTitle()
+{
+    return title;
+}
+public void setTitle( String title )
+{
+    this.title = title;
+}
+public String getZs()
+{
+    return zs;
+}
+public void setZs( String zs )
+{
+    this.zs = zs;
+}
+public String getTipt()
+{
+    return tipt;
+}
+public void setTipt( String tipt )
+{
+    this.tipt = tipt;
+}
+public String getDes()
+{
+    return des;
+}
+public void setDes( String des )
+{
+    this.des = des;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p><pre>public class WeatherDataBean<br>{<br>    private String date;<br>    private String dayPictureUrl;<br>    private String nightPictureUrl;<br>    private String weather;<br>    private String wind;<br>    private String temperature;</pre></p>
+<pre><code>public String getDate()
+{
+    return date;
+}
+public void setDate( String date )
+{
+    this.date = date;
+}
+public String getDayPictureUrl()
+{
+    return dayPictureUrl;
+}
+public void setDayPictureUrl( String dayPictureUrl )
+{
+    this.dayPictureUrl = dayPictureUrl;
+}
+public String getNightPictureUrl()
+{
+    return nightPictureUrl;
+}
+public void setNightPictureUrl( String nightPictureUrl )
+{
+    this.nightPictureUrl = nightPictureUrl;
+}
+public String getWeather()
+{
+    return weather;
+}
+public void setWeather( String weather )
+{
+    this.weather = weather;
+}
+public String getWind()
+{
+    return wind;
+}
+public void setWind( String wind )
+{
+    this.wind = wind;
+}
+public String getTemperature()
+{
+    return temperature;
+}
+public void setTemperature( String temperature )
+{
+    this.temperature = temperature;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>这4个JavaBean承载了json格式的字符串转换后的对象。</p>
+<p>&nbsp;</p>
+<p>然后，打开MainActivity.java文件，这个文件还有一个小红叉，那是我们之前删掉了一个文本后没有及时修改代码造成的后果。不用客气，把它删掉。</p>
+<p>修改http.send方法为以下内容：</p>
+<p><pre>        http.send( HttpMethod.GET, “<a href="http://api.map.baidu.com/telematics/v3/weather" target="_blank" rel="noopener">http://api.map.baidu.com/telematics/v3/weather</a>“, params, new RequestCallBack&lt;String&gt;()<br>        {<br>            @Override<br>            public void onSuccess( ResponseInfo&lt;String&gt; responseInfo )<br>            {<br>                String weather = responseInfo.result;</pre></p>
+<pre><code>        Gson gson = new Gson();
+        BaiduData data = gson.fromJson( weather, BaiduData.class );
+
+        Log.v( &quot;onFailure&quot;, data.toString() );
+    }
+
+    @Override
+    public void onFailure( HttpException arg0, String arg1 )
+    {
+        Log.v( &quot;onFailure&quot;, arg1 );
+    }
+} );&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>到这里，先搞一段落，来解释一下这么多的代码。</p>
+<p>虽然代码很多，但是都很简单，BaiduData、ResultsBean、IndexBean、WeatherDataBean这4个类是根据gson的要求，结合百度天气API的返回数据做成的标准JavaBean。</p>
+<p><pre>                Gson gson = new Gson();<br>                BaiduData data = gson.fromJson( weather, BaiduData.class );</pre><br>这两行是核心功能，把Json格式的字符串转换为了我们做成的BaiduData这个JavaBean。</p>
+<p>&nbsp;</p>
+<h2 id="BaseAdapter（2）"><a href="#BaseAdapter（2）" class="headerlink" title="BaseAdapter（2）"></a>BaseAdapter（2）</h2><p>既然已经把数据格式化为JavaBean了，剩下的工作就简单多了。</p>
+<p>&nbsp;</p>
+<p>修改WeatherAdapter使得数据和视图关联，</p>
+<p><pre>public class WeatherAdapter extends BaseAdapter<br>{<br>    private List&lt;WeatherDataBean&gt; weathers;<br>    private LayoutInflater inflater;<br>    private BitmapUtils bitmapUtils;</pre></p>
+<pre><code>public WeatherAdapter( Context context, List&amp;lt;WeatherDataBean&amp;gt; weathers )
+{
+    this.weathers = weathers;
+    inflater = LayoutInflater.from( context );
+    bitmapUtils = new BitmapUtils( context );
+}
+
+@Override
+public int getCount()
+{
+    return weathers.size();
+}
+
+@Override
+public Object getItem( int position )
+{
+    return weathers.get( position );
+}
+
+@Override
+public long getItemId( int position )
+{
+    return position;
+}
+
+@Override
+public View getView( int position, View convertView, ViewGroup parent )
+{
+    convertView = inflater.inflate( R.layout.item_weather, null );
+
+    TextView txtDate = (TextView)convertView.findViewById( R.id.item_date );
+    TextView txtWeather = (TextView)convertView.findViewById( R.id.item_weather );
+    TextView txtWind = (TextView)convertView.findViewById( R.id.item_wind );
+    TextView txtTemperature = (TextView)convertView.findViewById( R.id.item_temperature );
+    ImageView imgTemperature = (ImageView)convertView.findViewById( R.id.item_picture );
+
+    WeatherDataBean bean = (WeatherDataBean)getItem( position );
+
+    txtDate.setText( bean.getDate() );
+    txtWeather.setText( bean.getWeather() );
+    txtWind.setText( bean.getWind() );
+    txtTemperature.setText( bean.getTemperature() );
+
+    bitmapUtils.display( imgTemperature, bean.getDayPictureUrl() );
+
+    return convertView;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>这里我们使用了LayoutInflater来载入昨天做成的item_weather界面，使用了BitmapUtils来加载网络图片。虽然是大段代码，但是道理很简单，把对应的数据显示到对应的项目。</p>
+<p>&nbsp;</p>
+<p>然后，在MainActivity.java里添加对ListView以及我们之前建好的WeatherAdapter类的引用，并且将ListView、WeatherAdapter、BaiduData三个对象关联起来，</p>
+<p><pre>public class MainActivity extends Activity<br>{<br>    @ViewInject( R.id.weather_list )<br>    private ListView lstWeather;</pre></p>
+<pre><code>private WeatherAdapter adapter;
+private BaiduData data;
+
+private List&amp;lt;WeatherDataBean&amp;gt; datas;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_main );
+
+    ViewUtils.inject( this );
+
+    HttpUtils http = new HttpUtils();
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getApplicationContext(), datas );
+    lstWeather.setAdapter( adapter );
+
+    RequestParams params = new RequestParams();
+    params.addQueryStringParameter( &quot;location&quot;, &quot;北京&quot; );
+    params.addQueryStringParameter( &quot;output&quot;, &quot;json&quot; );
+    params.addQueryStringParameter( &quot;ak&quot;, &quot;YknGmxIoPugT7YrNrG955YLS&quot; );
+
+    http.send( HttpMethod.GET, &quot;http://api.map.baidu.com/telematics/v3/weather&quot;, params, new RequestCallBack&amp;lt;String&amp;gt;()
+    {
+        @Override
+        public void onSuccess( ResponseInfo&amp;lt;String&amp;gt; responseInfo )
+        {
+            String weather = responseInfo.result;
+
+            Gson gson = new Gson();
+            data = gson.fromJson( weather, BaiduData.class );
+
+            datas.clear();
+            datas.addAll( data.getResults().get( 0 ).getWeather_data() );
+            adapter.notifyDataSetChanged();
+
+            Log.v( &quot;onSuccess&quot;, data.toString() );
+        }
+
+        @Override
+        public void onFailure( HttpException arg0, String arg1 )
+        {
+            Log.v( &quot;onFailure&quot;, arg1 );
+        }
+    } );
+}
+</code></pre><p>}<br>打完收工。</p>
+<p>&nbsp;</p>
+<p>最终的效果如下：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-20-1711341.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-20-1711341-576x1024.png" alt="device-2015-01-20-171134"></a></p>
+<p>&nbsp;</p>
+<p>同志们，很有成就感了吧！！！</p>
+<p>&nbsp;</p>
+<p>不要得意，这只是把数据简单的显示出来而已，并且只能是帝都北京的数据，如果你不在北京，这根本对你一点用处都没有啊。</p>
+<p>嗯嗯，今天就到这儿吧，已经足够多了，好学的你肯定已经在查找更多关于Adapter、ListView的知识了，这里我就不做介绍了，建议大家经常百度。</p>
+<p>&nbsp;</p>
+<p>休闲一下，说点废话。</p>
+<p>本人从事IT行业10余年，从最初级的菜鸟程序员开始，一步一步成长，见过形形色色的程序员，从个人的角度把程序员分成这么几个级别：</p>
+<p>1. 无脑</p>
+<p>这个指的是一遇到问题就问别人的同志，自己也不思考，也不求上进，混一天算一天。这种类型是极少数的，我也只是听说过，都是传说中的人物。</p>
+<p>2. 菜鸟</p>
+<p>这种类型的程序员非常多，通常是接触技术时间不长的朋友。这部分通常是没有网络就不能工作了，经常在论坛里查找资料，下载别人代码拿来使用，键盘上的Ctrl、C、V键都磨光了。</p>
+<p>3. 小牛</p>
+<p>这种类型多见于技术负责人、技术总监这样的职位，要想做到小牛这一步，需要对技术有比较深的了解，能够从无到有进行设计的。在各种开源社区，这部分人通常会比较活跃，菜鸟们大都使用小牛们的劳动成果。</p>
+<p>4. 大牛</p>
+<p>这种类型的人已经非常少了，我只见过那么几位，都是各大公司CTO之类的。说说其中一位，他从无到有设计了公司的云计算方案，从硬件的基础设施到软件层面，再到用户层面，这位大牛都有深入的掌握。</p>
+<p>5. 传说</p>
+<p>鄙人只能在各种新闻、书籍中才能见到了。个人认为这部分人的技术已经不是我们可以评判的了，他们的思想、影响力根本不是我等可以企及的。</p>
+<p>&nbsp;</p>
+<p>各位亲，你是哪个级别的？</p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1B7zuI" target="_blank" rel="noopener">点击下载</a>。</p>
+<p>&nbsp;</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/20/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-9b-9b-e5-a4-a9/" data-id="cjb3m5kkr000rrq14nvb5lgzg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-89-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/19/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-89-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-19T11:32:09.000Z" itemprop="datePublished">2015-01-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/19/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-89-e5-a4-a9/">10天学安卓-第三天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>经过第二天的学习，我们正确的调用了百度天气API，将天气信息显示到了界面上，做到这一步，我们的工作就算是完成1%了，剩下99%的工作就需要不断的润色这个未成形的APP了。</p>
+<p>最首要的就是，我们要把那么一大堆字符转换为普通用户可以轻松理解的界面，那么我们来学习一下Android里面的界面布局。</p>
+<p>打开res/layout/activity_main.xml文件，切换到Layouts选项卡，可以看到里面有许多项目，GridLayout、LinearLayout、RelativeLayout等，这些都代表什么类型的布局呢？</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211628221.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211628221.png" alt="QQ截图20140921162822"></a></p>
+<h2 id="理论知识"><a href="#理论知识" class="headerlink" title="理论知识"></a>理论知识</h2><p>总体来说，Android界面布局分为5中，分别为LinearLayout（线性布局）、RelativeLayout（相对布局）、FrameLayout（框架布局）、TableLayout（表格布局）、GridLayout（网格布局），下面逐一简单介绍一下。</p>
+<h3 id="LinearLayout（线性布局）"><a href="#LinearLayout（线性布局）" class="headerlink" title="LinearLayout（线性布局）"></a>LinearLayout（线性布局）</h3><p>LinearLayout使得布局内部的元素以水平（horizontal）或者垂直（vertical）的方式排成一行，</p>
+<p><pre>&lt;LinearLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    xmlns:tools=”<a href="http://schemas.android.com/tools" target="_blank" rel="noopener">http://schemas.android.com/tools</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”match_parent”<br>    android:orientation=”horizontal” &gt;</pre></p>
+<pre><code>&amp;lt;TextView
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:text=&quot;第一个文本&quot; /&amp;gt;
+
+&amp;lt;TextView
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:text=&quot;第二个文本&quot; /&amp;gt;
+</code></pre><p>&lt;/LinearLayout&gt;<br>&nbsp;</p>
+<p>其中，android:orientation指定布局内部元素的排列方式，如果没有此项设置，默认为水平排列。</p>
+<p>设置好排列方式之后的效果分别如下：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211648241.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211648241.png" alt="QQ截图20140921164824"></a><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211650361.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211650361.png" alt="QQ截图20140921165036"></a></p>
+<p>&nbsp;</p>
+<h3 id="RelativeLayout（相对布局）"><a href="#RelativeLayout（相对布局）" class="headerlink" title="RelativeLayout（相对布局）"></a>RelativeLayout（相对布局）</h3><p>RelativeLayout使得布局内部的元素以相对于容器、其他元素的位置排列，</p>
+<p><pre>&lt;RelativeLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    xmlns:tools=”<a href="http://schemas.android.com/tools" target="_blank" rel="noopener">http://schemas.android.com/tools</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”match_parent” &gt;</pre></p>
+<pre><code>&amp;lt;TextView
+    android:id=&quot;@+id/text1&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_alignParentLeft=&quot;true&quot;
+    android:layout_alignParentTop=&quot;true&quot;
+    android:text=&quot;第一个文本&quot; /&amp;gt;
+
+&amp;lt;TextView
+    android:id=&quot;@+id/text2&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_below=&quot;@id/text1&quot;
+    android:layout_toRightOf=&quot;@id/text1&quot;
+    android:text=&quot;第二个文本&quot; /&amp;gt;
+</code></pre><p>&lt;/RelativeLayout&gt;<br>&nbsp;</p>
+<p>这个布局定义了第一个文本位于布局的左上角，第二个文本在第一个文本的右下。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图2014092116583711.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图2014092116583711.png" alt="QQ截图20140921165837"></a></p>
+<h3 id="FrameLayout（框架布局）"><a href="#FrameLayout（框架布局）" class="headerlink" title="FrameLayout（框架布局）"></a>FrameLayout（框架布局）</h3><p>FrameLayout使得布局内部的元素按照层次堆叠在左上角，后添加的元素会覆盖前面的元素。</p>
+<p><pre>&lt;FrameLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    xmlns:tools=”<a href="http://schemas.android.com/tools" target="_blank" rel="noopener">http://schemas.android.com/tools</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”match_parent” &gt;</pre></p>
+<pre><code>&amp;lt;TextView
+    android:id=&quot;@+id/text1&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:textSize=&quot;60sp&quot;
+    android:background=&quot;#00ff00&quot;
+    android:text=&quot;第一个文本&quot; /&amp;gt;
+
+&amp;lt;TextView
+    android:id=&quot;@+id/text2&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:textSize=&quot;40sp&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:background=&quot;#ff00ff&quot;
+    android:text=&quot;第二个文本&quot; /&amp;gt;
+</code></pre><p>&lt;/FrameLayout&gt;<br>&nbsp;</p>
+<p>这样第二个文本会覆盖在第一个文本的上面，</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211705061.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211705061.png" alt="QQ截图20140921170506"></a></p>
+<h3 id="TableLayout（表格布局）"><a href="#TableLayout（表格布局）" class="headerlink" title="TableLayout（表格布局）"></a>TableLayout（表格布局）</h3><p>TableLayout使得布局内部的元素以行和列的形式排列，每一行都是一个TableRow或者一个普通的View，</p>
+<p><pre>&lt;TableLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    xmlns:tools=”<a href="http://schemas.android.com/tools" target="_blank" rel="noopener">http://schemas.android.com/tools</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”match_parent”<br>    android:stretchColumns=”1”&gt;</pre></p>
+<pre><code>&amp;lt;TableRow&amp;gt;
+    &amp;lt;TextView
+        android:layout_column=&quot;1&quot;
+        android:text=&quot;Open...&quot;
+        android:padding=&quot;3dip&quot; /&amp;gt;
+    &amp;lt;TextView
+        android:text=&quot;Ctrl-O&quot;
+        android:gravity=&quot;right&quot;
+        android:padding=&quot;3dip&quot; /&amp;gt;
+&amp;lt;/TableRow&amp;gt;
+
+&amp;lt;TableRow&amp;gt;
+    &amp;lt;TextView
+        android:layout_column=&quot;1&quot;
+        android:text=&quot;Save...&quot;
+        android:padding=&quot;3dip&quot; /&amp;gt;
+    &amp;lt;TextView
+        android:text=&quot;Ctrl-S&quot;
+        android:gravity=&quot;right&quot;
+        android:padding=&quot;3dip&quot; /&amp;gt;
+&amp;lt;/TableRow&amp;gt;
+
+&amp;lt;View
+    android:layout_height=&quot;2dip&quot;
+    android:background=&quot;#FF909090&quot; /&amp;gt;
+
+&amp;lt;TableRow&amp;gt;
+    &amp;lt;TextView
+        android:layout_column=&quot;1&quot;
+        android:text=&quot;Quit&quot;
+        android:padding=&quot;3dip&quot; /&amp;gt;
+&amp;lt;/TableRow&amp;gt;
+</code></pre><p>&lt;/TableLayout&gt;<br>&nbsp;</p>
+<p>这个布局有四行，1、2、4行是TableRow，各有数目不同的文本，第3行是一个普通的View，</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211721161.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211721161.png" alt="QQ截图20140921172116"></a></p>
+<h3 id="GridLayout（网格布局）"><a href="#GridLayout（网格布局）" class="headerlink" title="GridLayout（网格布局）"></a>GridLayout（网格布局）</h3><p>GridLayout使得布局内部的元素以行、列、单元格的形式排列，</p>
+<p><pre>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<br>&lt;GridLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    android:layout_width=”wrap_content”<br>    android:layout_height=”wrap_content”<br>    android:orientation=”horizontal”<br>    android:rowCount=”5”<br>    android:columnCount=”4” &gt;<br>　　&lt;Button<br>        android:text=”1”/&gt;<br>　　&lt;Button<br>        android:text=”2”/&gt;<br>　　&lt;Button<br>        android:text=”3”/&gt;<br>　　&lt;Button<br>        android:text=”/“/&gt;<br>　　&lt;Button<br>        android:text=”4”/&gt;<br>　　&lt;Button<br>        android:text=”5”/&gt;<br>　　&lt;Button<br>        android:text=”6”/&gt;<br>　　&lt;Button<br>        android:text=”×”/&gt;<br>　　&lt;Button<br>        android:text=”7”/&gt;<br>　　&lt;Button<br>        android:text=”8”/&gt;<br>　　&lt;Button<br>        android:text=”9”/&gt;<br>   &lt;Button<br>        android:text=”-“/&gt;<br>   &lt;Button<br>        android:layout_columnSpan=”2”<br>        android:layout_gravity=”fill”<br>        android:text=”0”/&gt;<br>　　 &lt;Button<br>        android:text=”.”/&gt;<br>   &lt;Button<br>        android:layout_rowSpan=”2”<br>        android:layout_gravity=”fill”<br>        android:text=”+”/&gt;<br>   &lt;Button<br>        android:layout_columnSpan=”3”<br>        android:layout_gravity=”fill”<br>        android:text=”=”/&gt;<br>&lt;/GridLayout&gt;</pre><br>&nbsp;</p>
+<p>这里定义了一个简单的计算器布局，</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图2014092117290411.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图2014092117290411.png" alt="QQ截图20140921172904"></a></p>
+<p>&nbsp;</p>
+<h3 id="其他布局"><a href="#其他布局" class="headerlink" title="其他布局"></a>其他布局</h3><p>除了以上5种主要的布局，还有一些第三方的布局，可以让你方便的实现一些比较酷炫的效果，例如DrawerLayout（左滑弹出菜单）、SwipeBackLayout（左滑返回）等，这些知识需要有一定的开发经验之后慢慢摸索。</p>
+<h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>以上是简单介绍了一下各种布局的使用方式，具体各个布局还有很多的属性，活用这些属性才会制作出实用的界面，这些属性要靠大家在不断的学习中慢慢掌握。</p>
+<p>在所有的布局里面，我这里推荐大家使用RelativeLayout。如果使用其他布局，可能需要嵌套比较多的层级才可以实现的界面，通常使用RelativeLayout会比较方便，而如果层级较多，对于界面的展示会需要耗费比较多的内存，所有我这里推荐使用RelativeLayout。</p>
+<p>&nbsp;</p>
+<p>好了，大家辛苦了，先休息一下吧，下面我们就要使用RelativeLayout来做我们的第一个界面了。</p>
+<p>&nbsp;</p>
+<h2 id="天气界面"><a href="#天气界面" class="headerlink" title="天气界面"></a>天气界面</h2><p>让我们回到我们的项目，打开res/layout/activity_main.xml文件，删掉TextView，添加一个新的控件-ListView。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211850301.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409211850301.png" alt="QQ截图20140921185030"></a></p>
+<p>&nbsp;</p>
+<p>然后切换到代码模式，确认一下ListView的属性，</p>
+<p><pre>    &lt;ListView<br>        android:id=”@+id/weather_list”<br>        android:layout_width=”match_parent”<br>        android:layout_height=”wrap_content”<br>        android:layout_centerHorizontal=”true”<br>        android:layout_centerVertical=”true” &gt;<br>    &lt;/ListView&gt;</pre><br>&nbsp;</p>
+<p>这里的属性说明的是这个ListView宽度撑满界面，高度自适应，水平居中并且垂直居中，它的id是weather_list，大家还记得id的作用吧，它使得这个控件在代码中可以被找到并使用。</p>
+<p>话说这个ListView是干什么用的？</p>
+<p>当然是显示天气了。还以北京的天气为例，<a href="http://api.map.baidu.com/telematics/v3/weather?location=%E5%8C%97%E4%BA%AC&amp;output=json&amp;ak=YknGmxIoPugT7YrNrG955YLS，" target="_blank" rel="noopener">http://api.map.baidu.com/telematics/v3/weather?location=%E5%8C%97%E4%BA%AC&amp;output=json&amp;ak=YknGmxIoPugT7YrNrG955YLS，</a> 这个链接返回的数据是：</p>
+<p><pre>{<br>error: 0,<br>status: “success”,<br>date: “2015-01-19”,<br>results: [<br>{<br>currentCity: “北京”,<br>pm25: “80”,<br>index: [<br>{<br>title: “穿衣”,<br>zs: “冷”,<br>tipt: “穿衣指数”,<br>des: “天气冷，建议着棉服、羽绒服、皮夹克加羊毛衫等冬季服装。年老体弱者宜着厚棉衣、冬大衣或厚羽绒服。”<br>},<br>{<br>title: “洗车”,<br>zs: “较适宜”,<br>tipt: “洗车指数”,<br>des: “较适宜洗车，未来一天无雨，风力较小，擦洗一新的汽车至少能保持一天。”<br>},<br>{<br>title: “旅游”,<br>zs: “适宜”,<br>tipt: “旅游指数”,<br>des: “天气较好，同时又有微风伴您一路同行。虽会让人感觉有点凉，但仍适宜旅游，可不要错过机会呦！”<br>},<br>{<br>title: “感冒”,<br>zs: “少发”,<br>tipt: “感冒指数”,<br>des: “各项气象条件适宜，无明显降温过程，发生感冒机率较低。”<br>},<br>{<br>title: “运动”,<br>zs: “较适宜”,<br>tipt: “运动指数”,<br>des: “天气较好，但考虑气温较低，推荐您进行室内运动，若户外适当增减衣物并注意防晒。”<br>},<br>{<br>title: “紫外线强度”,<br>zs: “最弱”,<br>tipt: “紫外线强度指数”,<br>des: “属弱紫外线辐射天气，无需特别防护。若长期在户外，建议涂擦SPF在8-12之间的防晒护肤品。”<br>}<br>],<br>weather_data: [<br>{<br>date: “周一 01月19日 (实时：3℃)”,<br>dayPictureUrl: “<a href="http://api.map.baidu.com/images/weather/day/qing.png" target="_blank" rel="noopener">http://api.map.baidu.com/images/weather/day/qing.png</a>“,<br>nightPictureUrl: “<a href="http://api.map.baidu.com/images/weather/night/qing.png" target="_blank" rel="noopener">http://api.map.baidu.com/images/weather/night/qing.png</a>“,<br>weather: “晴”,<br>wind: “微风”,<br>temperature: “-5℃”<br>},<br>{<br>date: “周二”,<br>dayPictureUrl: “<a href="http://api.map.baidu.com/images/weather/day/duoyun.png" target="_blank" rel="noopener">http://api.map.baidu.com/images/weather/day/duoyun.png</a>“,<br>nightPictureUrl: “<a href="http://api.map.baidu.com/images/weather/night/duoyun.png" target="_blank" rel="noopener">http://api.map.baidu.com/images/weather/night/duoyun.png</a>“,<br>weather: “多云”,<br>wind: “微风”,<br>temperature: “5 ~ -2℃”<br>},<br>{<br>date: “周三”,<br>dayPictureUrl: “<a href="http://api.map.baidu.com/images/weather/day/qing.png" target="_blank" rel="noopener">http://api.map.baidu.com/images/weather/day/qing.png</a>“,<br>nightPictureUrl: “<a href="http://api.map.baidu.com/images/weather/night/qing.png" target="_blank" rel="noopener">http://api.map.baidu.com/images/weather/night/qing.png</a>“,<br>weather: “晴”,<br>wind: “北风3-4级”,<br>temperature: “5 ~ -6℃”<br>},<br>{<br>date: “周四”,<br>dayPictureUrl: “<a href="http://api.map.baidu.com/images/weather/day/qing.png" target="_blank" rel="noopener">http://api.map.baidu.com/images/weather/day/qing.png</a>“,<br>nightPictureUrl: “<a href="http://api.map.baidu.com/images/weather/night/qing.png" target="_blank" rel="noopener">http://api.map.baidu.com/images/weather/night/qing.png</a>“,<br>weather: “晴”,<br>wind: “微风”,<br>temperature: “6 ~ -5℃”<br>}<br>]<br>}<br>]<br>}</pre><br>这是json格式的数据，其中[weather_data]这个节点就是当前以及接下来4天的天气，一共是5条数据，这样标准的列表数据当然是使用ListView控件来显示了。</p>
+<p>那么，如何进行呢？</p>
+<p>赵本山老师教过我们，总共分三步，</p>
+<p>1. 取得数据</p>
+<p>2. 做成界面</p>
+<p>3. 把数据显示到界面上</p>
+<p>那么，数据已经取得了，下面就进行第二步，做成界面。</p>
+<h2 id="ListView"><a href="#ListView" class="headerlink" title="ListView"></a>ListView</h2><p>如何使用ListView？在Android的设计中，这里就是一个标准的代码分离的方案，ListView作为一个容器使用，而其中的每一项单独使用另外的View来实现，那么，具体来说我们需要做些什么？</p>
+<p>不要着急，慢慢来。</p>
+<p>邮件点击res/layout目录，选择New &gt; Android XML File，在弹出框中按照下图所示进行填写，</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212034131.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212034131.png" alt="QQ截图20140921203413"></a></p>
+<p>然后点击Finish，就切换到了我们新建的这个视图了，这个视图将定义ListView中每一项都显示什么内容。根据百度的数据，我们的这个天气预报APP可以显示日期、天气、风、温度以及两个分别代表白天晚上的天气图片，那么我们就可以开始行动了，先添加4个TextView和1个ImageView，位置可以随便放置。需要注意的是在添加ImageView的时候，会弹出选择图片资源的对话框，我们就选中默认的ic_launcher就好了。</p>
+<p>这些做好之后，看看我们的界面是什么样子。不管怎么说，我的是这样子的：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212045371.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212045371.png" alt="QQ截图20140921204537"></a></p>
+<p>很那看是不是，还是那句话，不着急，我们来调整一下。</p>
+<p>选中左上角的TextView，然后注意图中红框部分，我们将在这里设置它的属性，包括宽度、位置、字体等，大家练习一下吧，试着设置一下各个项目，看看都会有什么反应。</p>
+<p>&nbsp;</p>
+<p>嗯，先来看看我调整后的界面吧。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212058411.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212058411.png" alt="QQ截图20140921205841"></a></p>
+<p>说不上好看，也算是比较标准的列表项目了。分享一下我的代码吧：</p>
+<p><pre>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;<br>&lt;RelativeLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”wrap_content”<br>    android:padding=”10dp” &gt;</pre></p>
+<pre><code>&amp;lt;TextView
+    android:id=&quot;@+id/item_date&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:text=&quot;日期&quot;
+    android:textColor=&quot;#000000&quot;
+    android:textSize=&quot;18sp&quot; /&amp;gt;
+
+&amp;lt;TextView
+    android:id=&quot;@+id/item_weather&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_alignParentLeft=&quot;true&quot;
+    android:layout_below=&quot;@+id/item_date&quot;
+    android:layout_marginTop=&quot;5dp&quot;
+    android:text=&quot;天气&quot;
+    android:textColor=&quot;#000000&quot;
+    android:textSize=&quot;14sp&quot; /&amp;gt;
+
+&amp;lt;TextView
+    android:id=&quot;@+id/item_wind&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_below=&quot;@+id/item_date&quot;
+    android:layout_marginLeft=&quot;5dp&quot;
+    android:layout_marginTop=&quot;5dp&quot;
+    android:layout_toRightOf=&quot;@id/item_weather&quot;
+    android:text=&quot;风&quot;
+    android:textColor=&quot;#000000&quot;
+    android:textSize=&quot;14sp&quot; /&amp;gt;
+
+&amp;lt;TextView
+    android:id=&quot;@+id/item_temperature&quot;
+    android:layout_width=&quot;wrap_content&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_below=&quot;@+id/item_date&quot;
+    android:layout_marginLeft=&quot;5dp&quot;
+    android:layout_marginTop=&quot;5dp&quot;
+    android:layout_toRightOf=&quot;@id/item_wind&quot;
+    android:text=&quot;温度&quot;
+    android:textColor=&quot;#000000&quot;
+    android:textSize=&quot;14sp&quot; /&amp;gt;
+
+&amp;lt;ImageView
+    android:id=&quot;@+id/item_picture&quot;
+    android:layout_width=&quot;40dp&quot;
+    android:layout_height=&quot;40dp&quot;
+    android:layout_alignParentRight=&quot;true&quot;
+    android:layout_centerVertical=&quot;true&quot;
+    android:src=&quot;@drawable/ic_launcher&quot; /&amp;gt;
+</code></pre><p>&lt;/RelativeLayout&gt;<br>&nbsp;</p>
+<p>你可以直接使用我的设置，这样很方便。   ^_^</p>
+<p>嗯，到这里，三步里面的第二步也完成了，好辛苦啊，休息休息。</p>
+<p>通过今天的折腾，我们的界面又变成不显示任何内容的了，不要担心，我们明天继续。</p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1bnhJkSZ" target="_blank" rel="noopener">点击下载</a>。</p>
+<p>&nbsp;</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/19/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-89-e5-a4-a9/" data-id="cjb3m5kk2000erq14b250hrnx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-8c-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/18/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-8c-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-18T05:18:18.000Z" itemprop="datePublished">2015-01-18</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/18/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-8c-e5-a4-a9/">10天学安卓-第二天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>继续我们的学习。</p>
+<p>相信我，第一天的工作是最为重要的，通过这些工作，我们把开发安卓所必须的环境、基础条件都配置好了，相信肯定遇到了很多问题，不过，根据我的经验，您会很快解决这些问题的。在第一天的最后，我们终于运行了第一个应用-&gt;“Hello, world”。</p>
+<h2 id="理论知识"><a href="#理论知识" class="headerlink" title="理论知识"></a>理论知识</h2><p>下面我们学习一些理论知识，了解一下安卓系统的架构、组件，有了一些基础知识，才不会感觉迷惑。</p>
+<p>先看下整个项目的目录，每个目录都有特定的作用，分别如下：</p>
+<ul>
+<li>src目录，存放源代码文件。</li>
+<li>gen目录，由ADT插件自动生成的R.java文件。</li>
+<li>assets目录，存放资源文件目录。此目录的文件不会在R.java中生成资源ID，不会被编译为二进制，必须使用/assets开始的相对路径按照文件的方式进行访问，可以使用AssetManager 结合其他类进行访问。</li>
+<li>res目录，存放资源文件目录,这里面的每个文件或值都会在R.java中生成一个ID(变量)；res/drawable-xxxx是存放图片的目录；res/layout是放置布局文件（xml文件）的目录，每个Activity对应一个XML文件；res/values是放置存储值的文件（xml）的目录；res/values/strings.xml 存放键值对,一般用在程序的多语言版本切换（多个文件，键一样，值不同）；res/values/dimens.xml 尺寸；res/values/styles.xml 样式</li>
+<li>AndroidManifest.xml是整个应用程序的配置文件,储存一些 包名，版本号，程序图标，程序标签等。</li>
+<li>project.properties，由ADT插件自动生成，不能修改（修改将被删除）。<br>&nbsp;</li>
+</ul>
+<p>对于项目结构有了初步的了解之后，我们就可以有目的的开始我们的工作了。接下来的10天，我们将一步一步实现一个完整的天气预报应用，请注意：是完整的，而不只是Demo。</p>
+<p>我们最终的页面效果如下所示：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-18-1308301.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-18-1308301-576x1024.png" alt="device-2015-01-18-130830"></a></p>
+<p>&nbsp;</p>
+<h2 id="任务分解"><a href="#任务分解" class="headerlink" title="任务分解"></a>任务分解</h2><p>不要被吓到，不管现在看起来多么复杂，这终究会从我们的手中实现。为了实现这样的一个应用，我们需要分为一个一个小项目，这样看起来就不是那么庞然大物，我们心里底气也足了。</p>
+<p>如果您曾经做过项目管理相关工作的话，那么对于WBS（工作分解结构）一定很熟悉了，我们的应用规模不算大，可以分解为如下小项目：</p>
+<ol>
+<li><p>学习调用HTTP接口，将返回的JSON数据封装为Java类，并且最终将天气数据展示到页面上</p>
+</li>
+<li><p>学习使用百度地图SDK定位当前位置，并将当前位置信息保存为本地数据</p>
+</li>
+</ol>
+<p>3. 如果没有网络，我们就没办法查看天气了吗？这当然是有问题的，我们要把天气数据保存到本地数据库，并且默认显示本地数据</p>
+<p>4. 美化UI</p>
+<p>在这短短的10天内，我们要把这些工作都做完，不要犯怵，Follow me！！！</p>
+<h2 id="千里之行始于足下"><a href="#千里之行始于足下" class="headerlink" title="千里之行始于足下"></a>千里之行始于足下</h2><p>新建一个工程，Application Name填Weather，Package Name填com.demo.weather，SDK各个项目的选择如下：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409102250411.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409102250411.png" alt="QQ截图20140910225041"></a></p>
+<p>&nbsp;</p>
+<p>选择好之后，就一路点击【Next】直到我们的项目建好为止，建好的项目应该是这样子的：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409102253491.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409102253491.png" alt="QQ截图20140910225349"></a></p>
+<p>&nbsp;</p>
+<p>打开res/layout/activity_main.xml，在Eclipse中应该是这个样子的：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409102257091.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409102257091-1024x504.png" alt="QQ截图20140910225709"></a></p>
+<p>&nbsp;</p>
+<p>注意视图的下方有两个Tab选项卡，【Graphical  Layout】是图形视图，【activity_main.xml】是代码视图，我们切换为代码视图，在TextView处添加一行代码，</p>
+<p><pre>android:id=”@+id/weather”</pre><br>这样，我们就可以在代码中使用findViewById方法找到这个TextView控件，不过，为了代码的美观，我们将使用另外的办法。</p>
+<h2 id="使用第三方组件"><a href="#使用第三方组件" class="headerlink" title="使用第三方组件"></a>使用第三方组件</h2><p>大家都知道，Android是开源的，所以就有很多具有奉献精神的牛人把自己的经验、收获分享给大家，这就是很多很多的开源代码、组件、框架。</p>
+<p>在这里我们引入第一个开源组件——xUtils，可以在<a href="https://github.com/wyouflf/xUtils这里查看它的详细说明。" target="_blank" rel="noopener">https://github.com/wyouflf/xUtils这里查看它的详细说明。</a></p>
+<p>首先，下载jar包，并且导入到我们的工程里面，说起来麻烦，做起来那是相当简单。下载地址：<a href="https://github.com/wyouflf/xUtils/blob/master/xUtils-2.6.11.jar，然后将下载下来的文件放到工程项目的libs文件夹就可以了。" target="_blank" rel="noopener">https://github.com/wyouflf/xUtils/blob/master/xUtils-2.6.11.jar，然后将下载下来的文件放到工程项目的libs文件夹就可以了。</a></p>
+<p>如何在项目中使用呢？</p>
+<p>如果大家懒得看xUtils的文档，那就跟着我一步一步做就好了。</p>
+<p>打开src目录下，com.demo.weather的MainActivity文件，添加一个变量，可以命名为txtWeather。<br><pre>@ViewInject( R.id.weather )<br>private TextView txtWeather;</pre><br>这样，我们就可以在代码中使用TextView这个控件了。</p>
+<p>接下来，我们看一下onCreate方法，这个方法现在只有两行代码，</p>
+<p><pre>super.onCreate( savedInstanceState );<br>setContentView( R.layout.activity_main );</pre><br>&nbsp;</p>
+<p>其中第一行，调用父类的onCreate方法进行界面的绘制，第二行就是加载界面，这两行代码在所以的Activity的子类都是需要调用的，除非你不在界面显示任何内容。</p>
+<p>onCreate方法有一个参数savedInstanceState，关于这个我们稍后细说，先说第二行代码</p>
+<p><pre>setContentView( R.layout.activity_main );</pre><br>R.layout.activity_main指向了res/layout/activity_main.xml这个文件，这样界面就知道应该加载这个界面文件了。可能大家都Activity是什么还有些疑惑，不要紧，这些理论知识我们明天再说，今天我们的任务就是把天气数据显示到界面上。当然，我们自己是不知道天气预报数据的，不过万能的互联网什么都有，百度就提供了这方面的数据。</p>
+<p>官方文档：<a href="http://developer.baidu.com/map/index.php?title=car/api/weather，" target="_blank" rel="noopener">http://developer.baidu.com/map/index.php?title=car/api/weather，</a></p>
+<p>一个例子：<a href="http://api.map.baidu.com/telematics/v3/weather?location=%E5%8C%97%E4%BA%AC&amp;output=json&amp;ak=YknGmxIoPugT7YrNrG955YLS" target="_blank" rel="noopener">http://api.map.baidu.com/telematics/v3/weather?location=%E5%8C%97%E4%BA%AC&amp;output=json&amp;ak=YknGmxIoPugT7YrNrG955YLS</a></p>
+<p>好了，万事俱备，只欠代码。如何把天气显示到界面上，总共分三步：</p>
+<p>1. 在界面上放置一个TextView用于显示文字，这个我们已经完成了。</p>
+<p>2. 调用百度地图的API，获取天气数据，这个我们接下来就要做。</p>
+<p>3. 把数据显示到界面上。</p>
+<p>松了一口气，喝杯茶，休息十分钟吧，接下来会有大段的代码等着你来完成。</p>
+<p>&nbsp;</p>
+<p>休息好了吧，我们马上开工。</p>
+<p>在onCreate方法的setContentView下面添加以下代码，</p>
+<p><pre>        ViewUtils.inject( this );</pre></p>
+<pre><code>HttpUtils http = new HttpUtils();
+
+RequestParams params = new RequestParams();
+params.addQueryStringParameter( &quot;location&quot;, &quot;北京&quot; );
+params.addQueryStringParameter( &quot;output&quot;, &quot;json&quot; );
+params.addQueryStringParameter( &quot;ak&quot;, &quot;YknGmxIoPugT7YrNrG955YLS&quot; );
+
+http.send( HttpMethod.GET, &quot;http://api.map.baidu.com/telematics/v3/weather&quot;, params, new RequestCallBack&amp;lt;String&amp;gt;()
+{
+    @Override
+    public void onSuccess( ResponseInfo&amp;lt;String&amp;gt; responseInfo )
+    {
+        String weather = responseInfo.result;
+        txtWeather.setText( weather );
+    }
+
+    @Override
+    public void onFailure( HttpException arg0, String arg1 )
+    {
+        String weather = arg1;
+        txtWeather.setText( weather );
+    }
+} );&lt;/pre&gt;
+</code></pre><p>并且删除onCreateOptionsMenu方法。</p>
+<p>保存吧，一大段的代码，一大片的红叉，呵呵，不着急，慢慢来，那是因为我们使用了第三方组件的原因，一项一项把缺失的引用添加进来就可以了。如果你嫌麻烦，那么复制这几行代码吧。</p>
+<p><pre>import com.lidroid.xutils.HttpUtils;<br>import com.lidroid.xutils.ViewUtils;<br>import com.lidroid.xutils.exception.HttpException;<br>import com.lidroid.xutils.http.RequestParams;<br>import com.lidroid.xutils.http.ResponseInfo;<br>import com.lidroid.xutils.http.callback.RequestCallBack;<br>import com.lidroid.xutils.http.client.HttpRequest.HttpMethod;<br>import com.lidroid.xutils.view.annotation.ViewInject;</pre><br>&nbsp;</p>
+<p>这下大家满足了吧，一切看起来都是那么的顺利和完美，来，运行程序。</p>
+<p>你看到的可能是这样的内容：</p>
+<p>java.io.IOException: Permission denied (missing INTERNET permission?)</p>
+<p>为什么？为什么？为什么？</p>
+<p>辛辛苦苦，XX都X了，你就让我看这个。</p>
+<p>不着急，不着急，上面写得很明白，没有访问网络的权限，那么，在项目里面找到AndroidManifest.xml这个文件，添加一行代码即可。</p>
+<p><pre>&lt;uses-permission android:name=”android.permission.INTERNET” /&gt;</pre><br>把这行代码加到 &lt;application 的前面就可以了，好了，一切都OK了。运行吧。</p>
+<p>这下界面上显示的就是一大堆天气的数据了。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-18-1314011.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-18-1314011-576x1024.png" alt="device-2015-01-18-131401"></a></p>
+<p>&nbsp;</p>
+<p>如果显示的还不正确，那么请仔细检查一下是否有遗漏的代码，是否真的可以连上网络。</p>
+<p>如果您可以正确的显示上面那一大堆字符，并且能正确理解那一大堆字符的意义，并且对于界面什么的也没有要求的话，那么我们的天气预报APP就可以给自己独家使用了。很有成就感了是不是，不过，这样的应用除了自己谁会用呢？恐怕连自己也是看都不想看吧。</p>
+<p>如果您有更要的要求，那么，明天我们继续。</p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1dD3ZE5j" title="点击下载" target="_blank" rel="noopener">点击下载</a>。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/18/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-8c-e5-a4-a9/" data-id="cjb3m5kk4000frq14v2bg3y5z" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-80-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/17/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-80-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-17T06:57:49.000Z" itemprop="datePublished">2015-01-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/17/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-80-e5-a4-a9/">10天学安卓-第一天</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>说明1：本系列教程仅针对新手入门，高手勿入！</p>
+<p>说明2：本系列教程均不考虑安卓版本低于4.0的情况。</p>
+<p>说明3：本系列教程假定您了解一些编程的基础知识，对于Java语言略懂即可。</p>
+<p>&nbsp;</p>
+<h2 id="说点废话"><a href="#说点废话" class="headerlink" title="说点废话"></a>说点废话</h2><p>从什么时候说起呢，应该是很久以前的事情了。</p>
+<p>2008年的早春，因为工作的原因在日本工作了一个月，当我和同事们在XXX闲逛的时候，发现了以前从未见过的电子设备，一款是大屏幕（当时可以称得上巨屏了）的手机，一款是超大容量（80G）的MP3，对了，也许聪明的你已经猜到了，一个是iPhone 1，一个是iPod Classic，</p>
+<p>于是，一个崭新的时代开启了，当然，我们都是旁观者，真正的主角是Apple和Google。</p>
+<p>&nbsp;</p>
+<p>真正的开始其实是2007年，在这一年，Apple和Google先后发布了iPhone1以及Android操作系统，从此，一发不可收拾，iPhone以每年一代产品的速度迭代，Android则先后发布了许多成功的、失败的版本，具体的数字就不列举了，只要大家知道智能的才是未来的，作为程序员，更要时刻瞄准最新的技术。</p>
+<p>&nbsp;</p>
+<p>比如Google Glass</p>
+<p>&nbsp;</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/08/13838754160911.jpg" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/08/13838754160911.jpg" alt="1383875416091.jpg"></a></p>
+<p>&nbsp;</p>
+<p>废话不多说了，我们言归正传，本教程的目标不是仅仅让大家学会编写一些事例，更会让大家制作一个完整的可以运营的应用，在这个过程中，你会慢慢掌握Android开发中必备的知识，以及如何来解决遇到的问题，最终，你会发挥自己的聪明才智，开始制作自己专属的应用。</p>
+<p>Come on, baby！</p>
+<p>&nbsp;</p>
+<h2 id="工欲善其事，必先利其器"><a href="#工欲善其事，必先利其器" class="headerlink" title="工欲善其事，必先利其器"></a>工欲善其事，必先利其器</h2><p>移动互联网的时代，多少创业者一鸣惊人，升职加薪，当上总经理，出任CEO，迎娶白富美，走上人生巅峰。相信我，这一切都不是梦，但是千里之行始于足下，首先你要具备以下软硬件：</p>
+<p>1. 至少一台设备</p>
+<p>国内买手机，选择何其多，三星、Sony、LG、Moto甚至Nokia这些国际大厂的品牌，到HTC、小米、魅族、中华酷联这些国内知名厂商，甚至金立、大黄蜂、小辣椒这些山寨货，高中低档任君选择。不过对于我们开发人员来说，最好的选择必须是Google的亲儿子，重点推荐Nexus 4，或者即将发布的Google的下一代旗舰级。</p>
+<p>2. 一台电脑</p>
+<p>相比较于iOS开发对于电脑的要求，Android开发简直太人性了。不管你是Windows、Linux、Mac，只要安装了Java环境，都可以进行Android开发。</p>
+<p>本文假定大家使用的是Windows环境，以下的操作都是基于Win8系统的，如果你的操作系统不是Windows，那么安装Java之类的我想是更不在话下了。</p>
+<p>3. 软件环境</p>
+<p>首先安装Java环境，请移步 <a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" title="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/downloads/index.html</a> 下载。</p>
+<p>其次，Google推荐使用Eclipse+ADT的组合，请移步 <a href="http://developer.android.com/sdk/index.html" title="http://developer.android.com/sdk/index.html" target="_blank" rel="noopener">http://developer.android.com/sdk/index.html</a> 下载。</p>
+<p>别告诉我你上不去这个网站，请自己想办法。</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h2 id="开启Android之旅"><a href="#开启Android之旅" class="headerlink" title="开启Android之旅"></a>开启Android之旅</h2><p>安装好以上环境后，解压下载的adt-bundle-windows…..zip文件，打开eclipse，先确认Android环境是否完备。</p>
+<p>依次选择菜单 File &gt;&gt; New &gt;&gt; Android Application Project，</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/08/201408182135241.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/08/20140818213524_thumb1.png" alt="20140818213524" title="20140818213524"></a></p>
+<p>其中Application Name填写demo后，会自动生成Project Name和 Package Name，我们保留默认值就好了，然后选择Minimum Required SDK为API14，我们只针对4.0以上的版本进行开发。</p>
+<p>选择好之后，请一路点击[Next]，直到最后一步，点击[Finish]，我们的第一个应用项目就搭建好了。</p>
+<p>连上你的手机之后，在项目的根节点右键选择[Run As] &gt;&gt; [Android Application]，会弹出设备选择框，</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/08/201408182154011.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/08/20140818215401_thumb1.png" alt="20140818215401" title="20140818215401"></a></p>
+<p>看到了吧，我的手机是小米3。</p>
+<p>如果没出现设备的话，请依次检查USB线是否连接、驱动是否安装、手机是否已经开启[USB调试]，一切正常的话，点击[OK]，程序就运行到手机上了。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/08/0818_22_01_011.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/08/0818_22_01_01_thumb1.png" alt="0818_22_01_01" title="0818_22_01_01"></a></p>
+<p>&nbsp;</p>
+<p>好了，第一天就到这儿吧，万事开头难，我相信在配置环境的过程中，大家都遇到了不少问题，请利用好百度、Google这些工具。</p>
+<p>明天开始，我们即将有一个全新的目标。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/17/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-80-e5-a4-a9/" data-id="cjb3m5kjz000brq14s5pa4erw" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-e4-b8-80-e5-bc-a0-e5-9b-be-e5-91-8a-e8-af-89-e4-bd-a0-ef-bc-8c-e7-a8-8b-e5-ba-8f-e7-8c-bf-e7-9a-84-e8-b7-af-e5-9c-a8-e4-bd-95-e6-96-b9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/16/e4-b8-80-e5-bc-a0-e5-9b-be-e5-91-8a-e8-af-89-e4-bd-a0-ef-bc-8c-e7-a8-8b-e5-ba-8f-e7-8c-bf-e7-9a-84-e8-b7-af-e5-9c-a8-e4-bd-95-e6-96-b9/" class="article-date">
+  <time datetime="2015-01-16T00:15:36.000Z" itemprop="datePublished">2015-01-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/收藏-•-分享/">收藏 • 分享</a>►<a class="article-category-link" href="/categories/收藏-•-分享/职场-•-技能/">职场 • 技能</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/01/16/e4-b8-80-e5-bc-a0-e5-9b-be-e5-91-8a-e8-af-89-e4-bd-a0-ef-bc-8c-e7-a8-8b-e5-ba-8f-e7-8c-bf-e7-9a-84-e8-b7-af-e5-9c-a8-e4-bd-95-e6-96-b9/">一张图告诉你，程序猿的路在何方</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近在琢磨程序员到底路在何方，经过不断的自虐和代入，终于在迷雾森林中得图一张，看之豁然开朗。独乐乐不如众乐乐，share了：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/a2094_005WTVurjw1eoa928kgmej30hy0jnwhq1.jpg" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/a2094_005WTVurjw1eoa928kgmej30hy0jnwhq1.jpg" alt="a2094_005WTVurjw1eoa928kgmej30hy0jnwhq"></a></p>
+<h2 id="术语表"><a href="#术语表" class="headerlink" title="术语表"></a>术语表</h2><p>图1中使用了很多术语，这里先做解释，只有我们大家都说同一种语言，沟通才会顺畅。</p>
+<p>程序员：撰写代码，生产软件，辅助提高社会生产率的脑力劳动者。据说喝的是咖啡，抽的是烟，产的是代码。他们是计算机诞生后才逐渐兴起的一个群体，鱼龙混杂，有高飞天上的白富美，也有低到尘埃里的矮矬穷，总之虽一类而九流具足。</p>
+<p>初级工程师：入门程序员，怀揣着IT行业多金的遐想进入了IT江湖，开始了练级打怪求升级的游戏之路。</p>
+<p>中级工程师：经过几年的打拼，有一定的拷贝、粘贴功底，掌握了太祖长拳或罗汉掌之类的一技之长，打字速度变快了，双眼变得稍稍有些迷人了，对零壹世界有了比初级工程师更深刻的认识。</p>
+<p>高级工程师：拷贝、粘贴之术出神入化，又习得搭积木和沙滩上盖大楼的绝技，还能像江湖郎中一样给病入膏肓的代码开药了。</p>
+<p>架构师：坚信技术可以让人牛X，抵制了各种旁门左道的火辣诱惑，闭关多年，终于一生二、二生三、三生万物了，能够坐而论道、指手画脚了，觉得自己形神具备有仙人之资，偶尔来个仙人指路挺爽。</p>
+<p>技术专家：看过各种江湖流派，最终在某条羊肠小道之上月黑风高之夜顿悟辟邪剑法，从而成为一代旁门高手，在自己的领域里无人能及。</p>
+<p>CTO：史上最强的技术流？不一定。不过有一点高度是肯定的：会当凌绝顶，一览众山小。正统的CTO专门研究各种武技，寻求能在未来的江湖中克敌制胜的秘辛。国内江湖乱象纷呈，很多CTO其实在打杂做管理。</p>
+<p>小组组长：这并不是一个正式的头衔，在《江湖异闻录》中，小组组长被掌门委以突袭带头人的角色，只因为他有带头大哥的潜力，能激发大家的战斗力。虽然没有掌握绩效考评之类的绝杀技，不过也是通往管理之路的必经过程。</p>
+<p>项目组长：管的事儿有点儿多了，要带人，要带项目，要和产品经理搞好关系，通常也得和小分队的成员不分你我，总之什么都干，干的是项目经理的活，只是没有名分。没关系，等带好一个项目，又有项目经理的缺时就可以顶上去了。</p>
+<p>项目经理：这是一个正式的打杂的，终于有了名分了。</p>
+<p>高级项目经理：又叫项目群经理。他搬了把凳子以便让自己站得更高，能够看清楚纷乱的江湖里多个项目的情况，通常需要协调这个协调那个，找项目经理谈谈话，抚慰一下项目经理或项目组长委屈的心，有时也会被来自上面的压力压得喘不过气来。</p>
+<p>部门（项目）总监：So，不知道要说什么了，开始管各种事儿了，评估项目开发过程，拟定考评、绩效、职级等各种制度，或者今天跑这个项目聊聊天，明天跑那个项目聊聊天，后者自己左右互搏和自己聊聊天，看起来闲人一个。</p>
+<p>就这么多吧，其它的也不想说了。因为我们要讨论的是程序员的出路……</p>
+<h2 id="程序员的路在何方"><a href="#程序员的路在何方" class="headerlink" title="程序员的路在何方"></a>程序员的路在何方</h2><p>图1中框起来的，是程序员的主旋律。</p>
+<p>程序员，专业人士也，与瓦工、木匠、发型师、保洁员等类似，不过是社会万千分工之一种，没什么高大上，也没什么矮矬穷，只不过时代大潮中被滚滚洪流裹夹着前进的一群人而已，所谓泯然众人矣，就是说的这个。</p>
+<p>So，该说什么啦？</p>
+<p>你怎么混进来的</p>
+<p>不忘初衷。</p>
+<p>不忘初心。</p>
+<p>你是不是忘了当初为什么要干这个？</p>
+<p>那就想想吧。有好处。</p>
+<p>有的人是为了程序员的高薪</p>
+<p>有的人是想要一份体面稳定的工作而已，别出差</p>
+<p>有的人是过来打酱油的早抱定了过两年就走的心</p>
+<p>有的人想了解这个世界，试试看自己合不合适</p>
+<p>有的人就喜欢计算机的世界，如鱼得水</p>
+<p>有的人觉得这个行当既专业又神秘，感觉倍儿棒</p>
+<p>有的人喜欢挑战，因为软件开发每一刻都有战斗的感觉，各种问题纷至沓来</p>
+<p>有的人就喜欢不断学习新技术，为技术而生，而没有哪个行业像这个一样时刻都要学习</p>
+<p>有的人喜欢这个行当的成就感，持续不断的小刺激总让人高潮不断</p>
+<p>有的人渴望有自己的软件作品</p>
+<p>有的人想用软件改变世界</p>
+<p>有的人觉得这是一片净土，罕见尔虞我诈，不必江海寄余生</p>
+<p>有的人觉得这行门槛低，谁都可以来搞两下</p>
+<p>有的人是来发动战争的，攻破别人的防线感觉很爽</p>
+<p>有的人是冲着 IT 界牛人半数都出柜这一点来的</p>
+<p>……</p>
+<p>总之各种理由都有，你也一定有自己的那一个。对吧，你自己的。</p>
+<p>将来去哪儿</p>
+<p>迪克牛仔的《三万英尺》：</p>
+<p>要飞向哪里 能飞向哪里</p>
+<p>愚笨的问题</p>
+<p>我浮在天空里</p>
+<p>自由的很无力</p>
+<p>前几天在朋友家翻看米兰昆德拉的《不能承受的生命之轻》，里面开篇对轻与重的辩论，很有意思，好像和我们也有一点关系，感兴趣的可以读读，这本书是倒退十来年那个时候小资必读。</p>
+<p>你今天的选择，决定了明天的路。</p>
+<p>那些来打酱油的，明天就走了。比如我原来有个同事，干了一阵子，来找我辞职，说准备回家搞民间金融去了。后来还在QQ上联系过我，据说搞得还不错，问我要不要投资。</p>
+<p>有些人听说IT行业薪资高，巴巴地进来了，可是干了两三年，工资还是三两千，只好失望的走了。其实除非你有经天纬地之才，没有一开始就高薪的道理。先做事，后有钱。先想钱，钱难来。做程序员搞开发大抵是酱紫的。听说有个哥们跳到了华为，天天晚上十一二点的搞，有一天他终于不慎抱恙，晚上九点多回去了，被整个组的人鄙视；可是华为熬过三年，钱多多的，年终奖和分红抵得上你一年的工资。关键是，你熬得住吗？你媳妇熬得住吗？</p>
+<p>有一段时间我觉得心不够静，买了几本佛经想受点熏陶，读了《金刚经》、《坛经》、《心经》、《地藏经》，不过都没读完。后来在一个同事的工位上看到她贴了一个即时贴：</p>
+<p>“观自在菩萨，行深般若波罗蜜多时……”</p>
+<p>原来心不净的人可真多呀，好吧，我不是一个人在战斗，太欣慰了。</p>
+<p>我看到女同事贴的这段《心经》中的文字没多久，她离开了公司。再后来我到书店闲逛，发现摆在显眼处的都是什么这个禅师、那个道长、某个灵修、西方冥想者出的拯救大家心灵的菩提书，也有很多国内的心理作家写的鸡汤，多得很呢真是。我这才意识到，原来我们都有病，药不能停啊。</p>
+<p>扯远了吧。</p>
+<p>我想说的是，作为程序员，心态决定你的将来。你自己怎么看待你所从事的工作，你是享受它、厌烦它、无所谓、爱恨交加……这些决定了你将在这条路上走多远。</p>
+<p>我们生活在一张社会关系网中，因为别人能够看到你你才存在，这是《作为意识与表象的世界》，你看到的人、别人看到的你，都只是作为观察者的那个人想看到的，而非真实的人。虽然真实的人客观存在，但没有人能看到这样一个真实的、完整的人，包括你自己。</p>
+<p>你看到你想看到的，他看到他想看到的，张三看到张三想看到的，李四看到李四想看到的……周围一圈人对你的意识构造了社会化关系中的你，但那只是你的一小部分。仅此而已。如果别人不知道你，你就不存在。为了存在，你就要在别人面前出现，这就是“存在感”。</p>
+<p>所以现在很多人在刷微信、微博、博客、论坛、陌陌，都是在刷存在感。当然也包括我自己。</p>
+<p>让别人知道你，你才存在。你只有留下点让别人难以忘怀的东西，你才因这些东西而存在。</p>
+<p>如果想明白了这个道理，一个真正热爱技术的程序员，想在这个行当里干点儿事情的哥们姐们，就不会去在意别人说什么“软件开发是青春饭”、“程序员平均寿命低于普通人”、“程序员群体社会地位低下不如鸡”、“过了30就要另谋出路”之类的话。作为一个与其它行业没有什么差别的行业，仅仅是分工不同而已，为什么有这么多说法呢？众说纷纭，都是杂音。有用的话不这样，大音希声。其实黄小琥在《没那么简单》这首歌里也说了：</p>
+<p>感觉快乐就忙东忙西</p>
+<p>感觉累了就放空自己</p>
+<p>别人说的话 随便听一听 自己作决定</p>
+<p>不想拥有太多情绪</p>
+<p>当然你也可以认为我通篇都是P话，真没关系。</p>
+<h2 id="程序员的两条主要通道"><a href="#程序员的两条主要通道" class="headerlink" title="程序员的两条主要通道"></a>程序员的两条主要通道</h2><p>看图1很明白了，程序员有两条主要的职业通道：技术和管理。</p>
+<p>在中国有个很不好的传统：学而优则仕。</p>
+<p>如果你在一个单位干技术干了很多年，还当不上领导，就会被人瞧不起。这也是很多人干开发干了几年后，正当年富力强生产力旺盛的时候脱离技术通道的原因。因为领导大部分都是这么一个套路：“干得好？行，带人吧。带得好？行，升经理吧……”所以，很多原本可以成为技术大牛的人，就这么被拐走了。</p>
+<p>也有一些专注搞技术的开发人员，就要走技术通道。</p>
+<p>有个哥们儿，做 CMS ，前台后台都能搞，领导让他带三个人，让他当项目经理，他不乐意，说我自己干就行了，管别人净浪费时间。领导好说歹说把他绑在了项目经理的位置上，结果他不管那几个小伙伴，也不安排工作给人家，人家来问他这个怎么干，他就说你不用管了，我来干。最后呢，一个人干了80%以上的活儿，其它几个人闲得蛋疼。再后来呢，领导不住地找这哥们儿谈话，教育他怎么做项目经理……再后来这哥们儿就离职了……</p>
+<p>“学而优则仕”还有一个非常不好的地方：普遍认为当领导的薪水要比高技术的高。这也是很多本来有灵气的开发人员想走管理路线的原因。我想干技术啊，可你们看不起我，不给我那么多钱，周围人也这么看，我没法老这么干下去。</p>
+<p>其实如果你不在意这种周围的看法，做技术未尝不是一条幸福的路。</p>
+<h2 id="跳出三界外"><a href="#跳出三界外" class="headerlink" title="跳出三界外"></a>跳出三界外</h2><p>前面我提到有同事搞金融去了，还有别的故事。</p>
+<p>我原来有个同事，程序很厉害，是公司的高级工程师，后来不干了，开便利店去了。前几天有个朋友说他找了个合伙人包了点儿地在搞有机农业，种菜……</p>
+<p>有个阿媛在淘宝上卖内衣，后来把工作辞了……</p>
+<p>有个阿猿开了家咖啡馆，名字就叫程序员咖啡……</p>
+<p>这都是跳出三界外的故事。其实也很平常，你的选择，你做主。如果你觉得这个行当不是人待的地方，再也不要受这罪了，那就走吧。如果一份工作带给你的痛苦比欢乐多很多，确实没有留恋的必要。真的，你肯定是走错了路。</p>
+<p>我在看《高效程序员的45个习惯》时，第一章里引用了一句土耳其谚语，写在下面，送给诸位，也送给我自己。</p>
+<p>不管路走了多远，错了就要重新返回。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/16/e4-b8-80-e5-bc-a0-e5-9b-be-e5-91-8a-e8-af-89-e4-bd-a0-ef-bc-8c-e7-a8-8b-e5-ba-8f-e7-8c-bf-e7-9a-84-e8-b7-af-e5-9c-a8-e4-bd-95-e6-96-b9/" data-id="cjb3m5km5002erq14wsg5982o" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/">Next &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/10天学安卓/">10天学安卓</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/">产品 • 设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/">收藏 • 分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/职场-•-技能/">职场 • 技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/运营-•-数据/">运营 • 数据</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/">原创 • 文章</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/开源系列/">开源系列</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/开源系列/我的应用/">我的应用</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/我的应用/">我的应用</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/生活-•-随笔/">生活 • 随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/我的应用/">我的应用</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/">收藏 • 分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/职场-•-技能/">职场 • 技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/营销-•-媒体/">营销 • 媒体</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/营销-•-媒体/运营-•-数据/">运营 • 数据</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/运营-•-数据/">运营 • 数据</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活-•-随笔/">生活 • 随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/90后/">90后</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APP/">APP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Admob/">Admob</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Andengine/">Andengine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blur/">Blur</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DateTime/">DateTime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FTP/">FTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QQ/">QQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sliding-Menu/">Sliding Menu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Widget/">Widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/afinal/">afinal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/db/">db</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iphone/">iphone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iwatch/">iwatch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgame/">lgame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/o2o/">o2o</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shimmer/">shimmer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xutils/">xutils</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理/">产品经理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/仙剑/">仙剑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/侧滑/">侧滑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创业/">创业</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创新/">创新</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双十一/">双十一</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双十二/">双十二</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团购/">团购</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图片/">图片</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/在线音乐/">在线音乐</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/天气预报/">天气预报</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓/">安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓教程/">安卓教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小米/">小米</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幸福/">幸福</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幼教/">幼教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开源/">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/录音/">录音</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微信/">微信</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微商/">微商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快速开发/">快速开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/扁平化/">扁平化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/手游/">手游</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/播放器/">播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/效果/">效果</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/日期/">日期</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/时间/">时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务/">服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/海淘/">海淘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/淘宝/">淘宝</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物联网/">物联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/特效/">特效</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/电商/">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动互联网/">移动互联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/第三方/">第三方</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/罗永浩/">罗永浩</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/美空/">美空</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/职业生涯/">职业生涯</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/职场/">职场</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/菜单/">菜单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/萌萌颜文字/">萌萌颜文字</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计/">设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/锤子手机/">锤子手机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/闪烁/">闪烁</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阿里巴巴/">阿里巴巴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/高仿/">高仿</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/10天学安卓/" style="font-size: 17.5px;">10天学安卓</a> <a href="/tags/90后/" style="font-size: 10px;">90后</a> <a href="/tags/APP/" style="font-size: 10px;">APP</a> <a href="/tags/Admob/" style="font-size: 10px;">Admob</a> <a href="/tags/Andengine/" style="font-size: 10.83px;">Andengine</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Blur/" style="font-size: 10px;">Blur</a> <a href="/tags/DateTime/" style="font-size: 10px;">DateTime</a> <a href="/tags/FTP/" style="font-size: 10px;">FTP</a> <a href="/tags/QQ/" style="font-size: 10px;">QQ</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Sliding-Menu/" style="font-size: 12.5px;">Sliding Menu</a> <a href="/tags/Widget/" style="font-size: 10px;">Widget</a> <a href="/tags/afinal/" style="font-size: 10px;">afinal</a> <a href="/tags/apple/" style="font-size: 10px;">apple</a> <a href="/tags/db/" style="font-size: 10.83px;">db</a> <a href="/tags/http/" style="font-size: 10.83px;">http</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iphone/" style="font-size: 10.83px;">iphone</a> <a href="/tags/iwatch/" style="font-size: 10px;">iwatch</a> <a href="/tags/lgame/" style="font-size: 10px;">lgame</a> <a href="/tags/o2o/" style="font-size: 17.5px;">o2o</a> <a href="/tags/shimmer/" style="font-size: 10px;">shimmer</a> <a href="/tags/xutils/" style="font-size: 10px;">xutils</a> <a href="/tags/产品经理/" style="font-size: 10px;">产品经理</a> <a href="/tags/仙剑/" style="font-size: 10px;">仙剑</a> <a href="/tags/侧滑/" style="font-size: 12.5px;">侧滑</a> <a href="/tags/创业/" style="font-size: 12.5px;">创业</a> <a href="/tags/创新/" style="font-size: 10px;">创新</a> <a href="/tags/双十一/" style="font-size: 15px;">双十一</a> <a href="/tags/双十二/" style="font-size: 10px;">双十二</a> <a href="/tags/团购/" style="font-size: 10px;">团购</a> <a href="/tags/图片/" style="font-size: 10.83px;">图片</a> <a href="/tags/在线音乐/" style="font-size: 10px;">在线音乐</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/天气预报/" style="font-size: 10px;">天气预报</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/安卓/" style="font-size: 18.33px;">安卓</a> <a href="/tags/安卓入门/" style="font-size: 17.5px;">安卓入门</a> <a href="/tags/安卓开发/" style="font-size: 19.17px;">安卓开发</a> <a href="/tags/安卓教程/" style="font-size: 17.5px;">安卓教程</a> <a href="/tags/小米/" style="font-size: 10px;">小米</a> <a href="/tags/幸福/" style="font-size: 10px;">幸福</a> <a href="/tags/幼教/" style="font-size: 10px;">幼教</a> <a href="/tags/开源/" style="font-size: 15.83px;">开源</a> <a href="/tags/录音/" style="font-size: 10px;">录音</a> <a href="/tags/微信/" style="font-size: 10.83px;">微信</a> <a href="/tags/微商/" style="font-size: 10px;">微商</a> <a href="/tags/快速开发/" style="font-size: 10.83px;">快速开发</a> <a href="/tags/扁平化/" style="font-size: 11.67px;">扁平化</a> <a href="/tags/手游/" style="font-size: 10px;">手游</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a> <a href="/tags/播放器/" style="font-size: 10.83px;">播放器</a> <a href="/tags/效果/" style="font-size: 10px;">效果</a> <a href="/tags/数据库/" style="font-size: 10.83px;">数据库</a> <a href="/tags/日期/" style="font-size: 10px;">日期</a> <a href="/tags/时间/" style="font-size: 10px;">时间</a> <a href="/tags/服务/" style="font-size: 10px;">服务</a> <a href="/tags/框架/" style="font-size: 10px;">框架</a> <a href="/tags/海淘/" style="font-size: 10px;">海淘</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/游戏/" style="font-size: 12.5px;">游戏</a> <a href="/tags/物联网/" style="font-size: 10px;">物联网</a> <a href="/tags/特效/" style="font-size: 13.33px;">特效</a> <a href="/tags/电商/" style="font-size: 16.67px;">电商</a> <a href="/tags/移动互联网/" style="font-size: 11.67px;">移动互联网</a> <a href="/tags/第三方/" style="font-size: 10px;">第三方</a> <a href="/tags/罗永浩/" style="font-size: 10px;">罗永浩</a> <a href="/tags/美空/" style="font-size: 10px;">美空</a> <a href="/tags/职业生涯/" style="font-size: 10px;">职业生涯</a> <a href="/tags/职场/" style="font-size: 10px;">职场</a> <a href="/tags/菜单/" style="font-size: 10.83px;">菜单</a> <a href="/tags/萌萌颜文字/" style="font-size: 10px;">萌萌颜文字</a> <a href="/tags/设计/" style="font-size: 10.83px;">设计</a> <a href="/tags/锤子手机/" style="font-size: 10px;">锤子手机</a> <a href="/tags/闪烁/" style="font-size: 10px;">闪烁</a> <a href="/tags/阿里巴巴/" style="font-size: 10px;">阿里巴巴</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a> <a href="/tags/高仿/" style="font-size: 14.17px;">高仿</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/12/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/03/e5-a3-b0-e6-98-8e-ef-bc-9a-e8-af-b7-e7-ab-8b-e5-8d-b3-e5-81-9c-e6-ad-a2-e4-bd-bf-e7-94-a8-e6-9c-ac-e4-ba-ba-e7-9a-84-e7-99-be-e5-ba-a6-e5-9c-b0-e5-9b-beapi-e7-9b-b8-e5-85-b3ak/">声明：请立即停止使用本人的百度地图API相关AK</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/28/e5-bf-83-e6-83-85-e8-ae-b0-e4-ba-8b-e6-9c-ac-ef-bc-8c-e7-8e-b0-e5-b7-b2-e5-bc-80-e6-ba-90/">心情记事本，现已开源</a>
+          </li>
+        
+          <li>
+            <a href="/2015/06/19/e6-88-91-e7-9a-84-e5-8a-9b-e4-bd-9c-e8-90-8c-e8-90-8c-e9-a2-9c-e6-96-87-e5-ad-97-ef-bc-8c-e5-a4-a7-e5-ae-b6-e5-a4-9a-e5-a4-9a-e6-94-af-e6-8c-81/">我的力作-萌萌颜文字，大家多多支持</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/05/e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-e5-a5-bd-e7-9a-84android-e5-bc-80-e5-8f-91-e4-b9-a0-e6-83-af/">分享一些好的Android开发习惯</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

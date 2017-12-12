@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>10天学安卓-第四天 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="继续昨天的学习。 昨天我们根据取得的天气数据新建了一个视图用来显示各项内容，那么今天我们就把数据显示出来吧！！！ 这里我们要把数据和视图联系起来，那么就用到了适配器-Adapter，Android给我们提供了很多Adapter，这里我们用到了BaseAdapter。 &amp;nbsp; BaseAdapter（1）右键点击src/com.demo.weather，选择 New &amp;gt; Class，按照">
+<meta name="keywords" content="10天学安卓,安卓,安卓入门,安卓开发,安卓教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10天学安卓-第四天">
+<meta property="og:url" content="http://yoursite.com/2015/01/20/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-9b-9b-e5-a4-a9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="继续昨天的学习。 昨天我们根据取得的天气数据新建了一个视图用来显示各项内容，那么今天我们就把数据显示出来吧！！！ 这里我们要把数据和视图联系起来，那么就用到了适配器-Adapter，Android给我们提供了很多Adapter，这里我们用到了BaseAdapter。 &amp;nbsp; BaseAdapter（1）右键点击src/com.demo.weather，选择 New &amp;gt; Class，按照">
+<meta property="og:image" content="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212125401.png">
+<meta property="og:image" content="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-20-1711341-576x1024.png">
+<meta property="og:updated_time" content="2017-12-12T12:38:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="10天学安卓-第四天">
+<meta name="twitter:description" content="继续昨天的学习。 昨天我们根据取得的天气数据新建了一个视图用来显示各项内容，那么今天我们就把数据显示出来吧！！！ 这里我们要把数据和视图联系起来，那么就用到了适配器-Adapter，Android给我们提供了很多Adapter，这里我们用到了BaseAdapter。 &amp;nbsp; BaseAdapter（1）右键点击src/com.demo.weather，选择 New &amp;gt; Class，按照">
+<meta name="twitter:image" content="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212125401.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-9b-9b-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/20/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-9b-9b-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-20T09:13:48.000Z" itemprop="datePublished">2015-01-20</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      10天学安卓-第四天
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>继续昨天的学习。</p>
+<p>昨天我们根据取得的天气数据新建了一个视图用来显示各项内容，那么今天我们就把数据显示出来吧！！！</p>
+<p>这里我们要把数据和视图联系起来，那么就用到了适配器-Adapter，Android给我们提供了很多Adapter，这里我们用到了BaseAdapter。</p>
+<p>&nbsp;</p>
+<h2 id="BaseAdapter（1）"><a href="#BaseAdapter（1）" class="headerlink" title="BaseAdapter（1）"></a>BaseAdapter（1）</h2><p>右键点击src/com.demo.weather，选择 New &gt; Class，按照下图填写：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212125401.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/09/QQ截图201409212125401.png" alt="QQ截图20140921212540"></a></p>
+<p>选择[Finish]后，我们就新建了一个BaseAdapter的子类，打开 WeatherAdapter.java这个文件，来解释一下这些代码，</p>
+<p><pre>public class WeatherAdapter extends BaseAdapter<br>{</pre></p>
+<pre><code>@Override
+public int getCount()
+{
+    // TODO Auto-generated method stub
+    return 0;
+}
+
+@Override
+public Object getItem( int arg0 )
+{
+    // TODO Auto-generated method stub
+    return null;
+}
+
+@Override
+public long getItemId( int arg0 )
+{
+    // TODO Auto-generated method stub
+    return 0;
+}
+
+@Override
+public View getView( int arg0, View arg1, ViewGroup arg2 )
+{
+    // TODO Auto-generated method stub
+    return null;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p><pre>public int getCount()</pre><br>这个方法返回ListView有几条数据，</p>
+<p>&nbsp;</p>
+<p><pre>public Object getItem( int arg0 )</pre><br>这个方法返回当前行的数据，</p>
+<p>&nbsp;</p>
+<p><pre>public long getItemId( int arg0 )</pre><br>这个方法返回当前行的id，</p>
+<p>&nbsp;</p>
+<p><pre>public View getView( int arg0, View arg1, ViewGroup arg2 )</pre><br>这个方法返回当前行的视图，</p>
+<p>那么究竟怎样把数据和视图关联起来了。</p>
+<p>&nbsp;</p>
+<p>首先，我们需要把取得的数据转换为代码可以方便操作的形式。把json数据转换为JavaBean，我们需要用到一个gson库，可以在这里下载。 <a href="http://code.google.com/p/google-gson/" target="_blank" rel="noopener">http://code.google.com/p/google-gson/</a></p>
+<p>把下载回来的gson-v2.jar放到libs文件夹，然后开始我们辛苦的工作吧，将是一大段代码。</p>
+<p>&nbsp;</p>
+<h2 id="Gson"><a href="#Gson" class="headerlink" title="Gson"></a>Gson</h2><p>新建一个package包，命名为com.demo.weather.bean，在这个包下面添加4个类，BaiduData、ResultsBean、IndexBean、WeatherDataBean，内容分别是：</p>
+<p><pre>public class BaiduData<br>{<br>    private int error;<br>    private String status;<br>    private String date;<br>    private List&lt;ResultsBean&gt; results;</pre></p>
+<pre><code>public int getError()
+{
+    return error;
+}
+public void setError( int error )
+{
+    this.error = error;
+}
+public String getStatus()
+{
+    return status;
+}
+public void setStatus( String status )
+{
+    this.status = status;
+}
+public String getDate()
+{
+    return date;
+}
+public void setDate( String date )
+{
+    this.date = date;
+}
+public List&amp;lt;ResultsBean&amp;gt; getResults()
+{
+    return results;
+}
+public void setResults( List&amp;lt;ResultsBean&amp;gt; results )
+{
+    this.results = results;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p><pre>public class ResultsBean<br>{<br>    private String currentCity;<br>    private String pm25;<br>    private List&lt;IndexBean&gt; index;<br>    private List&lt;WeatherDataBean&gt; weather_data;</pre></p>
+<pre><code>public String getCurrentCity()
+{
+    return currentCity;
+}
+public void setCurrentCity( String currentCity )
+{
+    this.currentCity = currentCity;
+}
+public String getPm25()
+{
+    return pm25;
+}
+public void setPm25( String pm25 )
+{
+    this.pm25 = pm25;
+}
+public List&amp;lt;IndexBean&amp;gt; getIndex()
+{
+    return index;
+}
+public void setIndex( List&amp;lt;IndexBean&amp;gt; index )
+{
+    this.index = index;
+}
+public List&amp;lt;WeatherDataBean&amp;gt; getWeather_data()
+{
+    return weather_data;
+}
+public void setWeather_data( List&amp;lt;WeatherDataBean&amp;gt; weather_data )
+{
+    this.weather_data = weather_data;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p><pre>public class IndexBean<br>{<br>    private String title;<br>    private String zs;<br>    private String tipt;<br>    private String des;</pre></p>
+<pre><code>public String getTitle()
+{
+    return title;
+}
+public void setTitle( String title )
+{
+    this.title = title;
+}
+public String getZs()
+{
+    return zs;
+}
+public void setZs( String zs )
+{
+    this.zs = zs;
+}
+public String getTipt()
+{
+    return tipt;
+}
+public void setTipt( String tipt )
+{
+    this.tipt = tipt;
+}
+public String getDes()
+{
+    return des;
+}
+public void setDes( String des )
+{
+    this.des = des;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p><pre>public class WeatherDataBean<br>{<br>    private String date;<br>    private String dayPictureUrl;<br>    private String nightPictureUrl;<br>    private String weather;<br>    private String wind;<br>    private String temperature;</pre></p>
+<pre><code>public String getDate()
+{
+    return date;
+}
+public void setDate( String date )
+{
+    this.date = date;
+}
+public String getDayPictureUrl()
+{
+    return dayPictureUrl;
+}
+public void setDayPictureUrl( String dayPictureUrl )
+{
+    this.dayPictureUrl = dayPictureUrl;
+}
+public String getNightPictureUrl()
+{
+    return nightPictureUrl;
+}
+public void setNightPictureUrl( String nightPictureUrl )
+{
+    this.nightPictureUrl = nightPictureUrl;
+}
+public String getWeather()
+{
+    return weather;
+}
+public void setWeather( String weather )
+{
+    this.weather = weather;
+}
+public String getWind()
+{
+    return wind;
+}
+public void setWind( String wind )
+{
+    this.wind = wind;
+}
+public String getTemperature()
+{
+    return temperature;
+}
+public void setTemperature( String temperature )
+{
+    this.temperature = temperature;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>这4个JavaBean承载了json格式的字符串转换后的对象。</p>
+<p>&nbsp;</p>
+<p>然后，打开MainActivity.java文件，这个文件还有一个小红叉，那是我们之前删掉了一个文本后没有及时修改代码造成的后果。不用客气，把它删掉。</p>
+<p>修改http.send方法为以下内容：</p>
+<p><pre>        http.send( HttpMethod.GET, “<a href="http://api.map.baidu.com/telematics/v3/weather" target="_blank" rel="noopener">http://api.map.baidu.com/telematics/v3/weather</a>“, params, new RequestCallBack&lt;String&gt;()<br>        {<br>            @Override<br>            public void onSuccess( ResponseInfo&lt;String&gt; responseInfo )<br>            {<br>                String weather = responseInfo.result;</pre></p>
+<pre><code>        Gson gson = new Gson();
+        BaiduData data = gson.fromJson( weather, BaiduData.class );
+
+        Log.v( &quot;onFailure&quot;, data.toString() );
+    }
+
+    @Override
+    public void onFailure( HttpException arg0, String arg1 )
+    {
+        Log.v( &quot;onFailure&quot;, arg1 );
+    }
+} );&lt;/pre&gt;
+</code></pre><p>&nbsp;</p>
+<p>到这里，先搞一段落，来解释一下这么多的代码。</p>
+<p>虽然代码很多，但是都很简单，BaiduData、ResultsBean、IndexBean、WeatherDataBean这4个类是根据gson的要求，结合百度天气API的返回数据做成的标准JavaBean。</p>
+<p><pre>                Gson gson = new Gson();<br>                BaiduData data = gson.fromJson( weather, BaiduData.class );</pre><br>这两行是核心功能，把Json格式的字符串转换为了我们做成的BaiduData这个JavaBean。</p>
+<p>&nbsp;</p>
+<h2 id="BaseAdapter（2）"><a href="#BaseAdapter（2）" class="headerlink" title="BaseAdapter（2）"></a>BaseAdapter（2）</h2><p>既然已经把数据格式化为JavaBean了，剩下的工作就简单多了。</p>
+<p>&nbsp;</p>
+<p>修改WeatherAdapter使得数据和视图关联，</p>
+<p><pre>public class WeatherAdapter extends BaseAdapter<br>{<br>    private List&lt;WeatherDataBean&gt; weathers;<br>    private LayoutInflater inflater;<br>    private BitmapUtils bitmapUtils;</pre></p>
+<pre><code>public WeatherAdapter( Context context, List&amp;lt;WeatherDataBean&amp;gt; weathers )
+{
+    this.weathers = weathers;
+    inflater = LayoutInflater.from( context );
+    bitmapUtils = new BitmapUtils( context );
+}
+
+@Override
+public int getCount()
+{
+    return weathers.size();
+}
+
+@Override
+public Object getItem( int position )
+{
+    return weathers.get( position );
+}
+
+@Override
+public long getItemId( int position )
+{
+    return position;
+}
+
+@Override
+public View getView( int position, View convertView, ViewGroup parent )
+{
+    convertView = inflater.inflate( R.layout.item_weather, null );
+
+    TextView txtDate = (TextView)convertView.findViewById( R.id.item_date );
+    TextView txtWeather = (TextView)convertView.findViewById( R.id.item_weather );
+    TextView txtWind = (TextView)convertView.findViewById( R.id.item_wind );
+    TextView txtTemperature = (TextView)convertView.findViewById( R.id.item_temperature );
+    ImageView imgTemperature = (ImageView)convertView.findViewById( R.id.item_picture );
+
+    WeatherDataBean bean = (WeatherDataBean)getItem( position );
+
+    txtDate.setText( bean.getDate() );
+    txtWeather.setText( bean.getWeather() );
+    txtWind.setText( bean.getWind() );
+    txtTemperature.setText( bean.getTemperature() );
+
+    bitmapUtils.display( imgTemperature, bean.getDayPictureUrl() );
+
+    return convertView;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>这里我们使用了LayoutInflater来载入昨天做成的item_weather界面，使用了BitmapUtils来加载网络图片。虽然是大段代码，但是道理很简单，把对应的数据显示到对应的项目。</p>
+<p>&nbsp;</p>
+<p>然后，在MainActivity.java里添加对ListView以及我们之前建好的WeatherAdapter类的引用，并且将ListView、WeatherAdapter、BaiduData三个对象关联起来，</p>
+<p><pre>public class MainActivity extends Activity<br>{<br>    @ViewInject( R.id.weather_list )<br>    private ListView lstWeather;</pre></p>
+<pre><code>private WeatherAdapter adapter;
+private BaiduData data;
+
+private List&amp;lt;WeatherDataBean&amp;gt; datas;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_main );
+
+    ViewUtils.inject( this );
+
+    HttpUtils http = new HttpUtils();
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getApplicationContext(), datas );
+    lstWeather.setAdapter( adapter );
+
+    RequestParams params = new RequestParams();
+    params.addQueryStringParameter( &quot;location&quot;, &quot;北京&quot; );
+    params.addQueryStringParameter( &quot;output&quot;, &quot;json&quot; );
+    params.addQueryStringParameter( &quot;ak&quot;, &quot;YknGmxIoPugT7YrNrG955YLS&quot; );
+
+    http.send( HttpMethod.GET, &quot;http://api.map.baidu.com/telematics/v3/weather&quot;, params, new RequestCallBack&amp;lt;String&amp;gt;()
+    {
+        @Override
+        public void onSuccess( ResponseInfo&amp;lt;String&amp;gt; responseInfo )
+        {
+            String weather = responseInfo.result;
+
+            Gson gson = new Gson();
+            data = gson.fromJson( weather, BaiduData.class );
+
+            datas.clear();
+            datas.addAll( data.getResults().get( 0 ).getWeather_data() );
+            adapter.notifyDataSetChanged();
+
+            Log.v( &quot;onSuccess&quot;, data.toString() );
+        }
+
+        @Override
+        public void onFailure( HttpException arg0, String arg1 )
+        {
+            Log.v( &quot;onFailure&quot;, arg1 );
+        }
+    } );
+}
+</code></pre><p>}<br>打完收工。</p>
+<p>&nbsp;</p>
+<p>最终的效果如下：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-20-1711341.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-20-1711341-576x1024.png" alt="device-2015-01-20-171134"></a></p>
+<p>&nbsp;</p>
+<p>同志们，很有成就感了吧！！！</p>
+<p>&nbsp;</p>
+<p>不要得意，这只是把数据简单的显示出来而已，并且只能是帝都北京的数据，如果你不在北京，这根本对你一点用处都没有啊。</p>
+<p>嗯嗯，今天就到这儿吧，已经足够多了，好学的你肯定已经在查找更多关于Adapter、ListView的知识了，这里我就不做介绍了，建议大家经常百度。</p>
+<p>&nbsp;</p>
+<p>休闲一下，说点废话。</p>
+<p>本人从事IT行业10余年，从最初级的菜鸟程序员开始，一步一步成长，见过形形色色的程序员，从个人的角度把程序员分成这么几个级别：</p>
+<p>1. 无脑</p>
+<p>这个指的是一遇到问题就问别人的同志，自己也不思考，也不求上进，混一天算一天。这种类型是极少数的，我也只是听说过，都是传说中的人物。</p>
+<p>2. 菜鸟</p>
+<p>这种类型的程序员非常多，通常是接触技术时间不长的朋友。这部分通常是没有网络就不能工作了，经常在论坛里查找资料，下载别人代码拿来使用，键盘上的Ctrl、C、V键都磨光了。</p>
+<p>3. 小牛</p>
+<p>这种类型多见于技术负责人、技术总监这样的职位，要想做到小牛这一步，需要对技术有比较深的了解，能够从无到有进行设计的。在各种开源社区，这部分人通常会比较活跃，菜鸟们大都使用小牛们的劳动成果。</p>
+<p>4. 大牛</p>
+<p>这种类型的人已经非常少了，我只见过那么几位，都是各大公司CTO之类的。说说其中一位，他从无到有设计了公司的云计算方案，从硬件的基础设施到软件层面，再到用户层面，这位大牛都有深入的掌握。</p>
+<p>5. 传说</p>
+<p>鄙人只能在各种新闻、书籍中才能见到了。个人认为这部分人的技术已经不是我们可以评判的了，他们的思想、影响力根本不是我等可以企及的。</p>
+<p>&nbsp;</p>
+<p>各位亲，你是哪个级别的？</p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1B7zuI" target="_blank" rel="noopener">点击下载</a>。</p>
+<p>&nbsp;</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/20/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-9b-9b-e5-a4-a9/" data-id="cjb3m5kkr000rrq14nvb5lgzg" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/21/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-ba-94-e5-a4-a9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          10天学安卓-第五天
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/01/19/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b8-89-e5-a4-a9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">10天学安卓-第三天</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/10天学安卓/">10天学安卓</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/">产品 • 设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/">收藏 • 分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/职场-•-技能/">职场 • 技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/运营-•-数据/">运营 • 数据</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/">原创 • 文章</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/开源系列/">开源系列</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/开源系列/我的应用/">我的应用</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/我的应用/">我的应用</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/生活-•-随笔/">生活 • 随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/我的应用/">我的应用</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/">收藏 • 分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/职场-•-技能/">职场 • 技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/营销-•-媒体/">营销 • 媒体</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/营销-•-媒体/运营-•-数据/">运营 • 数据</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/运营-•-数据/">运营 • 数据</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活-•-随笔/">生活 • 随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/90后/">90后</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APP/">APP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Admob/">Admob</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Andengine/">Andengine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blur/">Blur</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DateTime/">DateTime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FTP/">FTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QQ/">QQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sliding-Menu/">Sliding Menu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Widget/">Widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/afinal/">afinal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/db/">db</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iphone/">iphone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iwatch/">iwatch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgame/">lgame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/o2o/">o2o</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shimmer/">shimmer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xutils/">xutils</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理/">产品经理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/仙剑/">仙剑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/侧滑/">侧滑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创业/">创业</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创新/">创新</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双十一/">双十一</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双十二/">双十二</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团购/">团购</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图片/">图片</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/在线音乐/">在线音乐</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/天气预报/">天气预报</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓/">安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓教程/">安卓教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小米/">小米</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幸福/">幸福</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幼教/">幼教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开源/">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/录音/">录音</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微信/">微信</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微商/">微商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快速开发/">快速开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/扁平化/">扁平化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/手游/">手游</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/播放器/">播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/效果/">效果</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/日期/">日期</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/时间/">时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务/">服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/海淘/">海淘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/淘宝/">淘宝</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物联网/">物联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/特效/">特效</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/电商/">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动互联网/">移动互联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/第三方/">第三方</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/罗永浩/">罗永浩</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/美空/">美空</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/职业生涯/">职业生涯</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/职场/">职场</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/菜单/">菜单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/萌萌颜文字/">萌萌颜文字</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计/">设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/锤子手机/">锤子手机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/闪烁/">闪烁</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阿里巴巴/">阿里巴巴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/高仿/">高仿</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/10天学安卓/" style="font-size: 17.5px;">10天学安卓</a> <a href="/tags/90后/" style="font-size: 10px;">90后</a> <a href="/tags/APP/" style="font-size: 10px;">APP</a> <a href="/tags/Admob/" style="font-size: 10px;">Admob</a> <a href="/tags/Andengine/" style="font-size: 10.83px;">Andengine</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Blur/" style="font-size: 10px;">Blur</a> <a href="/tags/DateTime/" style="font-size: 10px;">DateTime</a> <a href="/tags/FTP/" style="font-size: 10px;">FTP</a> <a href="/tags/QQ/" style="font-size: 10px;">QQ</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Sliding-Menu/" style="font-size: 12.5px;">Sliding Menu</a> <a href="/tags/Widget/" style="font-size: 10px;">Widget</a> <a href="/tags/afinal/" style="font-size: 10px;">afinal</a> <a href="/tags/apple/" style="font-size: 10px;">apple</a> <a href="/tags/db/" style="font-size: 10.83px;">db</a> <a href="/tags/http/" style="font-size: 10.83px;">http</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iphone/" style="font-size: 10.83px;">iphone</a> <a href="/tags/iwatch/" style="font-size: 10px;">iwatch</a> <a href="/tags/lgame/" style="font-size: 10px;">lgame</a> <a href="/tags/o2o/" style="font-size: 17.5px;">o2o</a> <a href="/tags/shimmer/" style="font-size: 10px;">shimmer</a> <a href="/tags/xutils/" style="font-size: 10px;">xutils</a> <a href="/tags/产品经理/" style="font-size: 10px;">产品经理</a> <a href="/tags/仙剑/" style="font-size: 10px;">仙剑</a> <a href="/tags/侧滑/" style="font-size: 12.5px;">侧滑</a> <a href="/tags/创业/" style="font-size: 12.5px;">创业</a> <a href="/tags/创新/" style="font-size: 10px;">创新</a> <a href="/tags/双十一/" style="font-size: 15px;">双十一</a> <a href="/tags/双十二/" style="font-size: 10px;">双十二</a> <a href="/tags/团购/" style="font-size: 10px;">团购</a> <a href="/tags/图片/" style="font-size: 10.83px;">图片</a> <a href="/tags/在线音乐/" style="font-size: 10px;">在线音乐</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/天气预报/" style="font-size: 10px;">天气预报</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/安卓/" style="font-size: 18.33px;">安卓</a> <a href="/tags/安卓入门/" style="font-size: 17.5px;">安卓入门</a> <a href="/tags/安卓开发/" style="font-size: 19.17px;">安卓开发</a> <a href="/tags/安卓教程/" style="font-size: 17.5px;">安卓教程</a> <a href="/tags/小米/" style="font-size: 10px;">小米</a> <a href="/tags/幸福/" style="font-size: 10px;">幸福</a> <a href="/tags/幼教/" style="font-size: 10px;">幼教</a> <a href="/tags/开源/" style="font-size: 15.83px;">开源</a> <a href="/tags/录音/" style="font-size: 10px;">录音</a> <a href="/tags/微信/" style="font-size: 10.83px;">微信</a> <a href="/tags/微商/" style="font-size: 10px;">微商</a> <a href="/tags/快速开发/" style="font-size: 10.83px;">快速开发</a> <a href="/tags/扁平化/" style="font-size: 11.67px;">扁平化</a> <a href="/tags/手游/" style="font-size: 10px;">手游</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a> <a href="/tags/播放器/" style="font-size: 10.83px;">播放器</a> <a href="/tags/效果/" style="font-size: 10px;">效果</a> <a href="/tags/数据库/" style="font-size: 10.83px;">数据库</a> <a href="/tags/日期/" style="font-size: 10px;">日期</a> <a href="/tags/时间/" style="font-size: 10px;">时间</a> <a href="/tags/服务/" style="font-size: 10px;">服务</a> <a href="/tags/框架/" style="font-size: 10px;">框架</a> <a href="/tags/海淘/" style="font-size: 10px;">海淘</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/游戏/" style="font-size: 12.5px;">游戏</a> <a href="/tags/物联网/" style="font-size: 10px;">物联网</a> <a href="/tags/特效/" style="font-size: 13.33px;">特效</a> <a href="/tags/电商/" style="font-size: 16.67px;">电商</a> <a href="/tags/移动互联网/" style="font-size: 11.67px;">移动互联网</a> <a href="/tags/第三方/" style="font-size: 10px;">第三方</a> <a href="/tags/罗永浩/" style="font-size: 10px;">罗永浩</a> <a href="/tags/美空/" style="font-size: 10px;">美空</a> <a href="/tags/职业生涯/" style="font-size: 10px;">职业生涯</a> <a href="/tags/职场/" style="font-size: 10px;">职场</a> <a href="/tags/菜单/" style="font-size: 10.83px;">菜单</a> <a href="/tags/萌萌颜文字/" style="font-size: 10px;">萌萌颜文字</a> <a href="/tags/设计/" style="font-size: 10.83px;">设计</a> <a href="/tags/锤子手机/" style="font-size: 10px;">锤子手机</a> <a href="/tags/闪烁/" style="font-size: 10px;">闪烁</a> <a href="/tags/阿里巴巴/" style="font-size: 10px;">阿里巴巴</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a> <a href="/tags/高仿/" style="font-size: 14.17px;">高仿</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/12/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/03/e5-a3-b0-e6-98-8e-ef-bc-9a-e8-af-b7-e7-ab-8b-e5-8d-b3-e5-81-9c-e6-ad-a2-e4-bd-bf-e7-94-a8-e6-9c-ac-e4-ba-ba-e7-9a-84-e7-99-be-e5-ba-a6-e5-9c-b0-e5-9b-beapi-e7-9b-b8-e5-85-b3ak/">声明：请立即停止使用本人的百度地图API相关AK</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/28/e5-bf-83-e6-83-85-e8-ae-b0-e4-ba-8b-e6-9c-ac-ef-bc-8c-e7-8e-b0-e5-b7-b2-e5-bc-80-e6-ba-90/">心情记事本，现已开源</a>
+          </li>
+        
+          <li>
+            <a href="/2015/06/19/e6-88-91-e7-9a-84-e5-8a-9b-e4-bd-9c-e8-90-8c-e8-90-8c-e9-a2-9c-e6-96-87-e5-ad-97-ef-bc-8c-e5-a4-a7-e5-ae-b6-e5-a4-9a-e5-a4-9a-e6-94-af-e6-8c-81/">我的力作-萌萌颜文字，大家多多支持</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/05/e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-e5-a5-bd-e7-9a-84android-e5-bc-80-e5-8f-91-e4-b9-a0-e6-83-af/">分享一些好的Android开发习惯</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

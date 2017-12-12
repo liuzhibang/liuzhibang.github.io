@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>10天学安卓-第九天 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="接着昨天的任务，我们今天实现左右滑动可以切换城市的功能。 这里就需要引入新的控件了，Android给我们提供了ViewPager，我们就使用这个，同时，显示天气的界面我们也不再使用Activity，而改为Fragment。 FragmentFragment可以认为是可复用的UI组件，有自己的布局和完整的生命周期，可以处理本身的事件，但是必须依存于Activity，不能脱离Activity而存在。">
+<meta name="keywords" content="10天学安卓,安卓,安卓入门,安卓开发,安卓教程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="10天学安卓-第九天">
+<meta property="og:url" content="http://yoursite.com/2015/01/27/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b9-9d-e5-a4-a9/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="接着昨天的任务，我们今天实现左右滑动可以切换城市的功能。 这里就需要引入新的控件了，Android给我们提供了ViewPager，我们就使用这个，同时，显示天气的界面我们也不再使用Activity，而改为Fragment。 FragmentFragment可以认为是可复用的UI组件，有自己的布局和完整的生命周期，可以处理本身的事件，但是必须依存于Activity，不能脱离Activity而存在。">
+<meta property="og:image" content="http://lzbwp.b0.upaiyun.com/2014/10/08162501-0d1530c0e072468b8b0a68c1c8913bce1.png">
+<meta property="og:image" content="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_focused1.png">
+<meta property="og:image" content="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_unfocused1.png">
+<meta property="og:image" content="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-27-0842391-576x1024.png">
+<meta property="og:updated_time" content="2017-12-12T12:38:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="10天学安卓-第九天">
+<meta name="twitter:description" content="接着昨天的任务，我们今天实现左右滑动可以切换城市的功能。 这里就需要引入新的控件了，Android给我们提供了ViewPager，我们就使用这个，同时，显示天气的界面我们也不再使用Activity，而改为Fragment。 FragmentFragment可以认为是可复用的UI组件，有自己的布局和完整的生命周期，可以处理本身的事件，但是必须依存于Activity，不能脱离Activity而存在。">
+<meta name="twitter:image" content="http://lzbwp.b0.upaiyun.com/2014/10/08162501-0d1530c0e072468b8b0a68c1c8913bce1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b9-9d-e5-a4-a9" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/01/27/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b9-9d-e5-a4-a9/" class="article-date">
+  <time datetime="2015-01-27T00:49:26.000Z" itemprop="datePublished">2015-01-27</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/10天学安卓/">10天学安卓</a>►<a class="article-category-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      10天学安卓-第九天
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>接着昨天的任务，我们今天实现左右滑动可以切换城市的功能。</p>
+<p>这里就需要引入新的控件了，Android给我们提供了ViewPager，我们就使用这个，同时，显示天气的界面我们也不再使用Activity，而改为Fragment。</p>
+<h2 id="Fragment"><a href="#Fragment" class="headerlink" title="Fragment"></a>Fragment</h2><p>Fragment可以认为是可复用的UI组件，有自己的布局和完整的生命周期，可以处理本身的事件，但是必须依存于Activity，不能脱离Activity而存在。</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/10/08162501-0d1530c0e072468b8b0a68c1c8913bce1.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/10/08162501-0d1530c0e072468b8b0a68c1c8913bce1.png" alt="08162501-0d1530c0e072468b8b0a68c1c8913bce"></a></p>
+<p>&nbsp;</p>
+<p>可以看出来，Fragment的生命周期跟Activity非常相似，并且会随着Activity的销毁而销毁。</p>
+<p>&nbsp;</p>
+<p>下面，我们来战。</p>
+<p>首先，新建一个Fragment的子类，取名为WeatherFragment。</p>
+<p><pre>public class WeatherFragment extends Fragment<br>{<br>    @Override<br>    public void onCreate( Bundle savedInstanceState )<br>    {<br>        super.onCreate( savedInstanceState );<br>    }</pre></p>
+<pre><code>@Override
+public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
+{
+    return super.onCreateView( inflater, container, savedInstanceState );
+}
+</code></pre><p>}<br>这是用来显示天气的界面，而我们之前是直接在Activity中显示的，需要把这部分代码给移植到Fragment中。</p>
+<p>这是个麻烦的过程，不过不要紧，慢慢来。</p>
+<p>新建一个Layout，取名为frag_weather.xml，然后把activity_main.xml中的代码给复制过来，</p>
+<p><pre>&lt;RelativeLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    xmlns:tools=”<a href="http://schemas.android.com/tools" target="_blank" rel="noopener">http://schemas.android.com/tools</a>“<br>    android:layout_width=”match_parent”<br>    android:layout_height=”match_parent”<br>    android:paddingBottom=”@dimen/activity_vertical_margin”<br>    android:paddingLeft=”@dimen/activity_horizontal_margin”<br>    android:paddingRight=”@dimen/activity_horizontal_margin”<br>    android:paddingTop=”@dimen/activity_vertical_margin”  &gt;</pre></p>
+<pre><code>&amp;lt;ListView
+    android:id=&quot;@+id/weather_list&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_centerHorizontal=&quot;true&quot;
+    android:layout_centerVertical=&quot;true&quot; &amp;gt;
+&amp;lt;/ListView&amp;gt;
+</code></pre><p>&lt;/RelativeLayout&gt;<br>&nbsp;</p>
+<p>我们让WeatherFragment使用新的Layout，再把MainActivity中关于天气的代码移植到WeatherFragment中，</p>
+<p><pre>public class WeatherFragment extends Fragment<br>{<br>    @ViewInject( R.id.weather_list )<br>    private ListView lstWeather;</pre></p>
+<pre><code>private WeatherAdapter adapter;
+private BaiduData data;
+
+private List&amp;lt;WeatherDataBean&amp;gt; datas;
+private String city;
+
+public void setCity( String city )
+{
+    this.city = city;
+}
+
+@Override
+public void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+
+    datas = new ArrayList&amp;lt;WeatherDataBean&amp;gt;();
+    adapter = new WeatherAdapter( getActivity(), datas );
+}
+
+@Override
+public View onCreateView( LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState )
+{
+    View view = inflater.inflate( R.layout.frag_weather, null );
+    ViewUtils.inject( this, view );
+
+    lstWeather.setAdapter( adapter );
+
+    getWeather();
+
+    return view;
+}
+
+private void getWeather()
+{
+    HttpUtils http = new HttpUtils();
+
+    RequestParams params = new RequestParams();
+    params.addQueryStringParameter( &quot;location&quot;, city );
+    params.addQueryStringParameter( &quot;output&quot;, &quot;json&quot; );
+    params.addQueryStringParameter( &quot;ak&quot;, &quot;YknGmxIoPugT7YrNrG955YLS&quot; );
+
+    http.send( HttpMethod.GET, &quot;http://api.map.baidu.com/telematics/v3/weather&quot;, params, new RequestCallBack&amp;lt;String&amp;gt;()
+    {
+        @Override
+        public void onSuccess( ResponseInfo&amp;lt;String&amp;gt; responseInfo )
+        {
+            String weather = responseInfo.result;
+
+            Gson gson = new Gson();
+            data = gson.fromJson( weather, BaiduData.class );
+
+            datas.clear();
+            datas.addAll( data.getResults().get( 0 ).getWeather_data() );
+            adapter.notifyDataSetChanged();
+
+            Log.v( &quot;onSuccess&quot;, data.toString() );
+        }
+
+        @Override
+        public void onFailure( HttpException arg0, String arg1 )
+        {
+            Log.v( &quot;onFailure&quot;, arg1 );
+        }
+    } );
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>然后，修改主页面activity_main.xml为：</p>
+<p><pre>&lt;?xml version=”1.0”?&gt;<br>&lt;RelativeLayout xmlns:android=”<a href="http://schemas.android.com/apk/res/android" target="_blank" rel="noopener">http://schemas.android.com/apk/res/android</a>“<br>    android:layout_width=”fill_parent”<br>    android:layout_height=”fill_parent”<br>    android:orientation=”vertical” &gt;</pre></p>
+<pre><code>&amp;lt;android.support.v4.view.ViewPager
+    android:id=&quot;@+id/viewPager&quot;
+    android:layout_width=&quot;fill_parent&quot;
+    android:layout_height=&quot;wrap_content&quot; /&amp;gt;
+
+&amp;lt;LinearLayout
+    android:id=&quot;@+id/viewGroup&quot;
+    android:layout_width=&quot;fill_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:layout_alignParentBottom=&quot;true&quot;
+    android:layout_marginBottom=&quot;30dp&quot;
+    android:gravity=&quot;center_horizontal&quot;
+    android:orientation=&quot;horizontal&quot; &amp;gt;
+&amp;lt;/LinearLayout&amp;gt;
+</code></pre><p>&lt;/RelativeLayout&gt;<br>这里我们引入了ViewPager，并且还有一个LinearLayout，其中ViewPager我们用来显示天气，Linearlayout用来作为指示器，表示我们当前所选城市的次序。</p>
+<p>&nbsp;</p>
+<p>之后，修改我们主页面的代码，主界面现在的作用主要是两个：</p>
+<p>1. 初次启动的时候，获取所在地城市</p>
+<ol>
+<li>处理切换Fragment的逻辑</li>
+</ol>
+<p>3. 处理页面跳转/返回的逻辑</p>
+<p><pre>public class MainActivity extends FragmentActivity<br>{<br>    @ViewInject( R.id.viewPager )<br>    private ViewPager pager;</pre></p>
+<pre><code>@ViewInject( R.id.viewGroup )
+private LinearLayout layout;
+
+private MyAdapter mAdapter;
+private List&amp;lt;SelectCityBean&amp;gt; citys;
+
+private LocationClient mLocationClient;
+private BDLocationListener myListener;
+
+private List&amp;lt;ImageView&amp;gt; imageViews;
+
+@Override
+protected void onCreate( Bundle savedInstanceState )
+{
+    super.onCreate( savedInstanceState );
+    setContentView( R.layout.activity_main );
+
+    Log.v( &quot;WeatherAPP&quot;, &quot;onCreate&quot; );
+
+    ViewUtils.inject( this );
+
+    imageViews = new ArrayList&amp;lt;ImageView&amp;gt;();
+
+    citys = readCity();
+    mAdapter = new MyAdapter( getSupportFragmentManager() );
+    pager.setAdapter( mAdapter );
+    pager.setOnPageChangeListener( new OnPageChangeListener()
+    {
+        @Override
+        public void onPageSelected( int arg0 )
+        {
+            setTitle( citys.get( arg0 ).getCityName() + &quot;天气&quot; );
+            setImageBackground( arg0 );
+        }
+
+        @Override
+        public void onPageScrolled( int arg0, float arg1, int arg2 )
+        {
+        }
+
+        @Override
+        public void onPageScrollStateChanged( int arg0 )
+        {
+        }
+    } );
+
+    if( citys == null || citys.size() == 0 )
+    {
+        citys = new ArrayList&amp;lt;SelectCityBean&amp;gt;();
+        initLocationClient();
+        mLocationClient.start();
+    }
+
+    showIndicator( 0 );
+}
+
+private void showIndicator( int position )
+{
+    layout.removeAllViews();
+    imageViews = new ArrayList&amp;lt;ImageView&amp;gt;();
+
+    pager.setCurrentItem( position );
+
+    for( int i = 0; i &amp;lt; citys.size(); i++ )
+    {
+        ImageView imageView = new ImageView( this );
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams( 20, 20 );
+        lp.leftMargin = 5;
+        imageView.setLayoutParams( lp );
+        imageViews.add( imageView );
+        if( i == position )
+        {
+            setTitle( citys.get( position ).getCityName() + &quot;天气&quot; );
+            imageView.setBackgroundResource( R.drawable.page_indicator_focused );
+        }
+        else
+        {
+            imageView.setBackgroundResource( R.drawable.page_indicator_unfocused );
+        }
+
+        layout.addView( imageView );
+    }
+}
+
+private void setImageBackground( int selectItems )
+{
+    for( int i = 0; i &amp;lt; imageViews.size(); i++ )
+    {
+        if( i == selectItems )
+        {
+            imageViews.get( i ).setBackgroundResource( R.drawable.page_indicator_focused );
+        }
+        else
+        {
+            imageViews.get( i ).setBackgroundResource( R.drawable.page_indicator_unfocused );
+        }
+    }
+}
+
+@Override
+public boolean onCreateOptionsMenu( Menu menu )
+{
+    super.onCreateOptionsMenu( menu );
+    menu.add( Menu.NONE, Menu.FIRST + 1, 0, &quot;添加城市&quot; ).setShowAsAction( MenuItem.SHOW_AS_ACTION_ALWAYS );
+    return true;
+}
+
+@Override
+public boolean onOptionsItemSelected( MenuItem item )
+{
+    if( item.getItemId() == Menu.FIRST + 1 )
+    {
+        Intent intent = new Intent( getApplicationContext(), ChooseCityActivity.class );
+        intent.putExtra( &quot;key&quot;, &quot;value&quot; );
+        startActivityForResult( intent, 99 );
+    }
+
+    return super.onOptionsItemSelected( item );
+}
+
+@Override
+protected void onActivityResult( int requestCode, int resultCode, Intent data )
+{
+    super.onActivityResult( requestCode, resultCode, data );
+
+    if( resultCode == RESULT_OK )
+    {
+        String city = data.getStringExtra( &quot;selectedCity&quot; );
+        addCity( city );
+    }
+}
+
+private void initLocationClient()
+{
+    mLocationClient = new LocationClient( getApplicationContext() ); // 声明LocationClient类
+    myListener = new MyLocationListener();
+    LocationClientOption option = new LocationClientOption();
+    option.setLocationMode( LocationMode.Hight_Accuracy );
+    option.setIsNeedAddress( true );
+    mLocationClient.setLocOption( option );
+    mLocationClient.registerLocationListener( myListener );
+}
+
+@Override
+protected void onStop()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onStop&quot; );
+    super.onStop();
+    if( mLocationClient != null ) mLocationClient.stop();
+}
+
+@Override
+protected void onPause()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onPause&quot; );
+    super.onPause();
+}
+
+@Override
+protected void onRestart()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onRestart&quot; );
+    super.onRestart();
+}
+
+@Override
+protected void onResume()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onResume&quot; );
+    super.onResume();
+}
+
+@Override
+protected void onStart()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onStart&quot; );
+    super.onStart();
+}
+
+@Override
+protected void onDestroy()
+{
+    Log.v( &quot;WeatherAPP&quot;, &quot;onDestroy&quot; );
+    super.onDestroy();
+}
+
+public class MyLocationListener implements BDLocationListener
+{
+    @Override
+    public void onReceiveLocation( BDLocation location )
+    {
+        String city = location.getCity();
+        addCity( city );
+    }
+}
+
+private void addCity( String city )
+{
+    SelectCityBean cityBean = new SelectCityBean();
+    cityBean.setCityName( city );
+    saveCity( cityBean );
+
+    if( citys == null ) citys = new ArrayList&amp;lt;SelectCityBean&amp;gt;();
+    citys.add( cityBean );
+    mAdapter.notifyDataSetChanged();
+    showIndicator( citys.size() - 1 );
+}
+
+private void saveCity( SelectCityBean city )
+{
+    DbUtils dbUtils = WeatherApplication.getInstance().getDbUtil();
+    try
+    {
+        dbUtils.save( city );
+    }
+    catch( DbException e )
+    {
+    }
+}
+
+private List&amp;lt;SelectCityBean&amp;gt; readCity()
+{
+    DbUtils dbUtils = WeatherApplication.getInstance().getDbUtil();
+    try
+    {
+        return dbUtils.findAll( SelectCityBean.class );
+    }
+    catch( DbException e )
+    {
+        return null;
+    }
+}
+
+public class MyAdapter extends FragmentStatePagerAdapter
+{
+    public MyAdapter( FragmentManager fm )
+    {
+        super( fm );
+    }
+
+    @Override
+    public Fragment getItem( int arg0 )
+    {
+        WeatherFragment fragment = new WeatherFragment();
+        fragment.setCity( citys.get( arg0 ).getCityName() );
+        return fragment;
+    }
+
+    @Override
+    public int getItemPosition( Object object )
+    {
+        return POSITION_NONE;
+    }
+
+    @Override
+    public int getCount()
+    {
+        if( citys == null ) return 0;
+        return citys.size();
+    }
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>基本上面目全非了，跟之前的代码完全不一样了，这里面的主要变动为：</p>
+<ol>
+<li>saveCity、readCity不再从Preference中获取数据了，而改为从数据库获取</li>
+</ol>
+<p>2. 增加了MyAdapter以及相关的ViewPager的逻辑</p>
+<p>&nbsp;</p>
+<p>这里还用到了一个新的SelectCityBean以及两个图片资源，</p>
+<p><pre>public class SelectCityBean<br>{<br>    private int id;<br>    private String cityName;</pre></p>
+<pre><code>public int getId()
+{
+    return id;
+}
+
+public void setId( int id )
+{
+    this.id = id;
+}
+
+public String getCityName()
+{
+    return cityName;
+}
+
+public void setCityName( String cityName )
+{
+    this.cityName = cityName;
+}
+</code></pre><p>}<br>&nbsp;</p>
+<p>两个图片资源分别代表了当前城市以及其他城市，</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_focused1.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_focused1.png" alt="page_indicator_focused"></a><a href="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_unfocused1.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2014/10/page_indicator_unfocused1.png" alt="page_indicator_unfocused"></a></p>
+<p>&nbsp;</p>
+<p>完成之后，运行来看看，我这边的效果是这样的：</p>
+<p><a href="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-27-0842391.png" target="_blank" rel="noopener"><img src="http://lzbwp.b0.upaiyun.com/2015/01/device-2015-01-27-0842391-576x1024.png" alt="device-2015-01-27-084239"></a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>你可以试着添加城市看看，是不是这样的效果。</p>
+<p>&nbsp;</p>
+<p>今天的内容比较少，代码比较多，大家多多练习一下。</p>
+<p>&nbsp;</p>
+<p>附件是本次的工程文件，<a href="http://pan.baidu.com/s/1sj2V5fB" target="_blank" rel="noopener">点击下载</a> <a href="http://pan.baidu.com/s/1sj2V5fB" target="_blank" rel="noopener">http://pan.baidu.com/s/1sj2V5fB</a> 。</p>
+<p>此系列文章系本人原创，如需转载，请注明出处 www.liuzhibang.cn</p>
+<p>&nbsp;</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/01/27/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e4-b9-9d-e5-a4-a9/" data-id="cjb3m5kk6000grq14o17j8ivi" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓/">安卓</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/安卓教程/">安卓教程</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/28/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-8d-81-e5-a4-a9/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          10天学安卓-第十天
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/01/25/10-e5-a4-a9-e5-ad-a6-e5-ae-89-e5-8d-93-e7-ac-ac-e5-85-ab-e5-a4-a9/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">10天学安卓-第八天</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/10天学安卓/">10天学安卓</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/10天学安卓/原创-•-文章/">原创 • 文章</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/">产品 • 设计</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/">收藏 • 分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/职场-•-技能/">职场 • 技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/产品-•-设计/收藏-•-分享/运营-•-数据/">运营 • 数据</a></li></ul></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/">原创 • 文章</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/开源系列/">开源系列</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/开源系列/我的应用/">我的应用</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/我的应用/">我的应用</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/原创-•-文章/生活-•-随笔/">生活 • 随笔</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/我的应用/">我的应用</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/">收藏 • 分享</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/职场-•-技能/">职场 • 技能</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/营销-•-媒体/">营销 • 媒体</a><ul class="category-list-child"><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/营销-•-媒体/运营-•-数据/">运营 • 数据</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/收藏-•-分享/运营-•-数据/">运营 • 数据</a></li></ul></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活-•-随笔/">生活 • 随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/10天学安卓/">10天学安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/90后/">90后</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/APP/">APP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Admob/">Admob</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Andengine/">Andengine</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android/">Android</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Blur/">Blur</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DateTime/">DateTime</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FTP/">FTP</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/QQ/">QQ</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SEO/">SEO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Sliding-Menu/">Sliding Menu</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Widget/">Widget</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/afinal/">afinal</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/apple/">apple</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/db/">db</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iphone/">iphone</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iwatch/">iwatch</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgame/">lgame</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/o2o/">o2o</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shimmer/">shimmer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xutils/">xutils</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理/">产品经理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/仙剑/">仙剑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/侧滑/">侧滑</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创业/">创业</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/创新/">创新</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双十一/">双十一</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/双十二/">双十二</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/团购/">团购</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/图片/">图片</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/在线音乐/">在线音乐</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/大数据/">大数据</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/天气预报/">天气预报</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安全/">安全</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓/">安卓</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓入门/">安卓入门</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓开发/">安卓开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/安卓教程/">安卓教程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/小米/">小米</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幸福/">幸福</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/幼教/">幼教</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/开源/">开源</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/录音/">录音</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微信/">微信</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/微商/">微商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/快速开发/">快速开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/扁平化/">扁平化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/手游/">手游</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/推送/">推送</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/播放器/">播放器</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/效果/">效果</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/数据库/">数据库</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/日期/">日期</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/时间/">时间</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/服务/">服务</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/框架/">框架</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/海淘/">海淘</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/淘宝/">淘宝</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/游戏/">游戏</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/物联网/">物联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/特效/">特效</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/电商/">电商</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动互联网/">移动互联网</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/第三方/">第三方</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/罗永浩/">罗永浩</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/美空/">美空</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/职业生涯/">职业生涯</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/职场/">职场</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/菜单/">菜单</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/萌萌颜文字/">萌萌颜文字</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/设计/">设计</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/锤子手机/">锤子手机</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/闪烁/">闪烁</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/阿里巴巴/">阿里巴巴</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/面试/">面试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/高仿/">高仿</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/10天学安卓/" style="font-size: 17.5px;">10天学安卓</a> <a href="/tags/90后/" style="font-size: 10px;">90后</a> <a href="/tags/APP/" style="font-size: 10px;">APP</a> <a href="/tags/Admob/" style="font-size: 10px;">Admob</a> <a href="/tags/Andengine/" style="font-size: 10.83px;">Andengine</a> <a href="/tags/Android/" style="font-size: 20px;">Android</a> <a href="/tags/Blur/" style="font-size: 10px;">Blur</a> <a href="/tags/DateTime/" style="font-size: 10px;">DateTime</a> <a href="/tags/FTP/" style="font-size: 10px;">FTP</a> <a href="/tags/QQ/" style="font-size: 10px;">QQ</a> <a href="/tags/SEO/" style="font-size: 10px;">SEO</a> <a href="/tags/Sliding-Menu/" style="font-size: 12.5px;">Sliding Menu</a> <a href="/tags/Widget/" style="font-size: 10px;">Widget</a> <a href="/tags/afinal/" style="font-size: 10px;">afinal</a> <a href="/tags/apple/" style="font-size: 10px;">apple</a> <a href="/tags/db/" style="font-size: 10.83px;">db</a> <a href="/tags/http/" style="font-size: 10.83px;">http</a> <a href="/tags/iOS/" style="font-size: 10px;">iOS</a> <a href="/tags/iphone/" style="font-size: 10.83px;">iphone</a> <a href="/tags/iwatch/" style="font-size: 10px;">iwatch</a> <a href="/tags/lgame/" style="font-size: 10px;">lgame</a> <a href="/tags/o2o/" style="font-size: 17.5px;">o2o</a> <a href="/tags/shimmer/" style="font-size: 10px;">shimmer</a> <a href="/tags/xutils/" style="font-size: 10px;">xutils</a> <a href="/tags/产品经理/" style="font-size: 10px;">产品经理</a> <a href="/tags/仙剑/" style="font-size: 10px;">仙剑</a> <a href="/tags/侧滑/" style="font-size: 12.5px;">侧滑</a> <a href="/tags/创业/" style="font-size: 12.5px;">创业</a> <a href="/tags/创新/" style="font-size: 10px;">创新</a> <a href="/tags/双十一/" style="font-size: 15px;">双十一</a> <a href="/tags/双十二/" style="font-size: 10px;">双十二</a> <a href="/tags/团购/" style="font-size: 10px;">团购</a> <a href="/tags/图片/" style="font-size: 10.83px;">图片</a> <a href="/tags/在线音乐/" style="font-size: 10px;">在线音乐</a> <a href="/tags/大数据/" style="font-size: 10px;">大数据</a> <a href="/tags/天气预报/" style="font-size: 10px;">天气预报</a> <a href="/tags/安全/" style="font-size: 10px;">安全</a> <a href="/tags/安卓/" style="font-size: 18.33px;">安卓</a> <a href="/tags/安卓入门/" style="font-size: 17.5px;">安卓入门</a> <a href="/tags/安卓开发/" style="font-size: 19.17px;">安卓开发</a> <a href="/tags/安卓教程/" style="font-size: 17.5px;">安卓教程</a> <a href="/tags/小米/" style="font-size: 10px;">小米</a> <a href="/tags/幸福/" style="font-size: 10px;">幸福</a> <a href="/tags/幼教/" style="font-size: 10px;">幼教</a> <a href="/tags/开源/" style="font-size: 15.83px;">开源</a> <a href="/tags/录音/" style="font-size: 10px;">录音</a> <a href="/tags/微信/" style="font-size: 10.83px;">微信</a> <a href="/tags/微商/" style="font-size: 10px;">微商</a> <a href="/tags/快速开发/" style="font-size: 10.83px;">快速开发</a> <a href="/tags/扁平化/" style="font-size: 11.67px;">扁平化</a> <a href="/tags/手游/" style="font-size: 10px;">手游</a> <a href="/tags/推送/" style="font-size: 10px;">推送</a> <a href="/tags/播放器/" style="font-size: 10.83px;">播放器</a> <a href="/tags/效果/" style="font-size: 10px;">效果</a> <a href="/tags/数据库/" style="font-size: 10.83px;">数据库</a> <a href="/tags/日期/" style="font-size: 10px;">日期</a> <a href="/tags/时间/" style="font-size: 10px;">时间</a> <a href="/tags/服务/" style="font-size: 10px;">服务</a> <a href="/tags/框架/" style="font-size: 10px;">框架</a> <a href="/tags/海淘/" style="font-size: 10px;">海淘</a> <a href="/tags/淘宝/" style="font-size: 10px;">淘宝</a> <a href="/tags/游戏/" style="font-size: 12.5px;">游戏</a> <a href="/tags/物联网/" style="font-size: 10px;">物联网</a> <a href="/tags/特效/" style="font-size: 13.33px;">特效</a> <a href="/tags/电商/" style="font-size: 16.67px;">电商</a> <a href="/tags/移动互联网/" style="font-size: 11.67px;">移动互联网</a> <a href="/tags/第三方/" style="font-size: 10px;">第三方</a> <a href="/tags/罗永浩/" style="font-size: 10px;">罗永浩</a> <a href="/tags/美空/" style="font-size: 10px;">美空</a> <a href="/tags/职业生涯/" style="font-size: 10px;">职业生涯</a> <a href="/tags/职场/" style="font-size: 10px;">职场</a> <a href="/tags/菜单/" style="font-size: 10.83px;">菜单</a> <a href="/tags/萌萌颜文字/" style="font-size: 10px;">萌萌颜文字</a> <a href="/tags/设计/" style="font-size: 10.83px;">设计</a> <a href="/tags/锤子手机/" style="font-size: 10px;">锤子手机</a> <a href="/tags/闪烁/" style="font-size: 10px;">闪烁</a> <a href="/tags/阿里巴巴/" style="font-size: 10px;">阿里巴巴</a> <a href="/tags/面试/" style="font-size: 10px;">面试</a> <a href="/tags/高仿/" style="font-size: 14.17px;">高仿</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">December 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/06/">June 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/01/">January 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/05/">May 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/04/">April 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/03/">March 2014</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/12/hello-world/">Hello World</a>
+          </li>
+        
+          <li>
+            <a href="/2015/11/03/e5-a3-b0-e6-98-8e-ef-bc-9a-e8-af-b7-e7-ab-8b-e5-8d-b3-e5-81-9c-e6-ad-a2-e4-bd-bf-e7-94-a8-e6-9c-ac-e4-ba-ba-e7-9a-84-e7-99-be-e5-ba-a6-e5-9c-b0-e5-9b-beapi-e7-9b-b8-e5-85-b3ak/">声明：请立即停止使用本人的百度地图API相关AK</a>
+          </li>
+        
+          <li>
+            <a href="/2015/10/28/e5-bf-83-e6-83-85-e8-ae-b0-e4-ba-8b-e6-9c-ac-ef-bc-8c-e7-8e-b0-e5-b7-b2-e5-bc-80-e6-ba-90/">心情记事本，现已开源</a>
+          </li>
+        
+          <li>
+            <a href="/2015/06/19/e6-88-91-e7-9a-84-e5-8a-9b-e4-bd-9c-e8-90-8c-e8-90-8c-e9-a2-9c-e6-96-87-e5-ad-97-ef-bc-8c-e5-a4-a7-e5-ae-b6-e5-a4-9a-e5-a4-9a-e6-94-af-e6-8c-81/">我的力作-萌萌颜文字，大家多多支持</a>
+          </li>
+        
+          <li>
+            <a href="/2015/05/05/e5-88-86-e4-ba-ab-e4-b8-80-e4-ba-9b-e5-a5-bd-e7-9a-84android-e5-bc-80-e5-8f-91-e4-b9-a0-e6-83-af/">分享一些好的Android开发习惯</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2017 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
